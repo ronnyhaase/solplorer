@@ -15,7 +15,7 @@ I'm not saying this is bad per se (I eventually stake my SOL with them, too), bu
 
 ## Contributing
 
-Ideas, bugs or questions? [Create an issue](issues).
+Ideas, bugs or questions? [Create an issue](https://github.com/ronnyhaase/solplorer/issues).
 
 ### Developing
 
