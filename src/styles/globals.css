@@ -1,0 +1,95 @@
+:root {
+  /* Colors */
+  --c-background: #2c2d30;
+  --c-inset: #252629;
+  --c-outset: #35363a;
+  --c-foreground: #fff;
+  --c-muted: #999999;
+  --c-success: #10b981;
+  --c-danger: #ef4444;
+
+  /* Breakpoints */
+  --bp-xs: 0;
+  --bp-sm: 576px;
+  --bp-md: 768px;
+  --bp-lg: 992px;
+  --bp-xl: 1200px;
+
+  /* Spacing */
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+
+  --radius-md: 1rem;
+
+  /* Container */
+  --max-w-container-sm: 540px;
+  --max-w-container-md: 720px;
+  --max-w-container-lg: 960px;
+  --max-w-container-xl: 1140px;
+
+  /* Text */
+  --font-size-sm: 0.875rem;
+  --line-height-sm: 1rem;
+
+  --font-size-md: 1.125rem;
+  --line-height-md: 1.75rem;
+
+  --font-size-xl: 2rem;
+  --line-height-xl: 2.25rem;
+}
+
+body {
+  background-color: var(--c-background);
+  color: var(--c-foreground);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+}
+
+th {
+  font-weight: normal;
+  text-align: left;
+}
+
+.d-flex { display: flex; }
+
+.m-0 { margin: 0; }
+.mb-md { margin-bottom: var(--space-md); }
+.ml-md { margin-left: var(--space-md); }
+.mx-md { margin-left: var(--space-md); margin-right: var(--space-md); }
+.p-md { padding: var(--space-md); }
+.pb-md { padding-bottom: var(--space-md); }
+.py-lg { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
+.p-1px { padding: 1px; }
+
+.items-center { align-items: center; }
+.grow { flex-grow: 1; }
+
+.border-solid { border-style: solid; }
+.border-0 { border-width: 0; }
+.border-b { border-bottom-width: 1px; }
+.border-r { border-right-width: 1px; }
+.border-background { border-color: var(--c-background); }
+.border-inset { border-color: var(--c-inset); }
+
+.rounded { border-radius: 32767px; }
+.rounded-md { border-radius: var(--radius-md); }
+
+.bg-background { background-color: var(--c-background); }
+.bg-inset { background-color: var(--c-inset); }
+.bg-outset { background-color: var(--c-outset); }
+.bg-foreground { background-color: var(--c-foreground); }
+
+.text-inset { color: var(--c-inset) }
+.text-muted { color: var(--c-muted) }
+.text-success { color: var(--c-success) }
+.text-danger { color: var(--c-danger) }
+
+.text-sm { font-size: var(--font-size-sm); line-height: var(--line-height-sm); }
+.text-md { font-size: var(--font-size-md); line-height: var(--line-height-md); }
+.text-xl { font-size: var(--font-size-xl); line-height: var(--line-height-xl); }
+
+.text-center { text-align: center; }
+
+.whitespace-nowrap { white-space: nowrap; }
+
+.leading-none { line-height: 1; }

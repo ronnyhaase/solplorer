@@ -1,0 +1,20 @@
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.columns1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.columns2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.columns3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.columns4 {
+  grid-template-columns: repeat(4, 1fr);
+}
