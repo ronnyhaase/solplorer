@@ -1,5 +1,5 @@
-import Box from "../box"
-import StandardProps from "../StandardProps"
+import Box from '../box'
+import StandardProps from '../StandardProps'
 
 interface ProgressProps extends StandardProps {
   min?: number

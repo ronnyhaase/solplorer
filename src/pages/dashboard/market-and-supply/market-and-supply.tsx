@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
-import useSWR from "swr"
+import useSWR from 'swr'
 
-import { Panel } from "../../../components"
-import intlFormatHelper from "../../../utils/intl-format-helper"
-import Supply from "./supply"
-import PriceChart from "./price-chart"
-import Market from "./market"
+import { Panel } from '../../../components'
+import Supply from './supply'
+import PriceChart from './price-chart'
+import Market from './market'
 
 const MarketAndSupply = () => {
   const { data: marketData, error } = useSWR('/api/market', url => fetch(url).then((res) => res.json()))

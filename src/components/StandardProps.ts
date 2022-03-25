@@ -1,4 +1,4 @@
-import { Properties as CSSProperties} from "csstype"
+import { Properties as CSSProperties} from 'csstype'
 
 interface ExoticComponentWithDisplayName<P = unknown> extends React.ExoticComponent<P> {
   defaultProps?: Partial<P>

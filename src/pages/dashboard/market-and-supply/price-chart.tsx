@@ -7,9 +7,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts"
+} from 'recharts'
 
-import intlFormatHelper from "../../../utils/intl-format-helper"
+import intlFormatHelper from '../../../utils/intl-format-helper'
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload || !payload.length) return null
@@ -34,6 +34,7 @@ const PriceChart = ({ history }) => (
         dataKey="ts"
         tickFormatter={val => intlFormatHelper.chartDate(new Date(val))}
       />
+      {/* // TODO: Add labels to y-axes */}
       <YAxis
         yAxisId="price"
         dataKey="price"

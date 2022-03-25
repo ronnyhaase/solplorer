@@ -30,7 +30,7 @@ async function getValidatorInfos(connection) {
   return validatorInfos
 }
 
-// TODO: Optimize - Userbase supports requesting or multiple users per request
+// TODO: Optimize - Userbase supports requesting for multiple users per request
 async function getValidatorImageUrls(validatorInfos) {
   const validatorImageUrls = new Map()
   for (const [key, info] of validatorInfos.entries()) {

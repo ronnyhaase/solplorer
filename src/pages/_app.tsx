@@ -2,8 +2,8 @@ import 'ronalize.css'
 
 import '../styles/globals.css'
 
-function GreinaSolanaApp({ Component, pageProps }) {
+function SolplorerApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
 
-export default GreinaSolanaApp
+export default SolplorerApp

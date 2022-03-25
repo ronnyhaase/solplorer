@@ -5,6 +5,7 @@ import intlFormatHelper from '../../../utils/intl-format-helper'
 const Supply = () => {
   const { data, error } = useSWR('/api/supply', url => fetch(url).then((res) => res.json()))
 
+  // TODO: Show placeholder per item
   return (
     <div>
       <If condition={!!data} render={() => (<>

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { Container, Grid, Panel } from '../../components'
+import { Container, Grid } from '../../components'
 import Epoch from './epoch'
 import MarketAndSupply from './market-and-supply'
 
@@ -22,8 +22,6 @@ const Dashboard = () => {
           </Grid>
         </Container>
       </main>
-      <footer>
-      </footer>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { classNames as cx } from 'react-extras'
 
-import Box from "../box"
+import Box from '../box'
 import styles from './Grid.module.css'
 
 type GridProps = {

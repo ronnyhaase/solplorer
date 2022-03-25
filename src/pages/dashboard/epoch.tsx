@@ -1,7 +1,7 @@
-import useSWR from "swr"
+import useSWR from 'swr'
 
-import { Panel, Progress } from "../../components"
-import intlFormatHelper from "../../utils/intl-format-helper"
+import { Panel, Progress } from '../../components'
+import intlFormatHelper from '../../utils/intl-format-helper'
 
 const Epoch = () => {
   const { data, error } = useSWR('/api/epoch', url => fetch(url).then((res) => res.json()))
