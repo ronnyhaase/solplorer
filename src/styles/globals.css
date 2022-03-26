@@ -7,6 +7,8 @@
   --c-muted: #999999;
   --c-success: #10b981;
   --c-danger: #ef4444;
+  --c-solana-green: #14F195;
+  --c-solana-purple: #9945FF;
 
   /* Breakpoints */
   --bp-xs: 0;
@@ -16,6 +18,7 @@
   --bp-xl: 1200px;
 
   /* Spacing */
+  --space-sm: .5rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
 
@@ -55,6 +58,7 @@ th {
 .m-0 { margin: 0; }
 .mx-md { margin-left: var(--space-md); margin-right: var(--space-md); }
 .mb-md { margin-bottom: var(--space-md); }
+.ml-sm { margin-left: var(--space-sm); }
 .ml-md { margin-left: var(--space-md); }
 
 .p-1px { padding: 1px; }
@@ -73,6 +77,7 @@ th {
 .rounded-md { border-radius: var(--radius-md); }
 
 .items-center { align-items: center; }
+.justify-center { justify-content: center; }
 .grow { flex-grow: 1; }
 
 .bg-background { background-color: var(--c-background); }

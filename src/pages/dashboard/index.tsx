@@ -11,8 +11,11 @@ const Dashboard = () => {
         <title>Solplorer</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        <h1 className="text-center m-0 py-lg">Solplorer</h1>
+      <header className="d-flex items-center justify-center m-0 py-lg">
+        <img alt="Solplorer Logo" src="/logo-32.png" />
+        <h1 className="ml-sm">
+          Solplorer
+        </h1>
       </header>
       <main>
         <Container>
