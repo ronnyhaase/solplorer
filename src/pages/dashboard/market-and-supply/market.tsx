@@ -18,28 +18,36 @@ const Market = ({ marketData }) => {
     }
   }, [marketData])
 
-  if (!marketData) return null
-
   return (
     <>
       <div className="d-flex items-center">
         <div className="text-xl">
-          {intlFormatHelper.currency(marketData.price)}
+          {marketData ? intlFormatHelper.currency(marketData.price) : '-'}
           &nbsp;
         </div>
         <div className={`text-${changeColor}`}>
-          {changeSymbol} {marketData.change}%
+          {changeSymbol} {marketData ? marketData.change : '-'}%
         </div>
       </div>
       <table>
         <tbody>
           <tr>
             <th className="text-muted">24H Market Cap</th>
-            <td>{intlFormatHelper.shortCurrency(marketData.marketCap)}</td>
+            <td>
+              {marketData
+                ? intlFormatHelper.shortCurrency(marketData.marketCap)
+                : '-'
+              }
+            </td>
           </tr>
           <tr>
             <th className="text-muted">24H Volume</th>
-            <td>{intlFormatHelper.shortCurrency(marketData.volume)}</td>
+            <td>
+              {marketData
+                ? intlFormatHelper.shortCurrency(marketData.volume)
+                : '-'
+              }
+              </td>
           </tr>
         </tbody>
       </table>

@@ -10,23 +10,19 @@ const MarketAndSupply = () => {
 
   return (
     <Panel>
-      {marketData ? (<>
-        <div className="d-flex">
-          <div>
-            <div className="mb-md pb-md border-solid border-0 border-b border-inset">
-              <Market marketData={marketData} />
-            </div>
-            <div>
-              <Supply />
-            </div>
+      <div className="d-flex">
+        <div>
+          <div className="mb-md pb-md border-solid border-0 border-b border-inset">
+            <Market marketData={marketData} />
           </div>
-          <div className="grow ml-md bg-inset">
-            <PriceChart history={marketData.history} />
+          <div>
+            <Supply />
           </div>
         </div>
-      </>) : (
-        <div className="text-center">Loading market data...</div>
-      )}
+        <div className="grow ml-md bg-inset">
+          {marketData ? (<PriceChart history={marketData.history} />) : null}
+        </div>
+      </div>
     </Panel>
   )
 }
