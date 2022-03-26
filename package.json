@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "license": "GPL-3.0",
-  "browserslist": [">0.3%", "not ie 11", "not dead", "not op_mini all"],
+  "browserslist": ["defaults", "not IE 11", "maintained node versions"],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
