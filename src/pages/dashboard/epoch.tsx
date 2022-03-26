@@ -8,8 +8,8 @@ const Epoch = () => {
 
   return (
     <Panel>
-      <div className="d-flex">
-        <div className="p-md border-0 border-r border-solid border-inset">
+      <div className="d-flex flex-wrap">
+        <div className="mr-md pr-md border-0 border-r border-solid border-inset">
           <div>
             <span className="text-muted">Slot Height</span>
           </div>
@@ -17,7 +17,7 @@ const Epoch = () => {
             {data ? intlFormatHelper.number(data.slotHeightTotal) : '-'}
           </div>
         </div>
-        <div className="p-md border-0 border-r border-solid border-inset">
+        <div className="lg:mr-md lg:pr-md border-0 lg:border-r border-solid border-inset">
           <div>
           <span className="text-muted">Transactions</span>
           </div>
@@ -25,7 +25,7 @@ const Epoch = () => {
             {data ? intlFormatHelper.number(data.transactionsTotal) : '-'}
           </div>
         </div>
-        <div className="p-md grow">
+        <div className="mt-md lg:mt-0 pt-md lg:pt-0 border-0 border-solid border-inset grow border-t lg:border-t-0">
           <div>
           <span className="text-muted">Epoch</span>
           </div>
