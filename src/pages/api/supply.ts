@@ -1,8 +1,8 @@
 import { SOL_PER_LAMPORT } from '../../constants'
-import createSolanaConnection from '../../utils/solana-connection'
+import { SolanaConnection } from '../../utils/solana-connection'
 
-const handler = async (req, res) => {
-  const client = createSolanaConnection()
+const handler = async (_, res) => {
+  const client = SolanaConnection.getInstance()
   const supply = await client.getSupply({ excludeNonCirculatingAccountsList: true })
   const validators = await client.getVoteAccounts()
 

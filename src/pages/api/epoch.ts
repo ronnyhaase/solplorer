@@ -1,9 +1,9 @@
-import createSolanaConnection from '../../utils/solana-connection'
+import { SolanaConnection } from '../../utils/solana-connection'
 
 const AVG_SLOTTIME = 550
 
-const handler = async (req, res) => {
-  const client = createSolanaConnection()
+const handler = async (_, res) => {
+  const client = SolanaConnection.getInstance()
   const epochInfo = await client.getEpochInfo()
 
   res.status(200).json({

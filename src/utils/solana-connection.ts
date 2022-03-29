@@ -2,7 +2,7 @@ import { Commitment, Connection, clusterApiUrl, ConnectionConfig } from "@solana
 
 function createSolanaConnection (
   url: string = process.env.API_URL || clusterApiUrl('mainnet-beta'),
-  commitment: Commitment = undefined
+  commitment: Commitment = undefined,
 ): Connection {
   let config: ConnectionConfig = {}
   if (commitment) config.commitment = commitment
@@ -11,4 +11,20 @@ function createSolanaConnection (
   return new Connection(url, config)
 }
 
-export default createSolanaConnection
+class SolanaConnection {
+  protected static _instance: Connection = null
+
+  private constructor() {}
+
+  static getInstance(
+    url: string = process.env.API_URL || clusterApiUrl('mainnet-beta'),
+    commitment: Commitment = undefined,
+  ): Connection {
+    if (!this._instance) {
+      this._instance = createSolanaConnection(url, commitment)
+    }
+    return this._instance
+  }
+}
+
+export { createSolanaConnection, SolanaConnection }
