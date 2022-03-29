@@ -71,7 +71,10 @@ function mergeData (validators, validatorInfos, validatorImageUrls) {
 }
 
 ;(async function main() {
-  const client = new solana.Connection(solana.clusterApiUrl('mainnet-beta'), 'finalized')
+  const client = new solana.Connection(process.env.API_URL || solana.clusterApiUrl('mainnet-beta'), {
+    commitment: 'finalized',
+    httpHeaders: { 'Authorization': process.env.API_KEY || '' },
+  })
 
   const validators = await getValidators(client)
   const validatorInfos = await getValidatorInfos(client)
