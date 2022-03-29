@@ -1,8 +1,8 @@
-import * as solana from '@solana/web3.js'
 import { SOL_PER_LAMPORT } from '../../constants'
+import createSolanaConnection from '../../utils/solana-connection'
 
 const handler = async (req, res) => {
-  const client = new solana.Connection(solana.clusterApiUrl('mainnet-beta'), 'finalized')
+  const client = createSolanaConnection()
   const supply = await client.getSupply({ excludeNonCirculatingAccountsList: true })
   const validators = await client.getVoteAccounts()
 

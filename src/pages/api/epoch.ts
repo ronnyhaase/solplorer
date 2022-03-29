@@ -1,9 +1,9 @@
-import * as solana from '@solana/web3.js'
+import createSolanaConnection from '../../utils/solana-connection'
 
 const AVG_SLOTTIME = 550
 
 const handler = async (req, res) => {
-  const client = new solana.Connection(solana.clusterApiUrl('mainnet-beta'), 'finalized')
+  const client = createSolanaConnection()
   const epochInfo = await client.getEpochInfo()
 
   res.status(200).json({
