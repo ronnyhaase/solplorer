@@ -1,13 +1,9 @@
-import useSWR from 'swr'
-
 import { Panel } from '../../../components'
 import Supply from './supply'
 import PriceChart from './price-chart'
 import Market from './market'
 
-const MarketAndSupply = () => {
-  const { data: marketData, error } = useSWR('/api/market', url => fetch(url).then((res) => res.json()))
-
+const MarketAndSupply = ({ marketData, supplyData }) => {
   return (
     <Panel>
       <div className="d-flex flex-wrap">
@@ -17,7 +13,7 @@ const MarketAndSupply = () => {
               <Market marketData={marketData} />
             </div>
             <div className="w-1/2 lg:w-1/1">
-              <Supply />
+              <Supply supplyData={supplyData} />
             </div>
           </div>
         </div>
