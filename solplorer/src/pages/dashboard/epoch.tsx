@@ -3,7 +3,11 @@ import useSWR from 'swr'
 import { Panel, Progress } from '../../components'
 import intlFormatHelper from '../../utils/intl-format-helper'
 
-const Epoch = ({ epochData }) => {
+const Epoch = ({ epochData, slotData }) => {
+  let slot = null
+  if (slotData) slot = slotData.root
+  else if (epochData) slot = epochData.slotHeightTotal
+
   return (
     <Panel>
       <div className="d-flex flex-wrap">
@@ -12,7 +16,7 @@ const Epoch = ({ epochData }) => {
             <span className="text-muted">Slot Height</span>
           </div>
           <div className="text-xl">
-            {epochData ? intlFormatHelper.number(epochData.slotHeightTotal) : '-'}
+            {slot ? intlFormatHelper.number(slot) : '-'}
           </div>
         </div>
         <div className="lg:mr-md lg:pr-md border-0 lg:border-r border-solid border-inset">
@@ -28,17 +32,21 @@ const Epoch = ({ epochData }) => {
           <span className="text-muted">Epoch</span>
           </div>
           <div className="d-flex">
-            {epochData ? (<>
-              <span className="text-xl">{epochData.currentEpoch}</span>
-              <div className="grow mx-md">
-                <div className="d-flex text-sm">
-                  <div className="grow">{epochData.epochProgress} %</div>
-                  <div>ETA {intlFormatHelper.timeLeft(epochData.epochETA)} </div>
+            <span className="text-xl">
+              {epochData ? epochData.currentEpoch : '-'}
+            </span>
+            <div className="grow mx-md">
+              <div className="d-flex text-sm">
+                <div className="grow">
+                  {epochData ? epochData.epochProgress : '-'} %
                 </div>
-                <Progress className="grow" min={0} max={100} value={epochData.epochProgress}></Progress>
+                <div>
+                  ETA {epochData ? intlFormatHelper.timeLeft(epochData.epochETA) : '-'}{' '}
+                </div>
               </div>
-              <span className="text-inset text-xl">{epochData.nextEpoch}</span>
-            </>) : '-'}
+              <Progress className="grow" min={0} max={100} value={epochData ? epochData.epochProgress : 0}></Progress>
+            </div>
+            <span className="text-inset text-xl">{epochData ? epochData.nextEpoch : '-'}</span>
           </div>
         </div>
       </div>

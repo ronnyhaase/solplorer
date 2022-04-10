@@ -6,7 +6,7 @@ import { MarketData } from './types';
 @Injectable()
 export class MarketsService {
   async getSolanaData(): Promise<MarketData> {
-    const [rawPriceData, rawHistoryData] = await Promise.all([
+    const [rawPriceData, rawHistoryData]: [any, any] = await Promise.all([
       got('https://api.coingecko.com/api/v3/simple/price', {
         searchParams: {
           ids: 'solana',

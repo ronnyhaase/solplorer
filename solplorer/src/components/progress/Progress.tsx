@@ -19,7 +19,7 @@ const Progress = ({
 
   return (
     <Box className={className}>
-      <Box className="bg-inset rounded p-1px" style={{ height: '1rem', minWidth: '100px' }}>
+      <Box className="bg-inset rounded p-1px" style={{ height: '1rem', minWidth: '375px' }}>
         <Box className="bg-foreground rounded" style={{ height: 'calc(1rem - 2px)', width: `${relativeValue}%` }}>
         </Box>
       </Box>

@@ -1,9 +1,9 @@
-const validators = require('../../../data/validators.json')
+import { default as request } from 'got'
 
-const handler = async (req, res) => {
-  res.status(200).json({
-    validators,
-  })
+const handler = async (_, res) => {
+  res.status(200).json(
+    await request(`${process.env.API_URL}/solana/validators`).json()
+  )
 }
 
 export default handler
