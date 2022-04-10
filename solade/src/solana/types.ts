@@ -9,6 +9,17 @@ export type Epoch = {
   transactionsTotal: number;
 };
 
+export type Supply = {
+  activeStake: number,
+  activeStakePercent: number,
+  circulating: number,
+  circulatingPercent: number,
+  delinquentsStake: number,
+  delinquentsStakePercent: number,
+  nonCirculating: number,
+  total: number,
+};
+
 export type Validator = {
   activatedStake: number;
   commission: number;

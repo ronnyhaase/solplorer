@@ -2,7 +2,7 @@ import { Controller, Get, MessageEvent, Sse } from '@nestjs/common';
 import { SlotInfo } from '@solana/web3.js';
 import { map, Observable } from 'rxjs';
 
-import { Epoch, Validator } from './types';
+import { Epoch, Supply, Validator } from './types';
 import { SolanaService } from './solana.service';
 
 @Controller('/solana')
@@ -20,11 +20,15 @@ export class SolanaController {
   }
 
   @Sse('/sse/slot')
-  getSlotSSE(/* @Query('token') token: string */): Observable<MessageEvent> {
-    // if (!token) throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
+  getSlotSSE(): Observable<MessageEvent> {
     return this.solanaService
       .subscribeSlotChanges()
       .pipe(map((slot) => ({ data: slot })));
+  }
+
+  @Get('/supply')
+  getSupply(): Promise<Supply> {
+    return this.solanaService.getSupply()
   }
 
   @Get('/validators')
