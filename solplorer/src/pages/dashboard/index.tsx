@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 import { Container, Grid } from '../../components'
@@ -6,9 +7,19 @@ import Epoch from './epoch'
 import MarketAndSupply from './market-and-supply'
 
 const Dashboard = () => {
+  const [slotData, setSlotData] = useState(null)
   const { data: epochData } = useSWR('/api/epoch', url => fetch(url).then((res) => res.json()))
   const { data: marketData } = useSWR('/api/market', url => fetch(url).then((res) => res.json()))
   const { data: supplyData } = useSWR('/api/supply', url => fetch(url).then((res) => res.json()))
+
+  useEffect(() => {
+    // TODO: Use env for base url
+    const eventSource = new EventSource('http://localhost:3000/solana/sse/slot');
+    eventSource.onmessage = (e) => setSlotData(JSON.parse(e.data));
+    return () => {
+      eventSource.close();
+    };
+  }, [])
 
   return (
     <>
@@ -25,7 +36,7 @@ const Dashboard = () => {
       <main>
         <Container>
           <Grid columns={1}>
-            <Epoch epochData={epochData} />
+            <Epoch epochData={epochData} slotData={slotData} />
             <MarketAndSupply marketData={marketData} supplyData={supplyData} />
           </Grid>
         </Container>
