@@ -9,7 +9,7 @@ class SolanaValidatorsService {
   private readonly logger = new Logger(SolanaValidatorsService.name);
 
   constructor(@Inject(CACHE_MANAGER) private cache: Cache) {
-    this.cache.set('validators', [], { ttl: 0 })
+    this.cache.set('validators', [], { ttl: 0 });
     this.update();
   }
 
@@ -22,7 +22,7 @@ class SolanaValidatorsService {
       `${process.env.STATIC_DATA_URL}/validators.json`,
     ).json();
     this.cache.set('validators', validators, { ttl: 0 });
-    this.logger.log('Validators updated and cached')
+    this.logger.log('Validators updated and cached');
   }
 }
 

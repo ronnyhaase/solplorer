@@ -28,7 +28,7 @@ export class SolanaController {
 
   @Get('/supply')
   getSupply(): Promise<Supply> {
-    return this.solanaService.getSupply()
+    return this.solanaService.getSupply();
   }
 
   @Get('/validators')

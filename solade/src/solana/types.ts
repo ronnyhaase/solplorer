@@ -10,14 +10,14 @@ export type Epoch = {
 };
 
 export type Supply = {
-  activeStake: number,
-  activeStakePercent: number,
-  circulating: number,
-  circulatingPercent: number,
-  delinquentsStake: number,
-  delinquentsStakePercent: number,
-  nonCirculating: number,
-  total: number,
+  activeStake: number;
+  activeStakePercent: number;
+  circulating: number;
+  circulatingPercent: number;
+  delinquentsStake: number;
+  delinquentsStakePercent: number;
+  nonCirculating: number;
+  total: number;
 };
 
 export type Validator = {

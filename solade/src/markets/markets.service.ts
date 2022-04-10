@@ -6,28 +6,24 @@ import { MarketData } from './types';
 @Injectable()
 export class MarketsService {
   async getSolanaData(): Promise<MarketData> {
-    const rawPriceData: any = await got(
-      'https://api.coingecko.com/api/v3/simple/price',
-       {
-         searchParams: {
-           ids: 'solana',
-           vs_currencies: 'usd',
-           include_market_cap: true,
-           include_24hr_vol: true,
-           include_24hr_change: true,
-         }
-       }
-    ).json();
-    const rawHistoryData: any = await got(
-      'https://api.coingecko.com/api/v3/coins/solana/market_chart',
-       {
-         searchParams: {
-           vs_currency: 'usd',
-           days: 13,
-           interval: 'daily',
-         }
-       }
-    ).json();
+    const [rawPriceData, rawHistoryData] = await Promise.all([
+      got('https://api.coingecko.com/api/v3/simple/price', {
+        searchParams: {
+          ids: 'solana',
+          vs_currencies: 'usd',
+          include_market_cap: true,
+          include_24hr_vol: true,
+          include_24hr_change: true,
+        },
+      }).json(),
+      got('https://api.coingecko.com/api/v3/coins/solana/market_chart', {
+        searchParams: {
+          vs_currency: 'usd',
+          days: 13,
+          interval: 'daily',
+        },
+      }).json(),
+    ]);
 
     return {
       price: parseFloat(rawPriceData.solana.usd.toFixed(2)),

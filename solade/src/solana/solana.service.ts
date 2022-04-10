@@ -24,8 +24,8 @@ export class SolanaService {
     private configService: ConfigService,
     private validatorsService: SolanaValidatorsService,
   ) {
-    const url: string = this.configService.get('SOLANA_API_URL')
-      || clusterApiUrl('mainnet-beta');
+    const url: string =
+      this.configService.get('SOLANA_API_URL') || clusterApiUrl('mainnet-beta');
     const key: string = this.configService.get('SOLANA_API_KEY');
 
     const config: ConnectionConfig = {};
@@ -59,16 +59,19 @@ export class SolanaService {
   }
 
   async getSupply(): Promise<Supply> {
-    const supply: SolanaSupply = (await this.client.getSupply({ excludeNonCirculatingAccountsList: true })).value;
-    const validators: Array<Validator> = await this.validatorsService.getValidators();
+    const supply: SolanaSupply = (
+      await this.client.getSupply({ excludeNonCirculatingAccountsList: true })
+    ).value;
+    const validators: Array<Validator> =
+      await this.validatorsService.getValidators();
 
-    let activeStake = 0
-    let delinquentsStake = 0
-    validators.forEach(validator => {
-      if (validator.delinquent) delinquentsStake += validator.activatedStake
-      else activeStake += validator.activatedStake
-    })
-    
+    let activeStake = 0;
+    let delinquentsStake = 0;
+    validators.forEach((validator) => {
+      if (validator.delinquent) delinquentsStake += validator.activatedStake;
+      else activeStake += validator.activatedStake;
+    });
+
     return {
       circulating: supply.circulating * SOL_PER_LAMPORT,
       nonCirculating: supply.nonCirculating * SOL_PER_LAMPORT,
@@ -78,7 +81,7 @@ export class SolanaService {
       delinquentsStake: Math.round(delinquentsStake * SOL_PER_LAMPORT),
       activeStakePercent: (activeStake / supply.total) * 100,
       delinquentsStakePercent: (delinquentsStake / supply.total) * 100,
-    }
+    };
   }
 
   async getValidators(): Promise<Array<Validator>> {
