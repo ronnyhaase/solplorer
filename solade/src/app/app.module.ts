@@ -7,7 +7,7 @@ import { SolanaModule } from '~/solana/solana.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    CacheModule.register({ isGlobal: true }),
+    CacheModule.register({ isGlobal: true, ttl: 0 }),
     MarketsModule,
     SolanaModule,
   ],
