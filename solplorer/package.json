@@ -8,6 +8,9 @@
     "not IE 11",
     "maintained node versions"
   ],
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
