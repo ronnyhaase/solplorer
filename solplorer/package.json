@@ -1,8 +1,10 @@
 {
   "name": "solplorer",
+  "author": "Ronny Haase <ronnyhaase@fastmail.com>",
+  "description": "Independent and open-source Solana Blockchain explorer",
   "version": "0.0.0",
-  "private": true,
   "license": "GPL-3.0",
+  "private": true,
   "browserslist": [
     "defaults",
     "not IE 11",

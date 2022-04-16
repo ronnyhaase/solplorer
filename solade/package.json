@@ -1,10 +1,10 @@
 {
-  "name": "facade",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
+  "name": "solade",
+  "author": "Ronny Haase <ronnyhaase@fastmail.com>",
+  "description": "Solana Blockchain RPC Facade",
+  "version": "0.0.0",
   "license": "GPL-3.0",
+  "private": true,
   "engines": {
     "node": "16.x"
   },
