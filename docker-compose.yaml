@@ -1,0 +1,17 @@
+version: '3'
+services:
+  solade:
+    build: ./solade
+    ports:
+      - 3000:3000
+    env_file: ./solade/.env
+    environment:
+      - CORS_ORIGINS=http://localhost:3001
+  solplorer:
+    depends_on:
+      - solade
+    build: ./solplorer
+    environment:
+      - API_URL=http://solade:3000
+    ports:
+      - 3001:3000
