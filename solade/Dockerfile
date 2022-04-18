@@ -9,7 +9,7 @@ RUN apk add dumb-init
 ENV NODE_ENV production
 USER node
 WORKDIR /usr/app
-COPY --chown=node:node --from=build /usr/app-src/dist /usr/app/dist
-COPY --chown=node:node package*.json /usr/app
+COPY --chown=node:node --from=build /usr/app-src/dist /usr/app/dist/
+COPY --chown=node:node package*.json /usr/app/
 RUN npm ci --only=production
 CMD ["dumb-init", "node", "dist/main"]
