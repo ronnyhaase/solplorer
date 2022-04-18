@@ -11,7 +11,7 @@ import {
 
 import intlFormatHelper from '../../../utils/intl-format-helper'
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active = null, payload = null, label = null }) => {
   if (!active || !payload || !payload.length) return null
 
   const ts = intlFormatHelper.date(new Date(label))
