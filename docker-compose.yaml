@@ -13,5 +13,6 @@ services:
     build: ./solplorer
     environment:
       - API_URL=http://solade:3000
+      - NEXT_PUBLIC_SSE_URL=http://localhost:3000
     ports:
       - 3001:3000

@@ -6,15 +6,14 @@ import { Container, Grid } from '../../components'
 import Epoch from './epoch'
 import MarketAndSupply from './market-and-supply'
 
-const Dashboard = () => {
+const Dashboard = ({ sseUrl }: { sseUrl: string }) => {
   const [slotData, setSlotData] = useState(null)
   const { data: epochData } = useSWR('/api/epoch', url => fetch(url).then((res) => res.json()))
   const { data: marketData } = useSWR('/api/market', url => fetch(url).then((res) => res.json()))
   const { data: supplyData } = useSWR('/api/supply', url => fetch(url).then((res) => res.json()))
 
   useEffect(() => {
-    // TODO: Use env for base url
-    const eventSource = new EventSource('http://localhost:3000/solana/sse/slot');
+    const eventSource = new EventSource(`${sseUrl}/solana/sse/slot`);
     eventSource.onmessage = (e) => setSlotData(JSON.parse(e.data));
     return () => {
       eventSource.close();
@@ -43,6 +42,11 @@ const Dashboard = () => {
       </main>
     </>
   )
+}
+
+export function getServerSideProps() {
+  // Browser env variables are not working in Docker context
+  return { props: { sseUrl: process.env.NEXT_PUBLIC_SSE_URL } }
 }
 
 export default Dashboard
