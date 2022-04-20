@@ -6,7 +6,7 @@ import { MarketData } from './types';
 @Injectable()
 export class MarketsService {
   async getSolanaData(): Promise<MarketData> {
-    const [rawPriceData, rawHistoryData]: [any, any] = await Promise.all([
+    const [rawPriceData, rawHistoryData, rawTvlData]: [any, any, any] = await Promise.all([
       got('https://api.coingecko.com/api/v3/simple/price', {
         searchParams: {
           ids: 'solana',
@@ -23,10 +23,12 @@ export class MarketsService {
           interval: 'daily',
         },
       }).json(),
+      got('https://api.llama.fi/charts/Solana').json(),
     ]);
 
     return {
       price: parseFloat(rawPriceData.solana.usd.toFixed(2)),
+      tvl: rawTvlData[rawTvlData.length-1].totalLiquidityUSD,
       volume: Math.round(rawPriceData.solana.usd_24h_vol),
       change: parseFloat(rawPriceData.solana.usd_24h_change.toFixed(1)),
       marketCap: Math.round(rawPriceData.solana.usd_market_cap),
@@ -35,6 +37,10 @@ export class MarketsService {
         price: rawHistoryData.prices[n][1],
         volume: rawHistoryData.total_volumes[n][1],
       })),
+      tvlHistory: rawTvlData.map(item => ({
+        ts: parseInt(item.date) * 1000,
+        tvl: item.totalLiquidityUSD,
+      }))
     };
   }
 }
