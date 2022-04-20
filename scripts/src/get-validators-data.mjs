@@ -1,8 +1,8 @@
 /**
- * Fetches all validators, their respective validator info and image URL
+ * Fetches all validators, their respective validator info and image URL via Keybase
  */
 import * as solana from '@solana/web3.js'
-import ky from 'ky-universal'
+import request from 'got'
 
 async function getValidators(connection) {
   const setDelinquent = val => validator => ({ ...validator, delinquent: val })
@@ -36,7 +36,7 @@ async function getValidatorImageUrls(validatorInfos) {
   for (const [key, info] of validatorInfos.entries()) {
     if (!info.keybaseUsername) continue
 
-    const keybaseResponse = await ky(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${info.keybaseUsername}&fields=pictures`).json()
+    const keybaseResponse = await request(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${info.keybaseUsername}&fields=pictures`).json()
 
     if (keybaseResponse.them[0].pictures && keybaseResponse.them[0].pictures.primary) {
       validatorImageUrls.set(key, keybaseResponse.them[0].pictures.primary.url)

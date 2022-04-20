@@ -1,0 +1,14 @@
+{
+  "name": "scripts",
+  "version": "0.0.0",
+  "description": "Various scripts for gathering Solana data",
+  "scripts": {
+    "get-validators": "node src/get-validators-data.mjs > ../data/validators.json"
+  },
+  "author": "Ronny Haase <ronnyhaase@fastmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@solana/web3.js": "^1.39.1",
+    "got": "^12.0.3"
+  }
+}
