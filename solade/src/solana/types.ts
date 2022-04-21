@@ -20,6 +20,30 @@ export type Supply = {
   total: number;
 };
 
+export type TvlData = {
+  protocols: Array<{
+    category: string;
+    change_1d: number;
+    change_1h: number;
+    change_7d: number;
+    description: string;
+    listedAt: number;
+    logo: string;
+    mcap: number;
+    name: string;
+    symbol: string;
+    twitter: string;
+    url: string;
+  }>;
+  history: Array<{
+    ts: number;
+    tvl: number;
+  }>;
+  protocolsCount: number;
+  totalTvl: number;
+  updatedAt: number;
+};
+
 export type Validator = {
   activatedStake: number;
   commission: number;

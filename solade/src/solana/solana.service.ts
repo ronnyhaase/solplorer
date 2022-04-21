@@ -10,9 +10,9 @@ import {
 } from '@solana/web3.js';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { Epoch, Supply, Validator } from './types';
+import { Epoch, Supply, TvlData, Validator } from './types';
 import { AVG_SLOTTIME, SOL_PER_LAMPORT } from './constants';
-import { SolanaValidatorsService } from './solana-validators.service';
+import { SolanaCacheService } from './solana-cache.service';
 
 @Injectable()
 export class SolanaService {
@@ -22,7 +22,7 @@ export class SolanaService {
 
   constructor(
     private configService: ConfigService,
-    private validatorsService: SolanaValidatorsService,
+    private chacheService: SolanaCacheService,
   ) {
     const url: string =
       this.configService.get('SOLANA_API_URL') || clusterApiUrl('mainnet-beta');
@@ -63,7 +63,7 @@ export class SolanaService {
       await this.client.getSupply({ excludeNonCirculatingAccountsList: true })
     ).value;
     const validators: Array<Validator> =
-      await this.validatorsService.getValidators();
+      await this.chacheService.getValidators();
 
     let activeStake = 0;
     let delinquentsStake = 0;
@@ -84,8 +84,12 @@ export class SolanaService {
     };
   }
 
+  async getTvl(): Promise<TvlData> {
+    return this.chacheService.getTvl();
+  }
+
   async getValidators(): Promise<Array<Validator>> {
-    return this.validatorsService.getValidators();
+    return this.chacheService.getValidators();
   }
 
   subscribeSlotChanges(): Observable<SlotInfo> {

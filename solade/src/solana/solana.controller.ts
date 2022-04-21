@@ -2,7 +2,7 @@ import { Controller, Get, MessageEvent, Sse } from '@nestjs/common';
 import { SlotInfo } from '@solana/web3.js';
 import { map, Observable } from 'rxjs';
 
-import { Epoch, Supply, Validator } from './types';
+import { Epoch, Supply, TvlData, Validator } from './types';
 import { SolanaService } from './solana.service';
 
 @Controller('/solana')
@@ -29,6 +29,11 @@ export class SolanaController {
   @Get('/supply')
   getSupply(): Promise<Supply> {
     return this.solanaService.getSupply();
+  }
+
+  @Get('/tvl')
+  getTvl(): Promise<TvlData> {
+    return this.solanaService.getTvl();
   }
 
   @Get('/validators')
