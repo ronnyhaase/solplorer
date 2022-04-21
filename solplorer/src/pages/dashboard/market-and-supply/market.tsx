@@ -64,7 +64,7 @@ const Market = ({ marketData }) => {
           </tr>
         </tbody>
       </table>
-      <div className="d-flex items-center mt-md">
+      <div className="d-flex items-center mt-md whitespace-nowrap">
         <div className="text-xl">
           TVL {marketData ? intlFormatHelper.shortCurrency(marketData.tvl) : '-'}
           &nbsp;
