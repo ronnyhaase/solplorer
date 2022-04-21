@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import got from 'got-cjs';
+import { calculateChange } from '~/common/utils';
 
 import { MarketData } from './types';
 
@@ -30,6 +31,12 @@ export class MarketsService {
     return {
       price: parseFloat(rawPriceData.solana.usd.toFixed(2)),
       tvl: rawTvlData[rawTvlData.length - 1].totalLiquidityUSD,
+      tvlChange: parseFloat(
+        calculateChange(
+          rawTvlData[rawTvlData.length - 2].totalLiquidityUSD,
+          rawTvlData[rawTvlData.length - 1].totalLiquidityUSD,
+        ).toFixed(2),
+      ),
       volume: Math.round(rawPriceData.solana.usd_24h_vol),
       change: parseFloat(rawPriceData.solana.usd_24h_change.toFixed(1)),
       marketCap: Math.round(rawPriceData.solana.usd_market_cap),

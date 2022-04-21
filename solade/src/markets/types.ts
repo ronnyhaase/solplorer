@@ -1,6 +1,7 @@
 export type MarketData = {
   price: number;
   tvl: number;
+  tvlChange: number;
   volume: number;
   change: number;
   marketCap: number;
