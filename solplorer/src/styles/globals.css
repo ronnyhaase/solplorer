@@ -44,8 +44,13 @@
 body {
   background-color: var(--c-background);
   color: var(--c-foreground);
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
+}
+
+code, kbd, pre, samp, tt {
+  font-family: 'Ubuntu Mono', monospace;
 }
 
 th {
@@ -120,6 +125,8 @@ th {
 .bg-foreground { background-color: var(--c-foreground); }
 .bg-inset { background-color: var(--c-inset); }
 .bg-outset { background-color: var(--c-outset); }
+
+.font-mono { font-family: 'Ubuntu Mono', monospace; }
 
 .text-danger { color: var(--c-danger) }
 .text-inset { color: var(--c-inset) }
