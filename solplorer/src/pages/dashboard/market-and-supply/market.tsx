@@ -3,10 +3,12 @@ import intlFormatHelper from '../../../utils/intl-format-helper'
 
 const Market = ({ marketData }) => {
   const [changeColor, setChangeColor] = useState('muted')
+  const [tvlChangeColor, setTvlChangeColor] = useState('muted')
   const [changeSymbol, setChangeSymbol] = useState('-')
+  const [tvlChangeSymbol, setTvlChangeSymbol] = useState('-')
 
   useEffect(() => {
-    if (!marketData || marketData === 0) {
+    if (!marketData || marketData.change === 0) {
       setChangeColor('muted')
       setChangeSymbol('±')
     } else if (marketData.change > 0) {
@@ -15,6 +17,17 @@ const Market = ({ marketData }) => {
     } else if (marketData.change < 0) {
       setChangeColor('danger')
       setChangeSymbol('▼')
+    }
+
+    if (!marketData || marketData.tvlChange === 0) {
+      setTvlChangeColor('muted')
+      setTvlChangeSymbol('±')
+    } else if (marketData.tvlChange > 0) {
+      setTvlChangeColor('success')
+      setTvlChangeSymbol('▲')
+    } else if (marketData.tvlChange < 0) {
+      setTvlChangeColor('danger')
+      setTvlChangeSymbol('▼')
     }
   }, [marketData])
 
@@ -51,6 +64,15 @@ const Market = ({ marketData }) => {
           </tr>
         </tbody>
       </table>
+      <div className="d-flex items-center mt-md">
+        <div className="text-xl">
+          TVL {marketData ? intlFormatHelper.shortCurrency(marketData.tvl) : '-'}
+          &nbsp;
+        </div>
+        <div className={`text-${tvlChangeColor}`}>
+          {tvlChangeSymbol} {marketData ? marketData.tvlChange : '-'}%
+        </div>
+      </div>
     </>
   )
 }
