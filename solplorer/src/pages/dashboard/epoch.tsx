@@ -15,7 +15,7 @@ const Epoch = ({ epochData, slotData }) => {
           <div>
             <span className="text-muted">Slot Height</span>
           </div>
-          <div className="text-xl">
+          <div className="font-mono text-xl">
             {slot ? intlFormatHelper.number(slot) : '-'}
           </div>
         </div>
@@ -23,7 +23,7 @@ const Epoch = ({ epochData, slotData }) => {
           <div>
           <span className="text-muted">Transactions</span>
           </div>
-          <div className="text-xl">
+          <div className="font-mono text-xl">
             {epochData ? intlFormatHelper.number(epochData.transactionsTotal) : '-'}
           </div>
         </div>
