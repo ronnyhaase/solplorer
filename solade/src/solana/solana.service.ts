@@ -10,7 +10,7 @@ import {
 } from '@solana/web3.js';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { Epoch, Supply, TvlData, Validator } from './types';
+import { CoinsData, Epoch, Supply, TvlData, ValidatorsData } from './types';
 import { AVG_SLOTTIME, SOL_PER_LAMPORT } from './constants';
 import { SolanaCacheService } from './solana-cache.service';
 
@@ -34,6 +34,10 @@ export class SolanaService {
 
     this.slotChangeStream = new BehaviorSubject(null);
     this.client.onSlotChange((slot) => this.slotChangeStream.next(slot));
+  }
+
+  async getCoins(): Promise<CoinsData> {
+    return this.chacheService.getCoins();
   }
 
   async getEpochInfo(): Promise<Epoch> {
@@ -62,12 +66,12 @@ export class SolanaService {
     const supply: SolanaSupply = (
       await this.client.getSupply({ excludeNonCirculatingAccountsList: true })
     ).value;
-    const validators: Array<Validator> =
+    const validators: ValidatorsData =
       await this.chacheService.getValidators();
 
     let activeStake = 0;
     let delinquentsStake = 0;
-    validators.forEach((validator) => {
+    validators.validators.forEach((validator) => {
       if (validator.delinquent) delinquentsStake += validator.activatedStake;
       else activeStake += validator.activatedStake;
     });
@@ -88,7 +92,7 @@ export class SolanaService {
     return this.chacheService.getTvl();
   }
 
-  async getValidators(): Promise<Array<Validator>> {
+  async getValidators(): Promise<ValidatorsData> {
     return this.chacheService.getValidators();
   }
 

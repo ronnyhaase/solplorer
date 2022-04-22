@@ -1,3 +1,27 @@
+import { type } from "os";
+
+export type CoinsData = {
+  coins: Array<{
+    id: string;
+    symbol: string;
+    name: string;
+    imageUrl: string;
+    price: number;
+    marketCap: number;
+    volume: number;
+    priceHigh_24h: number;
+    priceLow_24h: number;
+    priceChangePercent_24h: number;
+    marketCapChange24h: number;
+    marketCapChangePercent24h: number;
+    supplyCirculating: number;
+    supplyTotal: number;
+    supplyMax: number | null;
+  }>;
+  count: number;
+  updatedAt: number;
+}
+
 export type Epoch = {
   currentEpoch: number;
   nextEpoch: number;
@@ -62,3 +86,9 @@ export type Validator = {
     imageUrl: string;
   };
 };
+
+export type ValidatorsData = {
+  count: number;
+  updatedAt: number;
+  validators: Array<Validator>
+}
