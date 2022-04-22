@@ -80,6 +80,11 @@ function mergeData (validators, validatorInfos, validatorImageUrls) {
   const validatorInfos = await getValidatorInfos(client)
   const validatorImageUrls = await getValidatorImageUrls(validatorInfos)
 
-  const result = mergeData(validators, validatorInfos, validatorImageUrls)
+  const normalizedValidators = mergeData(validators, validatorInfos, validatorImageUrls)
+  const result = {
+    count: normalizedValidators.length,
+    updatedAt: Date.now(),
+    validators: normalizedValidators,
+  }
   console.log(JSON.stringify(result))
 })();
