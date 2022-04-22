@@ -7,18 +7,10 @@ import Epoch from './epoch'
 import MarketAndSupply from './market-and-supply'
 
 const Dashboard = ({ sseUrl }: { sseUrl: string }) => {
-  const [slotData, setSlotData] = useState(null)
   const { data: epochData } = useSWR('/api/epoch', url => fetch(url).then((res) => res.json()))
   const { data: marketData } = useSWR('/api/market', url => fetch(url).then((res) => res.json()))
+  const { data: slotData } = useSWR('/api/slot', url => fetch(url).then((res) => res.json()), { refreshInterval: 1000 })
   const { data: supplyData } = useSWR('/api/supply', url => fetch(url).then((res) => res.json()))
-
-  useEffect(() => {
-    const eventSource = new EventSource(`${sseUrl}/solana/sse/slot`);
-    eventSource.onmessage = (e) => setSlotData(JSON.parse(e.data));
-    return () => {
-      eventSource.close();
-    };
-  }, [])
 
   return (
     <>
