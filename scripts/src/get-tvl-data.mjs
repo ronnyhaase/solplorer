@@ -10,7 +10,7 @@ async function fetchData() {
 
 function normalizeData([rawHistory, rawProtocols]) {
   const history = rawHistory.map(item => pickAsWith([
-    ['date', 'ts'],
+    ['date', 'ts', x => parseInt(x) * 1000],
     ['totalLiquidityUSD', 'tvl'],
   ], item))
   const totalTvl = rawHistory[rawHistory.length-1].totalLiquidityUSD
@@ -24,7 +24,7 @@ function normalizeData([rawHistory, rawProtocols]) {
         'change_1h',
         'change_7d',
         'description',
-        'listedAt',
+        ['listedAt', 'listedAt', x => parseInt(x) * 1000],
         ['logo', 'imageUrl'],
         ['mcap', 'marketCap'],
         'name',
