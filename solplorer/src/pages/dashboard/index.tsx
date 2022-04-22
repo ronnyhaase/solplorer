@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 import { Container, Grid } from '../../components'
@@ -34,11 +33,6 @@ const Dashboard = ({ sseUrl }: { sseUrl: string }) => {
       </main>
     </>
   )
-}
-
-export function getServerSideProps() {
-  // Browser env variables are not working in Docker context
-  return { props: { sseUrl: process.env.NEXT_PUBLIC_SSE_URL } }
 }
 
 export default Dashboard
