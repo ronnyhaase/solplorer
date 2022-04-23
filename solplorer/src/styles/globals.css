@@ -128,6 +128,7 @@ th {
 
 .font-mono { font-family: 'Ubuntu Mono', monospace; }
 
+.text-color-inherit { color: inherit }
 .text-danger { color: var(--c-danger) }
 .text-inset { color: var(--c-inset) }
 .text-muted { color: var(--c-muted) }
@@ -138,6 +139,8 @@ th {
 .text-xl { font-size: var(--font-size-xl); line-height: var(--line-height-xl); }
 
 .text-center { text-align: center; }
+
+.no-underline { text-decoration-line: none; }
 
 .whitespace-nowrap { white-space: nowrap; }
 
