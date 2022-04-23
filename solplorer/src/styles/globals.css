@@ -1,14 +1,15 @@
 :root {
   /* Colors */
   --c-background: #2c2d30;
-  --c-inset: #252629;
-  --c-outset: #35363a;
-  --c-foreground: #fff;
-  --c-muted: #999999;
-  --c-success: #10b981;
   --c-danger: #ef4444;
+  --c-inset: #252629;
+  --c-foreground: #fff;
+  --c-link: #9945FF;
+  --c-muted: #999999;
+  --c-outset: #35363a;
   --c-solana-green: #14F195;
   --c-solana-purple: #9945FF;
+  --c-success: #10b981;
 
   /* Breakpoints */
   --bp-xs: 0;
@@ -47,6 +48,10 @@ body {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
+}
+
+a {
+  color: var(--c-link);
 }
 
 code, kbd, pre, samp, tt {
