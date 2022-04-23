@@ -9,10 +9,10 @@ const MarketAndSupply = ({ marketData, supplyData }) => {
       <div className="d-flex flex-wrap">
         <div className="w-1/1 lg:w-1/3 pr-md">
           <div className="d-flex flex-wrap mb-md lg:mb-0">
-            <div className="w-1/2 lg:w-1/1 lg:mb-md lg:pb-md border-solid border-0 lg:border-b border-inset">
+            <div className="w-1/1 sm:w-1/2 lg:w-1/1 lg:mb-md lg:pb-md border-solid border-0 lg:border-b border-inset">
               <Market marketData={marketData} />
             </div>
-            <div className="w-1/2 lg:w-1/1">
+            <div className="w-1/1 sm:w-1/2 lg:w-1/1">
               <Supply supplyData={supplyData} />
             </div>
           </div>
