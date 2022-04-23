@@ -4,12 +4,14 @@
   --c-danger: #ef4444;
   --c-inset: #252629;
   --c-foreground: #fff;
-  --c-link: #9945FF;
   --c-muted: #999999;
+  --c-primary: #0EA5E9;
   --c-outset: #35363a;
   --c-solana-green: #14F195;
   --c-solana-purple: #9945FF;
   --c-success: #10b981;
+
+  --c-link: var(--c-primary);
 
   /* Breakpoints */
   --bp-xs: 0;
@@ -65,10 +67,19 @@ th {
 
 .d-flex { display: flex; }
 
+@media (min-width: 768px) {
+  .md\:d-flex { display: flex; }
+}
+.d-flex { display: flex; }
+
 .w-1\/3 { width: calc(100%/3); }
 .w-2\/3 { width: calc(200%/3); }
 .w-1\/2 { width: 50%; }
 .w-1\/1 { width: 100%; }
+
+@media (min-width: 576px) {
+  .sm\:w-1\/2 { width: 50%; }
+}
 
 @media (min-width: 992px) {
   .lg\:w-1\/3 { width: calc(100%/3); }
@@ -84,6 +95,10 @@ th {
 .ml-md { margin-left: var(--space-md); }
 .mr-md { margin-right: var(--space-md); }
 
+@media (min-width: 576px) {
+  .sm\:mb-0 { margin-bottom: 0; }
+}
+
 @media (min-width: 992px) {
   .lg\:mt-0 { margin-top: 0; }
   .lg\:mb-0 { margin-bottom: 0; }
@@ -91,12 +106,17 @@ th {
   .lg\:mr-md { margin-right: var(--space-md); }
 }
 
+.p-0 { padding: 0; }
 .p-1px { padding: 1px; }
 .p-md { padding: var(--space-md); }
 .py-lg { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
 .pt-md { padding-top: var(--space-md); }
 .pb-md { padding-bottom: var(--space-md); }
 .pr-md { padding-right: var(--space-md); }
+
+@media (min-width: 576px) {
+  .sm\:pt-0 { padding-top: 0; }
+}
 
 @media (min-width: 992px) {
   .lg\:pt-0 { padding-top: 0; }
@@ -112,6 +132,11 @@ th {
 .border-background { border-color: var(--c-background); }
 .border-inset { border-color: var(--c-inset); }
 
+@media (min-width: 576px) {
+  .sm\:border-t-0 { border-top-width: 0; }
+  .sm\:border-r { border-right-width: 1px; }
+}
+
 @media (min-width: 992px) {
   .lg\:border-t-0 { border-top-width: 0; }
   .lg\:border-b { border-bottom-width: 1px; }
@@ -125,6 +150,8 @@ th {
 .grow { flex-grow: 1; }
 .items-center { align-items: center; }
 .justify-center { justify-content: center; }
+
+.list-none { list-style-type: none; }
 
 .bg-background { background-color: var(--c-background); }
 .bg-foreground { background-color: var(--c-foreground); }

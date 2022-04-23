@@ -11,7 +11,7 @@ const Epoch = ({ epochData, slotData }) => {
   return (
     <Panel>
       <div className="d-flex flex-wrap">
-        <div className="mr-md pr-md border-0 border-r border-solid border-inset">
+        <div className="mb-md sm:mb-0 mr-md pr-md border-0 sm:border-r border-solid border-inset">
           <div>
             <span className="text-muted">Slot Height</span>
           </div>
@@ -19,7 +19,7 @@ const Epoch = ({ epochData, slotData }) => {
             {slot ? intlFormatHelper.number(slot) : '-'}
           </div>
         </div>
-        <div className="lg:mr-md lg:pr-md border-0 lg:border-r border-solid border-inset">
+        <div className="w-1/1 sm:w-1/2 grow lg:mr-md pt-md sm:pt-0 lg:pr-md border-0 border-t sm:border-t-0 lg:border-r border-solid border-inset">
           <div>
           <span className="text-muted">Transactions</span>
           </div>
