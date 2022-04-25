@@ -1,4 +1,4 @@
-import { classNames as cx } from 'react-extras'
+import classNames from 'classnames'
 
 import Box from '../box'
 import styles from './Grid.module.css'
@@ -9,7 +9,7 @@ type GridProps = {
 }
 
 const Grid = ({ children, columns = 2 }: GridProps) => (
-  <Box className={cx(styles.grid, styles[`columns${columns}`])}>{children}</Box>
+  <Box className={classNames(styles.grid, styles[`columns${columns}`])}>{children}</Box>
 )
 
 export default Grid

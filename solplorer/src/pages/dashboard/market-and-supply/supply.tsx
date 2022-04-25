@@ -1,5 +1,3 @@
-import { If } from 'react-extras'
-import useSWR from 'swr'
 import intlFormatHelper from '../../../utils/intl-format-helper'
 
 const Supply = ({ supplyData }) => {

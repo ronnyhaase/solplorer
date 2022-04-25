@@ -1,9 +1,11 @@
+import classNames from 'classnames'
+
 import Box from '../box'
 import StandardProps from '../StandardProps'
 import styles from './Container.module.css'
 
-const Container = ({ children, ...rest }: StandardProps) => (
-  <Box className={styles.container} {...rest}>{children}</Box>
+const Container = ({ children, className = '', ...rest }: StandardProps) => (
+  <Box className={classNames(styles.container, className)} {...rest}>{children}</Box>
 )
 
 export default Container

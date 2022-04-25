@@ -1,5 +1,3 @@
-import useSWR from 'swr'
-
 import { Panel, Progress } from '../../components'
 import intlFormatHelper from '../../utils/intl-format-helper'
 

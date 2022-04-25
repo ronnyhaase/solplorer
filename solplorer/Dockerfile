@@ -2,6 +2,7 @@ FROM node:lts AS build
 WORKDIR /usr/app-src
 COPY . /usr/app-src/
 RUN npm install
+RUN npm install sharp
 RUN npm run build
 
 FROM node:lts-alpine@sha256:28bed508446db2ee028d08e76fb47b935defa26a84986ca050d2596ea67fd506
