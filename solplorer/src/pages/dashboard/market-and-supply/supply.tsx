@@ -1,26 +1,32 @@
-import intlFormatHelper from '../../../utils/intl-format-helper'
+import { NumberDisplay } from '../../../components'
 
 const Supply = ({ supplyData }) => {
+  const {
+    activeStake,
+    activeStakePercent,
+    circulating,
+    circulatingPercent,
+    delinquentsStakePercent,
+    total,
+  } = supplyData || {}
+
   return (
     <div>
       <div className="text-muted">Circulating Supply</div>
       <div className="whitespace-nowrap">
         {supplyData ? (<>
-          {intlFormatHelper.shortNumber(supplyData.circulating)}{' '}
-          of {intlFormatHelper.shortNumber(supplyData.total)}{' '}
-          ({intlFormatHelper.number(supplyData.circulatingPercent)}%)
+          <NumberDisplay short val={circulating} />
+          {' '} of <NumberDisplay short val={total} />
+          {' '} (<NumberDisplay val={circulatingPercent} suffix=" %" />)
         </>) : '-'}
       </div>
-
       <div className="text-muted">Actively Staked</div>
       <div className="whitespace-nowrap">
         {supplyData ? (<>
-          {intlFormatHelper.shortNumber(supplyData.activeStake)}{' '}
-          of {intlFormatHelper.shortNumber(supplyData.total)}{' '}
-          ({intlFormatHelper.number(supplyData.activeStakePercent)}%)
-          <div className="text-danger">
-            ({intlFormatHelper.number(supplyData.delinquentsStakePercent)}% Delinquents)
-          </div>
+          <NumberDisplay short val={activeStake} />
+          {' '} of <NumberDisplay short val={total} />
+          {' '} (<NumberDisplay val={activeStakePercent} suffix=" %" />)
+          <NumberDisplay as="div" className="text-danger" val={delinquentsStakePercent} prefix="(" suffix=" % Delinquents)" />
         </>) : <>-<br />&nbsp;</>}
       </div>
     </div>

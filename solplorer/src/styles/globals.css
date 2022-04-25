@@ -65,13 +65,19 @@ th {
   text-align: left;
 }
 
+.d-block { display: block; }
 .d-flex { display: flex; }
 
+@media (min-width: 576px) {
+  .sm\:d-block { display: block !important; }
+}
+
 @media (min-width: 768px) {
-  .md\:d-flex { display: flex; }
+  .md\:d-flex { display: flex !important; }
 }
 .d-flex { display: flex; }
 
+.w-auto { width: auto; }
 .w-1\/3 { width: calc(100%/3); }
 .w-2\/3 { width: calc(200%/3); }
 .w-1\/2 { width: 50%; }
@@ -82,6 +88,7 @@ th {
 }
 
 @media (min-width: 992px) {
+  .lg\:w-auto { width: auto; }
   .lg\:w-1\/3 { width: calc(100%/3); }
   .lg\:w-2\/3 { width: calc(200%/3); }
   .lg\:w-1\/1 { width: 100%; }
