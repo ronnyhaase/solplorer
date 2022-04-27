@@ -84,7 +84,7 @@ th {
 }
 
 .overflow-scroll { overflow: scroll; }
-.overflow-x-scroll { overflow-x: scroll; }
+.overflow-x-auto { overflow-x: auto; }
 .overflow-y-hidden { overflow-y: hidden; }
 
 .w-auto { width: auto; }

@@ -15,7 +15,6 @@ const Dashboard = ({ sseUrl }: { sseUrl: string }) => {
     <main>
       <Head>
         <title>Solplorer - Dashboard</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
         <Grid columns={1}>

@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="m-0 py-lg">
+      <header className="m-0 mb-md">
         <Logo />
         <Navigation />
       </header>
