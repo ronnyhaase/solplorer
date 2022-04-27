@@ -17,7 +17,7 @@ const MarketAndSupply = ({ marketData, supplyData }) => {
             </div>
           </div>
         </div>
-        <div className="w-1/1 lg:w-2/3 bg-inset" style={{ minHeight: '250px' }}>
+        <div className="w-1/1 lg:w-2/3 bg-inset text-sm" style={{ minHeight: '250px' }}>
           {marketData ? (<PriceChart history={marketData.history} />) : null}
         </div>
       </div>

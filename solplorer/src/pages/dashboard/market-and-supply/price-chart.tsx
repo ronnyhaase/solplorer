@@ -32,6 +32,7 @@ const PriceChart = ({ history }) => (
     <ComposedChart data={history}>
       <XAxis
         dataKey="ts"
+        height={25}
         tickFormatter={val => intlFormatHelper.chartDate(new Date(val))}
       />
       {/* // TODO: Add labels to y-axes */}
@@ -41,6 +42,7 @@ const PriceChart = ({ history }) => (
         orientation="right"
         domain={[dataMin => dataMin * 0.95, dataMax => dataMax + 1]}
         tickFormatter={val => intlFormatHelper.shortCurrency(val)}
+        width={45}
       />
       <YAxis
         yAxisId="volume"
@@ -48,7 +50,7 @@ const PriceChart = ({ history }) => (
         hide={false}
         domain={[0, dataMax => dataMax * 2]}
         tickFormatter={val => intlFormatHelper.shortNumber(val)}
-        width={75}
+        width={65}
       />
       <Tooltip content={<CustomTooltip />} />
       <CartesianGrid stroke="var(--c-outset)" />
