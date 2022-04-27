@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Container from '../container'
 import Logo from './Logo'
+import Navigation from './Navigation'
 
 const Layout = ({ children }) => {
   return (
@@ -10,10 +11,11 @@ const Layout = ({ children }) => {
       </Head>
       <header className="m-0 py-lg">
         <Logo />
+        <Navigation />
       </header>
-      <main>
+      <>
         {children}
-      </main>
+      </>
       <footer>
         <Container className="text-center text-sm">
           <p>

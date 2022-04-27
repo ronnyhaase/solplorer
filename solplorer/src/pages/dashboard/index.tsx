@@ -12,7 +12,7 @@ const Dashboard = ({ sseUrl }: { sseUrl: string }) => {
   const { data: supplyData } = useSWR('/api/supply', url => fetch(url).then((res) => res.json()))
 
   return (
-    <>
+    <main>
       <Head>
         <title>Solplorer - Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
@@ -23,7 +23,7 @@ const Dashboard = ({ sseUrl }: { sseUrl: string }) => {
           <MarketAndSupply marketData={marketData} supplyData={supplyData} />
         </Grid>
       </Container>
-    </>
+    </main>
   )
 }
 

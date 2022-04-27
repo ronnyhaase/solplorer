@@ -1,5 +1,6 @@
 export { type default as StandardProps } from './StandardProps'
 
+export * from './coming-soon'
 export { default as Container } from './container'
 export * from './display'
 export { default as Grid } from './grid'
