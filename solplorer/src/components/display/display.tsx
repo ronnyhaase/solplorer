@@ -28,7 +28,9 @@ const NumberFormatDisplay = ({
   val,
   ...rest
 }: DisplayProps & { format: Intl.NumberFormatOptions, val: number }) => {
-  const formattedVal: string = val ? (new Intl.NumberFormat(undefined, format)).format(val) : null
+  const formattedVal: string = (val !== null && val !== undefined)
+    ? (new Intl.NumberFormat(undefined, format)).format(val)
+    : null
 
   return (<Display {...rest}>{formattedVal}</Display>)
 }
@@ -72,7 +74,35 @@ const DateDisplay = ({ val, ...rest }: DisplayProps & { val: Date}) => (
   <DateTimeFormatDisplay val={val} format={{ dateStyle: 'full' }} {...rest} />
 )
 
+const ChangeDisplay = ({ val, percent = false, ...rest }: { val: number, percent?: boolean }) => {
+  if (val === undefined || val === null) return null
+
+  let color, symbol
+
+  if (val === 0) {
+    color = 'muted'
+    symbol = '±'
+  } else if (val > 0) {
+    color = 'success'
+    symbol = '▲'
+  } else if (val < 0) {
+    color = 'danger'
+    symbol = '▼'
+  }
+
+  return (
+    <NumberDisplay
+      className={`text-${color}`}
+      prefix={`${symbol} `}
+      suffix={percent ? ' %' : null}
+      val={val}
+      {...rest}
+    />
+  )
+}
+
 export {
+  ChangeDisplay,
   CurrencyDisplay,
   DateDisplay,
   DateTimeFormatDisplay,

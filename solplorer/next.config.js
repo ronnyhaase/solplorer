@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
+    images: {
+      layoutRaw: true,
+    },
     outputStandalone: true,
   },
   async redirects() {
@@ -12,6 +15,11 @@ const nextConfig = {
         permanent: false,
       }
     ]
+  },
+  images: {
+    domains: [
+      'assets.coingecko.com'
+    ],
   }
 }
 
