@@ -4,6 +4,8 @@ services:
     build: ./data
     ports:
       - 4000:3000
+    volumes:
+      - ./data:/home/static
   solade:
     depends_on:
       - static
@@ -22,3 +24,5 @@ services:
       - API_URL=http://solade:3000
     ports:
       - 3001:3000
+
+
