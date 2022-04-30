@@ -2,7 +2,20 @@ import { default as request } from 'got'
 import Head from 'next/head'
 import Image from 'next/image'
 
-import { ChangeDisplay, Container, CurrencyDisplay, Grid, NumberDisplay, Panel } from '../components'
+import {
+  ChangeDisplay,
+  Container,
+  CurrencyDisplay,
+  Grid,
+  NumberDisplay,
+  Panel,
+  TBody,
+  TD,
+  TH,
+  THead,
+  TR,
+  Table,
+} from '../components'
 
 export default function Tokens({ tokenData }) {
   return (
@@ -15,51 +28,51 @@ export default function Tokens({ tokenData }) {
           <Grid columns={1}>
             <Panel>
               {tokenData ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse text-sm md:text-md whitespace-nowrap">
-                    <thead className="text-muted">
-                      <tr>
-                        <th className="text-center">Symbol</th>
-                        <th className="text-center">Name</th>
-                        <th className="text-center">Price</th>
-                        <th className="text-center">Volume</th>
-                        <th className="text-center">Market Cap.</th>
-                        <th className="text-center">Supply (Circ. / Total)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tokenData.coins.map((token, n) => (
-                        <tr key={token.id} className={n % 2 ? null : 'bg-background'}>
-                          <td className="py-xs px-sm">
-                            <div className="d-flex items-center">
-                              <Image alt={`${token.name} Logo`} src={token.imageUrl} layout="raw" width={16} height={16} />
-                              <span>&nbsp;{token.symbol.toUpperCase()}</span>
-                            </div>
-                          </td>
-                          <td className="py-xs px-sm">{token.name}</td>
-                          <td className="py-xs px-sm">
-                            <CurrencyDisplay val={token.price} />
-                            {' '}
-                            <ChangeDisplay percent val={token.priceChangePercent_24h} />
-                          </td>
-                          <td className="py-xs px-sm">
-                            <NumberDisplay short val={token.volume} />
-                          </td>
-                          <td className="py-xs px-sm">
-                            <NumberDisplay short val={token.marketCap} />
-                            {' '}
-                            <ChangeDisplay percent val={token.marketCapChangePercent_24h} />
-                          </td>
-                          <td className="py-xs px-sm">
-                            <NumberDisplay short val={token.supplyCirculating} />
-                            {' '}/{' '}
-                            <NumberDisplay short val={token.supplyTotal} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <Table>
+                  <THead>
+                    <TR>
+                      <TH>Symbol</TH>
+                      <TH>Name</TH>
+                      <TH>Price</TH>
+                      <TH>Volume</TH>
+                      <TH>Market Cap.</TH>
+                      <TH>Supply (Circ. / Total)</TH>
+                    </TR>
+                  </THead>
+                  <TBody>
+                    {tokenData.coins.map((token, n) => (
+                      <TR key={token.id}>
+                        <TD>
+                          <div className="d-flex items-center">
+                            <Image alt={`${token.name} Logo`} src={token.imageUrl} layout="raw" width={16} height={16} />
+                            <span>&nbsp;{token.symbol.toUpperCase()}</span>
+                          </div>
+                        </TD>
+                        <TD>
+                          {token.name}
+                        </TD>
+                        <TD>
+                          <CurrencyDisplay val={token.price} />
+                          {' '}
+                          <ChangeDisplay percent val={token.priceChangePercent_24h} />
+                        </TD>
+                        <TD>
+                          <NumberDisplay short val={token.volume} />
+                        </TD>
+                        <TD>
+                          <NumberDisplay short val={token.marketCap} />
+                          {' '}
+                          <ChangeDisplay percent val={token.marketCapChangePercent_24h} />
+                        </TD>
+                        <TD>
+                          <NumberDisplay short val={token.supplyCirculating} />
+                          {' '}/{' '}
+                          <NumberDisplay short val={token.supplyTotal} />
+                        </TD>
+                      </TR>
+                    ))}
+                  </TBody>
+                </Table>
               ) : null}
             </Panel>
           </Grid>
