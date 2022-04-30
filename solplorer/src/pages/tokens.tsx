@@ -1,12 +1,10 @@
+import { default as request } from 'got'
 import Head from 'next/head'
 import Image from 'next/image'
-import useSWR from 'swr'
 
 import { ChangeDisplay, Container, CurrencyDisplay, Grid, NumberDisplay, Panel } from '../components'
 
-export default function Tokens() {
-  const { data: tokenData } = useSWR('/api/tokens', url => fetch(url).then((res) => res.json()))
-
+export default function Tokens({ tokenData }) {
   return (
     <>
       <Head>
@@ -69,4 +67,10 @@ export default function Tokens() {
       </main>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  return { props: {
+    tokenData: await request(`${process.env.API_URL}/solana/coins`).json()
+  }}
 }
