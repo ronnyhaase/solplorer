@@ -6,6 +6,7 @@ import { SolanaService } from './solana.service';
 
 @Module({
   controllers: [SolanaController],
+  exports: [SolanaCacheService],
   imports: [],
   providers: [SolanaService, SolanaCacheService],
 })
