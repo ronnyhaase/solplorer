@@ -18,7 +18,8 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'assets.coingecko.com'
+      'assets.coingecko.com',
+      'icons.llama.fi',
     ],
   }
 }
