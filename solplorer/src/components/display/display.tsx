@@ -70,8 +70,15 @@ const NumberDisplay = ({
   return (<NumberFormatDisplay val={val} format={format} {...rest} />)
 }
 
-const DateDisplay = ({ val, ...rest }: DisplayProps & { val: Date}) => (
-  <DateTimeFormatDisplay val={val} format={{ dateStyle: 'full' }} {...rest} />
+const DateDisplay = ({
+  val,
+  dateStyle = 'full',
+  ...rest
+}: DisplayProps & {
+  val: Date,
+  dateStyle?: "full" | "long" | "medium" | "short" | undefined,
+}) => (
+  <DateTimeFormatDisplay val={val} format={{ dateStyle }} {...rest} />
 )
 
 const ChangeDisplay = ({ val, percent = false, ...rest }: { val: number, percent?: boolean }) => {

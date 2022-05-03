@@ -107,6 +107,7 @@ th {
 
 .m-0 { margin: 0; }
 .mx-md { margin-left: var(--space-md); margin-right: var(--space-md); }
+.my-md { margin-top: var(--space-md); margin-bottom: var(--space-md); }
 .mt-md { margin-top: var(--space-md); }
 .mb-md { margin-bottom: var(--space-md); }
 .ml-sm { margin-left: var(--space-sm); }

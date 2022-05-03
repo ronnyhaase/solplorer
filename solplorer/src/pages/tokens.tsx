@@ -1,4 +1,4 @@
-import { default as request } from 'got'
+import request from 'got'
 import Head from 'next/head'
 import Image from 'next/image'
 
@@ -15,7 +15,9 @@ import {
   THead,
   TR,
   Table,
+  DateDisplay,
 } from '../components'
+import coingeckoImg from '../../public/coingecko.svg'
 
 export default function Tokens({ tokenData }) {
   return (
@@ -40,7 +42,7 @@ export default function Tokens({ tokenData }) {
                     </TR>
                   </THead>
                   <TBody>
-                    {tokenData.coins.map((token, n) => (
+                    {tokenData.coins.map((token) => (
                       <TR key={token.id}>
                         <TD>
                           <div className="d-flex items-center">
@@ -72,6 +74,23 @@ export default function Tokens({ tokenData }) {
                       </TR>
                     ))}
                   </TBody>
+                  <tfoot>
+                    <tr>
+                      <td colSpan={6}>
+                        <div>
+                          <div className="d-flex items-center justify-center my-md">
+                            <span>Data provided by</span>
+                            <a href="https://www.coingecko.com" className="d-flex">
+                              <img alt="CoinGecko" src="/assets/images/coingecko.svg" />
+                            </a>
+                          </div>
+                          <div className="text-center">
+                            Last updated: <DateDisplay val={new Date(tokenData.updatedAt)} dateStyle="long" />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tfoot>
                 </Table>
               ) : null}
             </Panel>
