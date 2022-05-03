@@ -29,7 +29,7 @@ export default function Protocols({ tvlData }) {
         <Container>
           <Grid columns={1}>
             <Panel>
-              {tvlData ? (
+              {tvlData ? (<>
                 <Table>
                   <THead>
                     <TR>
@@ -70,25 +70,19 @@ export default function Protocols({ tvlData }) {
                       </TR>
                     ))}
                   </TBody>
-                  <tfoot>
-                    <tr>
-                      <td colSpan={6}>
-                        <div>
-                          <div className="d-flex items-center justify-center my-md">
-                            <span>Data provided by</span>
-                            <a href="https://defillama.com/" className="d-flex">
-                              <img alt="DefiLlama" src="/assets/images/defillama.svg" />
-                            </a>
-                          </div>
-                          <div className="text-center">
-                            Last updated: <DateDisplay val={new Date(tvlData.updatedAt)} dateStyle="long" />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tfoot>
                 </Table>
-              ) : null}
+                <div>
+                  <div className="d-flex items-center justify-center my-md">
+                    <span>Data provided by</span>
+                    <a href="https://defillama.com/" className="d-flex">
+                      <img alt="DefiLlama" src="/assets/images/defillama.svg" />
+                    </a>
+                  </div>
+                  <div className="text-center">
+                    Last updated: <DateDisplay val={new Date(tvlData.updatedAt)} dateStyle="long" />
+                  </div>
+                </div>
+              </>) : null}
             </Panel>
           </Grid>
         </Container>

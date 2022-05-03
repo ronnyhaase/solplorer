@@ -30,6 +30,7 @@ export default function Tokens({ tokenData }) {
           <Grid columns={1}>
             <Panel>
               {tokenData ? (
+                <>
                 <Table>
                   <THead>
                     <TR>
@@ -74,25 +75,19 @@ export default function Tokens({ tokenData }) {
                       </TR>
                     ))}
                   </TBody>
-                  <tfoot>
-                    <tr>
-                      <td colSpan={6}>
-                        <div>
-                          <div className="d-flex items-center justify-center my-md">
-                            <span>Data provided by</span>
-                            <a href="https://www.coingecko.com" className="d-flex">
-                              <img alt="CoinGecko" src="/assets/images/coingecko.svg" />
-                            </a>
-                          </div>
-                          <div className="text-center">
-                            Last updated: <DateDisplay val={new Date(tokenData.updatedAt)} dateStyle="long" />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tfoot>
                 </Table>
-              ) : null}
+                <div>
+                  <div className="d-flex items-center justify-center my-md">
+                    <span>Data provided by</span>
+                    <a href="https://www.coingecko.com" className="d-flex">
+                      <img alt="CoinGecko" src="/assets/images/coingecko.svg" />
+                    </a>
+                  </div>
+                  <div className="text-center">
+                    Last updated: <DateDisplay val={new Date(tokenData.updatedAt)} dateStyle="long" />
+                  </div>
+                </div>
+              </>) : null}
             </Panel>
           </Grid>
         </Container>
