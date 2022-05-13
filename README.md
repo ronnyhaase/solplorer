@@ -1,6 +1,6 @@
 # ![Logo](logo.png "Solplorer")<br> Solplorer
 
-## https://solana.greina.io
+## https://solplorer.org
 
 An independent and open-source (GPLv3) explorer for [Solana Blockchain](https://solana.com)
 
