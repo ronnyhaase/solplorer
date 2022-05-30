@@ -3,6 +3,7 @@ require('dotenv').config()
 const path = require('path')
 
 const Bree = require('bree')
+const Graceful = require('@ladjs/graceful')
 
 const redisUrl = process.env.REDIS_URL
 const solanaUrl = process.env.SOLANA_API_URL
@@ -27,4 +28,6 @@ const jobScheduler = new Bree({
   ]
 })
 
+const graceful = new Graceful({ brees: [jobScheduler] });
+graceful.listen();
 jobScheduler.start()

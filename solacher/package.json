@@ -10,6 +10,7 @@
   "author": "Ronny Haase <ronnyhaase@fastmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
+    "@ladjs/graceful": "^2.0.1",
     "@redis/client": "^1.1.0",
     "@solana/web3.js": "^1.43.2",
     "bree": "^8.0.3",
