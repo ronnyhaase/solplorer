@@ -8,16 +8,18 @@ const solana = require('@solana/web3.js')
   const redisClient = redis.createClient({ url: workerData.data.redisUrl })
   const solanaClient = new solana.Connection(workerData.data.solanaUrl)
 
-  const [blockHeight, slotHeight, transactionsCount] = await Promise.all([
+  const [blockHeight, slotHeight, transactionsCount, rawPerfSample] = await Promise.all([
     solanaClient.getBlockHeight(),
     solanaClient.getSlot(),
     solanaClient.getTransactionCount(),
+    solanaClient.getRecentPerformanceSamples(1),
   ])
 
   const normalizedStats = {
     blockHeight,
     slotHeight,
     transactionsCount,
+    tps: Math.round(rawPerfSample[0].numTransactions / rawPerfSample[0].samplePeriodSecs),
   }
 
   await redisClient.connect()

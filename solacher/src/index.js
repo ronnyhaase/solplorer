@@ -17,11 +17,13 @@ const createJob = (name, interval = 0, data = {}, runOnStart = false) => ({
 const jobScheduler = new Bree({
   root: path.resolve('src/jobs'),
   jobs: [
-    createJob('stats', '5s'),
+    createJob('stats', '10s'),
     createJob('epoch', '10m'),
     createJob('markets', '15m'),
-    // createJob('validators', 'at 12:00 am', {}, false),
     createJob('supply', 'at 1:00 am'),
+    // createJob('tokens', 'at 1:00 am'),
+    // createJob('tvl', 'at 1:00 am'),
+    // createJob('validators', 'at 12:00 am'),
   ]
 })
 
