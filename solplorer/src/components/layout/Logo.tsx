@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import logoImg from '../../../public/logo-32.png'
+import logoImg from '../../../public/assets/images/logo-32.svg'
 
 const Logo = () => (
   <Link href="/">
     <a className="d-flex items-center justify-center no-underline text-color-inherit">
       <Image alt="Solplorer Logo" src={logoImg} />
-      <h1 className="ml-sm">
+      <h1>
         Solplorer
       </h1>
     </a>
