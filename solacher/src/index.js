@@ -22,7 +22,7 @@ const jobScheduler = new Bree({
     createJob('epoch', '10m'),
     createJob('markets', '15m'),
     createJob('supply', 'at 1:00 am'),
-    // createJob('tokens', 'at 1:00 am'),
+    createJob('tokens', 'at 1:00 am'),
     // createJob('tvl', 'at 1:00 am'),
     // createJob('validators', 'at 12:00 am'),
   ]
