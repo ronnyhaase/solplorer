@@ -17,7 +17,6 @@ import {
   Table,
   DateDisplay,
 } from '../components'
-import coingeckoImg from '../../public/coingecko.svg'
 
 export default function Tokens({ tokenData }) {
   return (
@@ -34,6 +33,7 @@ export default function Tokens({ tokenData }) {
                 <Table>
                   <THead>
                     <TR>
+                      <TH>#</TH>
                       <TH>Symbol</TH>
                       <TH>Name</TH>
                       <TH>Price</TH>
@@ -43,8 +43,11 @@ export default function Tokens({ tokenData }) {
                     </TR>
                   </THead>
                   <TBody>
-                    {tokenData.coins.map((token) => (
+                    {tokenData.coins.map((token, n) => (
                       <TR key={token.id}>
+                        <TD className="text-center">
+                          {n + 1}
+                        </TD>
                         <TD>
                           <div className="d-flex items-center">
                             <Image alt={`${token.name} Logo`} src={token.imageUrl} layout="raw" width={16} height={16} />
