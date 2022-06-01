@@ -26,7 +26,7 @@ const AVG_SLOTTIME = 550
   }
 
   await redisClient.connect()
-  await redisClient.set('epochInfo', JSON.stringify(normalizedEpochInfo))
+  await redisClient.set('epoch', JSON.stringify(normalizedEpochInfo))
   await redisClient.quit()
 
   if (workerParent) workerParent.postMessage('done')
