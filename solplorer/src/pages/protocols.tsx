@@ -17,7 +17,6 @@ import {
   THead,
   TR,
 } from '../components'
-import defillamaImg from '../../public/defillama.svg'
 
 export default function Protocols({ tvlData }) {
   return (
@@ -33,6 +32,7 @@ export default function Protocols({ tvlData }) {
                 <Table>
                   <THead>
                     <TR>
+                      <TH>#</TH>
                       <TH>Symbol</TH>
                       <TH>Name</TH>
                       <TH>Category</TH>
@@ -42,10 +42,13 @@ export default function Protocols({ tvlData }) {
                     </TR>
                   </THead>
                   <TBody>
-                    {tvlData.protocols.map(protocol => (
+                    {tvlData.protocols.map((protocol, n) => (
                       <TR key={protocol.name}>
+                        <TD className="text-center">
+                          {n + 1}
+                        </TD>
                         <TD>
-                        <div className="d-flex items-center">
+                          <div className="d-flex items-center">
                             <Image alt={`${protocol.name} Logo`} src={protocol.imageUrl} layout="raw" width={16} height={16} />
                             <span>&nbsp;{protocol.symbol.toUpperCase()}</span>
                           </div>

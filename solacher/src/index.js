@@ -1,0 +1,33 @@
+require('dotenv').config()
+
+const path = require('path')
+
+const Bree = require('bree')
+const Graceful = require('@ladjs/graceful')
+
+const redisUrl = process.env.REDIS_URL
+const solanaUrl = process.env.SOLANA_API_URL
+
+const createJob = (name, interval = 0, data = {}, runOnStart = false) => ({
+  name,
+  interval,
+  worker: { workerData: { data: { redisUrl, solanaUrl, ...data } } },
+  timeout: runOnStart ? 0 : false,
+})
+
+const jobScheduler = new Bree({
+  root: path.resolve('src/jobs'),
+  jobs: [
+    createJob('stats', '10s'),
+    createJob('epoch', '10m'),
+    createJob('markets', '15m'),
+    createJob('supply', 'at 1:00 am'),
+    createJob('tokens', 'at 1:00 am'),
+    createJob('tvl', 'at 1:00 am'),
+    createJob('validators', 'at 12:00 am'),
+  ]
+})
+
+const graceful = new Graceful({ brees: [jobScheduler] });
+graceful.listen();
+jobScheduler.start()

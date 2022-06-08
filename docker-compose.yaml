@@ -1,11 +1,24 @@
 version: '3'
 services:
+  redis:
+    image: bitnami/redis:latest
+    environment:
+      - REDIS_PASSWORD=sider
+    ports:
+      - 6379:6379
   static:
     build: ./data
     ports:
       - 4000:3000
     volumes:
       - ./data:/home/static
+  solacher:
+    depends_on:
+      - redis
+    build: ./solacher
+    env_file: ./solacher/.env
+    environment:
+      - REDIS_URL=redis://:sider@redis:6379
   solade:
     depends_on:
       - static

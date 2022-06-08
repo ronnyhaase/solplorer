@@ -1,0 +1,20 @@
+{
+  "name": "solacher",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ronny Haase <ronnyhaase@fastmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@ladjs/graceful": "^2.0.1",
+    "@redis/client": "^1.1.0",
+    "@solana/web3.js": "^1.43.2",
+    "bree": "^8.0.3",
+    "dotenv": "^16.0.1",
+    "got-cjs": "^12.0.1"
+  }
+}
