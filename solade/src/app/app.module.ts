@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from '~/admin/admin.module';
 import { MarketsModule } from '~/markets/markets.module';
 import { SolanaModule } from '~/solana/solana.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -13,7 +14,9 @@ import { SolanaModule } from '~/solana/solana.module';
     MarketsModule,
     SolanaModule,
   ],
-  controllers: [],
+  controllers: [
+    AppController,
+  ],
   providers: [],
 })
 export class AppModule {}
