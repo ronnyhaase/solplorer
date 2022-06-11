@@ -2,7 +2,7 @@ import { Controller, Get, MessageEvent, Sse } from '@nestjs/common';
 import { SlotInfo } from '@solana/web3.js';
 import { map, Observable } from 'rxjs';
 
-import { CoinsData, Epoch, Supply, TvlData, Validator, ValidatorsData } from './types';
+import { CoinsData, Epoch, Supply, TvlData, ValidatorsData } from './types';
 import { SolanaService } from './solana.service';
 
 @Controller('/solana')
