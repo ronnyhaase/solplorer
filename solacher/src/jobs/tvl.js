@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { parentPort: workerParent, workerData } = require('node:worker_threads')
 
 const redis = require('@redis/client')
@@ -51,7 +53,11 @@ function normalizeData([rawHistory, rawProtocols]) {
 }
 
 ;(async function main() {
-  const redisClient = redis.createClient({ url: workerData.data.redisUrl })
+  const redisUrl = workerParent
+    ? workerData.data.redisUrl
+    : process.env.REDIS_URL
+
+  const redisClient = redis.createClient({ url: redisUrl })
 
   const data = await fetchData()
     .then(normalizeData)

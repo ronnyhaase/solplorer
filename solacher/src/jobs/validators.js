@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 /**
  * Fetches all validators, their respective validator info and image URL via Keybase
  */
@@ -75,8 +77,15 @@ function mergeData (validators, validatorInfos, validatorImageUrls) {
 }
 
 ;(async function main() {
-  const redisClient = redis.createClient({ url: workerData.data.redisUrl })
-  const solanaClient = new solana.Connection(workerData.data.solanaUrl)
+  const redisUrl = workerParent
+    ? workerData.data.redisUrl
+    : process.env.REDIS_URL
+  const solanaUrl = workerParent
+    ? workerData.data.solanaUrl
+    : process.env.SOLANA_API_URL
+
+  const redisClient = redis.createClient({ url: redisUrl })
+  const solanaClient = new solana.Connection(solanaUrl)
 
   const validators = await getValidators(solanaClient)
   const validatorInfos = await getValidatorInfos(solanaClient)

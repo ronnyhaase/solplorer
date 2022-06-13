@@ -1,12 +1,20 @@
+require('dotenv').config()
+
 const { parentPort: workerParent, workerData } = require('node:worker_threads')
 
 const redis = require('@redis/client')
 const solana = require('@solana/web3.js')
 
-
 ;(async function () {
-  const redisClient = redis.createClient({ url: workerData.data.redisUrl })
-  const solanaClient = new solana.Connection(workerData.data.solanaUrl)
+  const redisUrl = workerParent
+    ? workerData.data.redisUrl
+    : process.env.REDIS_URL
+  const solanaUrl = workerParent
+    ? workerData.data.solanaUrl
+    : process.env.SOLANA_API_URL
+
+  const redisClient = redis.createClient({ url: redisUrl })
+  const solanaClient = new solana.Connection(solanaUrl)
 
   const [blockHeight, slotHeight, transactionsCount, rawPerfSample] = await Promise.all([
     solanaClient.getBlockHeight(),

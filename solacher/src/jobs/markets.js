@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { parentPort: workerParent, workerData } = require('node:worker_threads')
 
 const redis = require('@redis/client')
@@ -9,7 +11,11 @@ function calculateChange(oldVal, newVal) {
 }
 
 ;(async function () {
-  const redisClient = redis.createClient({ url: workerData.data.redisUrl })
+  const redisUrl = workerParent
+    ? workerData.data.redisUrl
+    : process.env.REDIS_URL
+
+  const redisClient = redis.createClient({ url: redisUrl })
 
   const [rawPriceData, rawHistoryData, rawTvlData] = await Promise.all([
     request('https://api.coingecko.com/api/v3/simple/price', {
