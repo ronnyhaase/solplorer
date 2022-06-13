@@ -1,4 +1,4 @@
-import { CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { CacheModule, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { AdminModule } from '~/admin/admin.module';
@@ -24,6 +24,10 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(RequestLoggerMiddleware)
+      .exclude(
+        { path: 'health', method: RequestMethod.GET },
+        { path: 'health', method: RequestMethod.HEAD },
+      )
       .forRoutes('*')
   }
 }
