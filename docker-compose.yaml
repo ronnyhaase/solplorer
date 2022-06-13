@@ -21,6 +21,7 @@ services:
       - REDIS_URL=redis://:sider@redis:6379
   solade:
     depends_on:
+      - redis
       - static
     build: ./solade
     ports:
@@ -29,6 +30,7 @@ services:
     environment:
       - CORS_ORIGINS=http://localhost:3001
       - STATIC_DATA_URL=http://static:3000
+      - REDIS_URL=redis://:sider@redis:6379
   solplorer:
     depends_on:
       - solade
@@ -37,5 +39,3 @@ services:
       - API_URL=http://solade:3000
     ports:
       - 3001:3000
-
-
