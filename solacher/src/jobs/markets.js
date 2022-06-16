@@ -15,8 +15,6 @@ function calculateChange(oldVal, newVal) {
     ? workerData.data.redisUrl
     : process.env.REDIS_URL
 
-  const redisClient = redis.createClient({ url: redisUrl })
-
   const [rawPriceData, rawHistoryData, rawTvlData] = await Promise.all([
     request('https://api.coingecko.com/api/v3/simple/price', {
       searchParams: {
@@ -60,6 +58,7 @@ function calculateChange(oldVal, newVal) {
     })),
   }
 
+  const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()
   await redisClient.set('markets', JSON.stringify(normalizedMarketsData))
   await redisClient.quit()

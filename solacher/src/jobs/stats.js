@@ -13,7 +13,6 @@ const solana = require('@solana/web3.js')
     ? workerData.data.solanaUrl
     : process.env.SOLANA_API_URL
 
-  const redisClient = redis.createClient({ url: redisUrl })
   const solanaClient = new solana.Connection(solanaUrl)
 
   const [blockHeight, slotHeight, transactionsCount, rawPerfSample] = await Promise.all([
@@ -30,10 +29,11 @@ const solana = require('@solana/web3.js')
     tps: Math.round(rawPerfSample[0].numTransactions / rawPerfSample[0].samplePeriodSecs),
   }
 
+  const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()
   await redisClient.set('stats', JSON.stringify(normalizedStats))
   await redisClient.quit()
 
   if (workerParent) workerParent.postMessage('done')
   else process.exit(0)
-})()
+})();

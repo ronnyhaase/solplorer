@@ -22,12 +22,17 @@ const jobScheduler = new Bree({
     createJob('epoch', '10m'),
     createJob('markets', '15m'),
     createJob('supply', 'at 1:00 am'),
-    createJob('tokens', 'at 1:00 am'),
-    createJob('tvl', 'at 1:00 am'),
-    createJob('validators', 'at 12:00 am'),
-  ]
+    createJob('tokens', 'at 1:05 am'),
+    createJob('tvl', 'at 1:10 am'),
+    // createJob('validators', 'at 12:00 am', {}, true),
+  ],
+  errorHandler: (error, meta) => {
+    console.error(error, meta)
+  },
 })
 
-const graceful = new Graceful({ brees: [jobScheduler] });
-graceful.listen();
-jobScheduler.start()
+const graceful = new Graceful({ brees: [jobScheduler] })
+graceful.listen()
+;(async () => {
+  await jobScheduler.start()
+})();

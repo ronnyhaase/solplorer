@@ -84,7 +84,6 @@ function mergeData (validators, validatorInfos, validatorImageUrls) {
     ? workerData.data.solanaUrl
     : process.env.SOLANA_API_URL
 
-  const redisClient = redis.createClient({ url: redisUrl })
   const solanaClient = new solana.Connection(solanaUrl)
 
   const validators = await getValidators(solanaClient)
@@ -98,6 +97,7 @@ function mergeData (validators, validatorInfos, validatorImageUrls) {
     validators: normalizedValidators,
   })
 
+  const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()
   await redisClient.set('validators', data)
   await redisClient.quit()

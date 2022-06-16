@@ -41,7 +41,7 @@ function normalizeData([rawHistory, rawProtocols]) {
       dominancePercent: (protocol.chainTvls['Solana'] / totalTvl) * 100,
       tvl: protocol.chainTvls['Solana'],
     }))
-    .sort((a, b) => (b.tvl || -1) - (a.tvl|| -1))
+    .sort((a, b) => (b.tvl || -1) - (a.tvl || -1))
 
   return {
     history,
@@ -57,12 +57,11 @@ function normalizeData([rawHistory, rawProtocols]) {
     ? workerData.data.redisUrl
     : process.env.REDIS_URL
 
-  const redisClient = redis.createClient({ url: redisUrl })
-
   const data = await fetchData()
     .then(normalizeData)
     .then(JSON.stringify)
 
+  const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()
   await redisClient.set('tvl', data)
   await redisClient.quit()

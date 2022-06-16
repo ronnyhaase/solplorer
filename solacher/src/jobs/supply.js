@@ -15,7 +15,6 @@ const SOL_PER_LAMPORT = 0.000000001
     ? workerData.data.solanaUrl
     : process.env.SOLANA_API_URL
 
-  const redisClient = redis.createClient({ url: redisUrl })
   const solanaClient = new solana.Connection(solanaUrl)
 
   const [rawSupplyData, rawValidatorsData] = await Promise.all([
@@ -36,6 +35,7 @@ const SOL_PER_LAMPORT = 0.000000001
     delinquentsStakePercent: (delinquentsStake / rawSupplyData.total) * 100,
   }
 
+  const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()
   await redisClient.set('supply', JSON.stringify(normalizedSupplyData))
   await redisClient.quit()

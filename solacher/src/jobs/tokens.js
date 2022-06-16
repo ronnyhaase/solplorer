@@ -63,12 +63,11 @@ function normalizeData (rawData) {
     ? workerData.data.redisUrl
     : process.env.REDIS_URL
 
-  const redisClient = redis.createClient({ url: redisUrl })
-
   const data = await fetchData()
     .then(normalizeData)
     .then(JSON.stringify)
 
+  const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()
   await redisClient.set('tokens', data)
   await redisClient.quit()

@@ -15,7 +15,6 @@ const AVG_SLOTTIME = 550
     ? workerData.data.solanaUrl
     : process.env.SOLANA_API_URL
 
-  const redisClient = redis.createClient({ url: redisUrl })
   const solanaClient = new solana.Connection(solanaUrl)
 
   const rawEpochInfo = await solanaClient.getEpochInfo()
@@ -34,6 +33,7 @@ const AVG_SLOTTIME = 550
     transactionsTotal: rawEpochInfo.transactionCount,
   }
 
+  const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()
   await redisClient.set('epoch', JSON.stringify(normalizedEpochInfo))
   await redisClient.quit()
