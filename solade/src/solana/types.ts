@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export type CoinsData = {
   coins: Array<{
     id: string;
