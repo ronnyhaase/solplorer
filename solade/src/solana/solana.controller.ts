@@ -1,13 +1,17 @@
-import { Controller, Get, MessageEvent, Sse } from '@nestjs/common';
+import { Controller, Get, Header, MessageEvent, Sse } from '@nestjs/common';
 import { SlotInfo } from '@solana/web3.js';
 import { map, Observable } from 'rxjs';
 
-import { CoinsData, Epoch, Supply, TvlData, ValidatorsData } from './types';
+import { CoinsData, Epoch, StatsData, Supply, TvlData, ValidatorsData } from './types';
 import { SolanaService } from './solana.service';
+import { DbService } from '~/db/db.service';
 
 @Controller('/solana')
 export class SolanaController {
-  constructor(private solanaService: SolanaService) {}
+  constructor(
+    private solanaService: SolanaService,
+    private dbService: DbService,
+  ) {}
 
   @Get('/coins')
   async getCoins(): Promise<CoinsData> {
@@ -34,6 +38,12 @@ export class SolanaController {
   @Get('/supply')
   getSupply(): Promise<Supply> {
     return this.solanaService.getSupply();
+  }
+
+  @Get('/stats')
+  @Header('content-type', 'application/json; charset=utf-8')
+  getStats(): Promise<string> {
+    return this.dbService.getStats();
   }
 
   @Get('/tvl')

@@ -21,5 +21,6 @@ import { AppModule } from './app/app.module';
       : false,
   });
   app.getHttpAdapter().getInstance().disable('x-powered-by');
+  app.enableShutdownHooks();
   await app.listen(parseInt(process.env.PORT) | 3000);
 })();
