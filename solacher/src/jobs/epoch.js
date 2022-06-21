@@ -20,17 +20,22 @@ const AVG_SLOTTIME = 550
   const rawEpochInfo = await solanaClient.getEpochInfo()
 
   const normalizedEpochInfo = {
-    currentEpoch: rawEpochInfo.epoch,
-    nextEpoch: rawEpochInfo.epoch + 1,
-    epochSlotCurrent: rawEpochInfo.slotIndex,
-    epochSlotTarget: rawEpochInfo.slotsInEpoch,
-    epochETA:
-      (rawEpochInfo.slotsInEpoch - rawEpochInfo.slotIndex) * AVG_SLOTTIME,
-    epochProgress: Math.round(
-      (rawEpochInfo.slotIndex / rawEpochInfo.slotsInEpoch) * 100,
-    ),
-    slotHeightTotal: rawEpochInfo.absoluteSlot,
-    transactionsTotal: rawEpochInfo.transactionCount,
+    data: {
+      currentEpoch: rawEpochInfo.epoch,
+      nextEpoch: rawEpochInfo.epoch + 1,
+      epochSlotCurrent: rawEpochInfo.slotIndex,
+      epochSlotTarget: rawEpochInfo.slotsInEpoch,
+      epochETA:
+        (rawEpochInfo.slotsInEpoch - rawEpochInfo.slotIndex) * AVG_SLOTTIME,
+      epochProgress: Math.round(
+        (rawEpochInfo.slotIndex / rawEpochInfo.slotsInEpoch) * 100,
+      ),
+      slotHeightTotal: rawEpochInfo.absoluteSlot,
+      transactionsTotal: rawEpochInfo.transactionCount,
+    },
+    count: null,
+    type: 'object',
+    updatedAt: Date.now(),
   }
 
   const redisClient = redis.createClient({ url: redisUrl })

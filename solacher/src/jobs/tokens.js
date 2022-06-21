@@ -35,7 +35,7 @@ async function fetchData() {
 
 function normalizeData (rawData) {
   return {
-    coins: rawData.map(coin => pickAsWith([
+    data: rawData.map(coin => pickAsWith([
         'id',
         'symbol',
         'name',
@@ -54,6 +54,7 @@ function normalizeData (rawData) {
         ['max_supply', 'supplyMax'],
     ], coin)),
     count: rawData.length,
+    type: 'list',
     updatedAt: Date.now(),
   }
 }
