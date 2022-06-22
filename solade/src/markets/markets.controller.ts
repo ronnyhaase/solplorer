@@ -1,14 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-
-import { MarketsService } from './markets.service';
-import { MarketData } from './types';
+import { DbService } from '~/db/db.service';
 
 @Controller('/markets')
 export class MarketsController {
-  constructor(private marketsService: MarketsService) {}
+  constructor(private dbService: DbService) {}
 
   @Get('/solana')
-  getSolanaData(): Promise<MarketData> {
-    return this.marketsService.getSolanaData();
+  getSolanaData(): Promise<string> {
+    return this.dbService.getMarkets();
   }
 }

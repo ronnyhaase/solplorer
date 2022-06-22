@@ -44,4 +44,8 @@ export class DbService implements OnModuleDestroy {
   getTvl() {
     return this.db.get('tvl');
   }
+
+  getValidators() {
+    return this.db.get('validators');
+  }
 }
