@@ -7,11 +7,11 @@ services:
     ports:
       - 6379:6379
   static:
-    build: ./data
+    build: ./static
     ports:
       - 4000:3000
     volumes:
-      - ./data:/home/static
+      - ./static:/home/static
   solacher:
     depends_on:
       - redis
