@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 
 import { RequestLoggerMiddleware } from '~/common/middleware/request-logger.middleware';
 import { DbModule } from '~/db/db.module';
-import { MarketsModule } from '~/markets/markets.module';
 import { SolanaModule } from '~/solana/solana.module';
 import { AppController } from './app.controller';
 
@@ -11,7 +10,6 @@ import { AppController } from './app.controller';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     DbModule,
-    MarketsModule,
     SolanaModule,
   ],
   exports: [],

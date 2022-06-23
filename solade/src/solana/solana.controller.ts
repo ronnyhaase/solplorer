@@ -18,6 +18,12 @@ export class SolanaController {
     return this.dbService.getEpoch();
   }
 
+  @Get('/markets')
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getMarkets(): Promise<string> {
+    return this.dbService.getMarkets();
+  }
+
   @Get('/supply')
   @Header('content-type', 'application/json; charset=utf-8')
   getSupply(): Promise<string> {
