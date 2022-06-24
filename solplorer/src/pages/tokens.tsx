@@ -43,7 +43,7 @@ export default function Tokens({ tokenData }) {
                     </TR>
                   </THead>
                   <TBody>
-                    {tokenData.coins.map((token, n) => (
+                    {tokenData.data.map((token, n) => (
                       <TR key={token.id}>
                         <TD className="text-center">
                           {n + 1}

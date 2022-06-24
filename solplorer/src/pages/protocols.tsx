@@ -42,7 +42,7 @@ export default function Protocols({ tvlData }) {
                     </TR>
                   </THead>
                   <TBody>
-                    {tvlData.protocols.map((protocol, n) => (
+                    {tvlData.data.protocols.map((protocol, n) => (
                       <TR key={protocol.name}>
                         <TD className="text-center">
                           {n + 1}
