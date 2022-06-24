@@ -92,9 +92,10 @@ function mergeData (validators, validatorInfos, validatorImageUrls) {
 
   const normalizedValidators = mergeData(validators, validatorInfos, validatorImageUrls)
   const data = JSON.stringify({
+    data: normalizedValidators,
     count: normalizedValidators.length,
+    type: 'list',
     updatedAt: Date.now(),
-    validators: normalizedValidators,
   })
 
   const redisClient = redis.createClient({ url: redisUrl })

@@ -5,7 +5,7 @@ const Epoch = ({ epochData, slotData }) => {
   const { currentEpoch, epochETA, epochProgress, nextEpoch, transactionsTotal } = epochData || {}
 
   let slot = null
-  if (slotData) slot = slotData.root
+  if (slotData) slot = slotData.slotHeight
   else if (epochData) slot = epochData.slotHeightTotal
 
   return (

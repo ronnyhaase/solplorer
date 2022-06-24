@@ -5,10 +5,10 @@ import { Container, Grid } from '../../components'
 import Epoch from './epoch'
 import MarketAndSupply from './market-and-supply'
 
-const Dashboard = ({ sseUrl }: { sseUrl: string }) => {
+const Dashboard = () => {
   const { data: epochData } = useSWR('/api/epoch', url => fetch(url).then((res) => res.json()))
   const { data: marketData } = useSWR('/api/market', url => fetch(url).then((res) => res.json()))
-  const { data: slotData } = useSWR('/api/slot', url => fetch(url).then((res) => res.json()), { refreshInterval: 500 })
+  const { data: slotData } = useSWR('/api/slot', url => fetch(url).then((res) => res.json()).then(body => body.data), { refreshInterval: 5000 })
   const { data: supplyData } = useSWR('/api/supply', url => fetch(url).then((res) => res.json()))
 
   return (

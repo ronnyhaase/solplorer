@@ -1,48 +1,50 @@
-import { Controller, Get, MessageEvent, Sse } from '@nestjs/common';
-import { SlotInfo } from '@solana/web3.js';
-import { map, Observable } from 'rxjs';
+import { Controller, Get, Header } from '@nestjs/common';
 
-import { CoinsData, Epoch, Supply, TvlData, ValidatorsData } from './types';
-import { SolanaService } from './solana.service';
+import { DbService } from '~/db/db.service';
 
 @Controller('/solana')
 export class SolanaController {
-  constructor(private solanaService: SolanaService) {}
+  constructor(private dbService: DbService) {}
 
   @Get('/coins')
-  async getCoins(): Promise<CoinsData> {
-    return this.solanaService.getCoins();
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getCoins(): Promise<string> {
+    return this.dbService.getTokens();
   }
 
   @Get('/epoch')
-  async getEpoch(): Promise<Epoch> {
-    return this.solanaService.getEpochInfo();
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getEpoch(): Promise<string> {
+    return this.dbService.getEpoch();
   }
 
-  @Get('/slot')
-  getSlot(): SlotInfo {
-    return this.solanaService.getLatestSlot();
-  }
-
-  @Sse('/sse/slot')
-  getSlotSSE(): Observable<MessageEvent> {
-    return this.solanaService
-      .subscribeSlotChanges()
-      .pipe(map((slot) => ({ data: slot })));
+  @Get('/markets')
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getMarkets(): Promise<string> {
+    return this.dbService.getMarkets();
   }
 
   @Get('/supply')
-  getSupply(): Promise<Supply> {
-    return this.solanaService.getSupply();
+  @Header('content-type', 'application/json; charset=utf-8')
+  getSupply(): Promise<string> {
+    return this.dbService.getSupply();
+  }
+
+  @Get('/stats')
+  @Header('content-type', 'application/json; charset=utf-8')
+  getStats(): Promise<string> {
+    return this.dbService.getStats();
   }
 
   @Get('/tvl')
-  getTvl(): Promise<TvlData> {
-    return this.solanaService.getTvl();
+  @Header('content-type', 'application/json; charset=utf-8')
+  getTvl(): Promise<string> {
+    return this.dbService.getTvl();
   }
 
   @Get('/validators')
-  async getValidators(): Promise<ValidatorsData> {
-    return this.solanaService.getValidators();
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getValidators(): Promise<string> {
+    return this.dbService.getValidators();
   }
 }

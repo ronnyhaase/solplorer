@@ -23,10 +23,15 @@ const solana = require('@solana/web3.js')
   ])
 
   const normalizedStats = {
-    blockHeight,
-    slotHeight,
-    transactionsCount,
-    tps: Math.round(rawPerfSample[0].numTransactions / rawPerfSample[0].samplePeriodSecs),
+    data: {
+      blockHeight,
+      slotHeight,
+      transactionsCount,
+      tps: Math.round(rawPerfSample[0].numTransactions / rawPerfSample[0].samplePeriodSecs),
+    },
+    count: null,
+    type: 'object',
+    updatedAt: Date.now(),
   }
 
   const redisClient = redis.createClient({ url: redisUrl })

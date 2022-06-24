@@ -24,15 +24,21 @@ const SOL_PER_LAMPORT = 0.000000001
 
   const activeStake = rawValidatorsData.current.reduce((total, v) => total + v.activatedStake, 0)
   const delinquentsStake = rawValidatorsData.delinquent.reduce((total, v) => total + v.activatedStake, 0)
+
   const normalizedSupplyData = {
-    circulating: rawSupplyData.circulating * SOL_PER_LAMPORT,
-    nonCirculating: rawSupplyData.nonCirculating * SOL_PER_LAMPORT,
-    total: rawSupplyData.total * SOL_PER_LAMPORT,
-    circulatingPercent: (rawSupplyData.circulating / rawSupplyData.total) * 100,
-    activeStake: Math.round(activeStake * SOL_PER_LAMPORT),
-    delinquentsStake: Math.round(delinquentsStake * SOL_PER_LAMPORT),
-    activeStakePercent: (activeStake / rawSupplyData.total) * 100,
-    delinquentsStakePercent: (delinquentsStake / rawSupplyData.total) * 100,
+    data: {
+      circulating: rawSupplyData.circulating * SOL_PER_LAMPORT,
+      nonCirculating: rawSupplyData.nonCirculating * SOL_PER_LAMPORT,
+      total: rawSupplyData.total * SOL_PER_LAMPORT,
+      circulatingPercent: (rawSupplyData.circulating / rawSupplyData.total) * 100,
+      activeStake: Math.round(activeStake * SOL_PER_LAMPORT),
+      delinquentsStake: Math.round(delinquentsStake * SOL_PER_LAMPORT),
+      activeStakePercent: (activeStake / rawSupplyData.total) * 100,
+      delinquentsStakePercent: (delinquentsStake / rawSupplyData.total) * 100,
+    },
+    count: null,
+    type: 'object',
+    updatedAt: Date.now(),
   }
 
   const redisClient = redis.createClient({ url: redisUrl })

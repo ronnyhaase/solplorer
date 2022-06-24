@@ -44,10 +44,14 @@ function normalizeData([rawHistory, rawProtocols]) {
     .sort((a, b) => (b.tvl || -1) - (a.tvl || -1))
 
   return {
-    history,
-    totalTvl,
-    protocols,
-    protocolsCount: protocols.length,
+    data: {
+      history,
+      totalTvl,
+      protocols,
+      protocolsCount: protocols.length,
+    },
+    count: null,
+    type: 'object',
     updatedAt: Date.now(),
   }
 }
