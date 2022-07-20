@@ -1,0 +1,1 @@
+export const SOL_PER_LAMPORT = 0.000000001;

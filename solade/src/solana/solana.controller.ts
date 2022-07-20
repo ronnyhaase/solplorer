@@ -1,10 +1,30 @@
-import { Controller, Get, Header } from '@nestjs/common';
+import { Controller, Get, Header, HttpException, HttpStatus, Param } from '@nestjs/common';
+import { InvalidAddressError } from '~/common/errors';
 
 import { DbService } from '~/db/db.service';
+import { SolanaService } from './solana.service';
 
 @Controller('/solana')
 export class SolanaController {
-  constructor(private dbService: DbService) {}
+  constructor(
+    private dbService: DbService,
+    private solanaService: SolanaService,
+  ) {}
+
+  @Get('/accounts/:address')
+  async getAccount(@Param() params): Promise<any> {
+    let account
+    try {
+      account = await this.solanaService.getAccount(params.address);
+    } catch (error) {
+      if (error instanceof InvalidAddressError) {
+        throw new HttpException('Invalid account address', HttpStatus.BAD_REQUEST);
+      } else {
+        throw error;
+      }
+    }
+    return { data: account };
+  }
 
   @Get('/coins')
   @Header('content-type', 'application/json; charset=utf-8')
