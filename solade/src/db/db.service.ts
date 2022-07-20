@@ -8,11 +8,14 @@ export class DbService implements OnModuleDestroy {
   private db: RedisClientType = null;
 
   constructor(private configService: ConfigService) {
-    this.db = createClient({
-      url: this.configService.get('REDIS_URL'),
-    });
+    const url = this.configService.get('REDIS_URL')
+    this.db = createClient({ url });
     this.db.connect()
-      .then(() => this.logger.log('Connected to Redis'))
+      .then(() => this.logger.log(`Connected to Redis ${
+          (this.db.options.socket as any).host
+        }:${
+          (this.db.options.socket as any).port
+      }`));
   }
 
   onModuleDestroy() {
