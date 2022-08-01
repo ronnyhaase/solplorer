@@ -49,7 +49,7 @@ export default function Protocols({ tvlData }) {
                         </TD>
                         <TD>
                           <div className="d-flex items-center">
-                            <Image alt={`${protocol.name} Logo`} src={protocol.imageUrl} layout="raw" width={16} height={16} />
+                            <Image alt={`${protocol.name} Logo`} src={protocol.imageUrl} layout="fixed" width={16} height={16} />
                             <span>&nbsp;{protocol.symbol.toUpperCase()}</span>
                           </div>
                         </TD>
