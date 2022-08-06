@@ -15,18 +15,16 @@ const solana = require('@solana/web3.js')
 
   const solanaClient = new solana.Connection(solanaUrl)
 
-  const [blockHeight, slotHeight, transactionsCount, rawPerfSample] = await Promise.all([
-    solanaClient.getBlockHeight(),
-    solanaClient.getSlot(),
-    solanaClient.getTransactionCount(),
+  const [rawPerfSample, epochInfo] = await Promise.all([
     solanaClient.getRecentPerformanceSamples(1),
+    solanaClient.getEpochInfo(),
   ])
 
   const normalizedStats = {
     data: {
-      blockHeight,
-      slotHeight,
-      transactionsCount,
+      blockHeight: epochInfo.blockHeight,
+      slotHeight: epochInfo.absoluteSlot,
+      transactionsCount: epochInfo.transactionCount,
       tps: Math.round(rawPerfSample[0].numTransactions / rawPerfSample[0].samplePeriodSecs),
     },
     count: null,
