@@ -5,8 +5,8 @@ const nextConfig = {
     images: {
       layoutRaw: true,
     },
-    outputStandalone: true,
   },
+  output: 'standalone',
   async redirects() {
     return [
       {

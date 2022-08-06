@@ -36,13 +36,13 @@
 
   /* Text */
   --font-size-sm: 0.875rem;
-  --line-height-sm: 1.2rem;
+  --line-height-sm: 1.25rem;
 
   --font-size-md: 1.125rem;
-  --line-height-md: 1.75rem;
+  --line-height-md: 1.625rem;
 
   --font-size-xl: 2rem;
-  --line-height-xl: 2.25rem;
+  --line-height-xl: 2.85rem;
 }
 
 body {
