@@ -31,6 +31,8 @@ const AVG_SLOTTIME = 550
         (rawEpochInfo.slotIndex / rawEpochInfo.slotsInEpoch) * 100,
       ),
       slotHeightTotal: rawEpochInfo.absoluteSlot,
+      totalSlotCurrent: rawEpochInfo.absoluteSlot - rawEpochInfo.slotIndex,
+      totalSlotTarget: rawEpochInfo.absoluteSlot - rawEpochInfo.slotIndex + rawEpochInfo.slotsInEpoch,
       transactionsTotal: rawEpochInfo.transactionCount,
     },
     count: null,
