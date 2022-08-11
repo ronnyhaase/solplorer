@@ -74,6 +74,7 @@ th {
 
 .d-block { display: block; }
 .d-flex { display: flex; }
+.d-inline-block { display: inline-block; }
 
 @media (min-width: 576px) {
   .sm\:d-block { display: block !important; }
@@ -215,8 +216,23 @@ th {
 
 .text-center { text-align: center; }
 
+@media (min-width: 576px) {
+  .sm\:text-center { text-align: center; }
+}
+
 .no-underline { text-decoration-line: none; }
 
 .whitespace-nowrap { white-space: nowrap; }
 
 .leading-none { line-height: 1; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.FadeIn {
+  animation-duration: 500ms;
+  animation-fill-mode: both;
+  animation-name: fadeIn;
+}
