@@ -3,9 +3,8 @@ require('dotenv').config()
 const { parentPort: workerParent, workerData } = require('node:worker_threads')
 
 const redis = require('@redis/client')
-const solana = require('@solana/web3.js')
-
-const AVG_SLOTTIME = 550
+const solana = require('@solana/web3.js');
+const { normalizeEpoch } = require('../lib/normalizers');
 
 ;(async function () {
   const redisUrl = workerParent
@@ -20,21 +19,7 @@ const AVG_SLOTTIME = 550
   const rawEpochInfo = await solanaClient.getEpochInfo()
 
   const normalizedEpochInfo = {
-    data: {
-      currentEpoch: rawEpochInfo.epoch,
-      nextEpoch: rawEpochInfo.epoch + 1,
-      epochSlotCurrent: rawEpochInfo.slotIndex,
-      epochSlotTarget: rawEpochInfo.slotsInEpoch,
-      epochETA:
-        (rawEpochInfo.slotsInEpoch - rawEpochInfo.slotIndex) * AVG_SLOTTIME,
-      epochProgress: Math.round(
-        (rawEpochInfo.slotIndex / rawEpochInfo.slotsInEpoch) * 100,
-      ),
-      slotHeightTotal: rawEpochInfo.absoluteSlot,
-      totalSlotCurrent: rawEpochInfo.absoluteSlot - rawEpochInfo.slotIndex,
-      totalSlotTarget: rawEpochInfo.absoluteSlot - rawEpochInfo.slotIndex + rawEpochInfo.slotsInEpoch,
-      transactionsTotal: rawEpochInfo.transactionCount,
-    },
+    data: normalizeEpoch(rawEpochInfo),
     count: null,
     type: 'object',
     updatedAt: Date.now(),

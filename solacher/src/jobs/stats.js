@@ -4,6 +4,7 @@ const { parentPort: workerParent, workerData } = require('node:worker_threads')
 
 const redis = require('@redis/client')
 const solana = require('@solana/web3.js')
+const { normalizeEpoch } = require('../lib/normalizers')
 
 ;(async function () {
   const redisUrl = workerParent
@@ -22,6 +23,7 @@ const solana = require('@solana/web3.js')
 
   const normalizedStats = {
     data: {
+      epoch: normalizeEpoch(epochInfo),
       blockHeight: epochInfo.blockHeight,
       slotHeight: epochInfo.absoluteSlot,
       transactionsCount: epochInfo.transactionCount,
