@@ -4,7 +4,7 @@ import { InvalidAddressError } from '~/common/errors';
 import { DbService } from '~/db/db.service';
 import { SolanaService } from './solana.service';
 
-@Controller('/solana')
+@Controller('/')
 export class SolanaController {
   constructor(
     private dbService: DbService,

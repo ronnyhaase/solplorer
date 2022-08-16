@@ -101,6 +101,6 @@ export default function Tokens({ tokenData }) {
 
 export async function getServerSideProps() {
   return { props: {
-    tokenData: await request(`${process.env.API_URL}/solana/coins`).json()
+    tokenData: await request(`${process.env.API_URL}/coins`).json()
   }}
 }

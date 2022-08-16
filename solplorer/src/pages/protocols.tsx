@@ -96,6 +96,6 @@ export default function Protocols({ tvlData }) {
 
 export async function getServerSideProps() {
   return { props: {
-    tvlData: await request(`${process.env.API_URL}/solana/tvl`).json()
+    tvlData: await request(`${process.env.API_URL}/tvl`).json()
   }}
 }
