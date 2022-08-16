@@ -26,7 +26,7 @@ export class SolanaController {
     return { data: account };
   }
 
-  @Get('/coins')
+  @Get('/tokens')
   @Header('content-type', 'application/json; charset=utf-8')
   async getCoins(): Promise<string> {
     return this.dbService.getTokens();
