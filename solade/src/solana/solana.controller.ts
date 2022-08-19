@@ -44,6 +44,12 @@ export class SolanaController {
     return this.dbService.getMarkets();
   }
 
+  @Get('/news')
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getNews(): Promise<string> {
+    return this.dbService.getNews();
+  }
+
   @Get('/supply')
   @Header('content-type', 'application/json; charset=utf-8')
   getSupply(): Promise<string> {

@@ -32,6 +32,10 @@ export class DbService implements OnModuleDestroy {
     return this.db.get('markets');
   }
 
+  getNews() {
+    return this.db.get('news');
+  }
+
   getStats() {
     return this.db.get('stats');
   }
