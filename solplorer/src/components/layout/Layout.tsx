@@ -8,6 +8,7 @@ const Layout = ({ children }) => {
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
+        <script defer data-domain="solplorer.org" src="https://plausible.io/js/plausible.js"></script>
       </Head>
       <header className="m-0 mb-md">
         <Logo />
