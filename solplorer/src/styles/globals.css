@@ -74,6 +74,7 @@ th {
 
 .d-block { display: block; }
 .d-flex { display: flex; }
+.d-inline { display: inline; }
 .d-inline-block { display: inline-block; }
 
 @media (min-width: 576px) {
@@ -129,11 +130,11 @@ th {
 .p-0 { padding: 0; }
 .p-1px { padding: 1px; }
 
+.py-xs { padding-top: var(--space-xs); padding-bottom: var(--space-xs);}
 .pb-xs { padding-bottom: var(--space-xs); }
 
+.p-sm { padding: var(--space-sm); }
 .px-sm { padding-left: var(--space-sm); padding-right: var(--space-sm);}
-
-.py-xs { padding-top: var(--space-xs); padding-bottom: var(--space-xs);}
 .py-sm { padding-top: var(--space-sm); padding-bottom: var(--space-sm);}
 
 .p-md { padding: var(--space-md); }
@@ -196,11 +197,17 @@ th {
 .bg-background { background-color: var(--c-background); }
 .bg-foreground { background-color: var(--c-foreground); }
 .bg-inset { background-color: var(--c-inset); }
+.odd\:bg-inset:nth-child(2n+1) { background-color: var(--c-background); }
 .bg-outset { background-color: var(--c-outset); }
 
 .font-mono { font-family: 'Ubuntu Mono', monospace; }
+.font-normal { font-weight: normal; }
+.font-bold { font-weight: 700; }
 
-.text-color-inherit { color: inherit }
+.no-underline { text-decoration: none; }
+.not-italic { font-style: normal; }
+
+.text-inherit { color: inherit }
 .text-danger { color: var(--c-danger) }
 .text-inset { color: var(--c-inset) }
 .text-muted { color: var(--c-muted) }
@@ -215,6 +222,7 @@ th {
 }
 
 .text-center { text-align: center; }
+.text-right { text-align: right; }
 
 @media (min-width: 576px) {
   .sm\:text-center { text-align: center; }

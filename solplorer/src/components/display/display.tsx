@@ -42,7 +42,7 @@ const DateTimeFormatDisplay = ({
 }: DisplayProps & { format: Intl.DateTimeFormatOptions, val: Date }) => {
   const formattedVal: string = val ? (new Intl.DateTimeFormat(undefined, format)).format(val) : null
 
-  return (<Display {...rest}>{formattedVal}</Display>)
+  return (<Display as="time" dateTime={val.toISOString()} {...rest}>{formattedVal}</Display>)
 }
 
 const CurrencyDisplay = ({
@@ -81,6 +81,19 @@ const DateDisplay = ({
   <DateTimeFormatDisplay val={val} format={{ dateStyle }} {...rest} />
 )
 
+const DateTimeDisplay = ({
+  val,
+  dateStyle = 'full',
+  timeStyle = 'full',
+  ...rest
+}: DisplayProps & {
+  val: Date,
+  dateStyle?: "full" | "long" | "medium" | "short" | undefined,
+  timeStyle?: "full" | "long" | "medium" | "short" | undefined,
+}) => (
+  <DateTimeFormatDisplay val={val} format={{ dateStyle, timeStyle }} {...rest} />
+)
+
 const ChangeDisplay = ({ val, percent = false, ...rest }: { val: number, percent?: boolean }) => {
   if (val === undefined || val === null) return null
 
@@ -112,6 +125,7 @@ export {
   ChangeDisplay,
   CurrencyDisplay,
   DateDisplay,
+  DateTimeDisplay,
   DateTimeFormatDisplay,
   Display,
   NumberFormatDisplay,

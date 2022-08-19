@@ -25,7 +25,7 @@ const NavItem = ({ children, curr, to }) => {
             'pb-xs',
             'no-underline',
             {
-              'text-color-inherit': active,
+              'text-inherit': active,
               'text-muted': !active,
               'border-solid': active,
               'border-0': active,

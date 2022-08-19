@@ -13,6 +13,7 @@ type StandardProps = {
   as?: KnownWebTarget,
   children?: React.ReactNode,
   className?: React.HTMLAttributes<HTMLElement> | string,
+  dateTime?:  React.HTMLAttributes<HTMLTimeElement> | string,
   style?: CSSProperties,
 }
 

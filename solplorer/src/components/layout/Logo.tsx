@@ -5,7 +5,7 @@ import logoImg from '../../../public/assets/images/logo-32.svg'
 
 const Logo = () => (
   <Link href="/">
-    <a className="d-flex items-center justify-center no-underline text-color-inherit">
+    <a className="d-flex items-center justify-center no-underline text-inherit">
       <Image alt="Solplorer Logo" src={logoImg} />
       <h1>
         Solplorer
