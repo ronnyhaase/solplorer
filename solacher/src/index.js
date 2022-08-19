@@ -21,6 +21,7 @@ const jobScheduler = new Bree({
     createJob('stats', '10s'),
     createJob('epoch', '10m'),
     createJob('markets', '15m'),
+    createJob('news', '60m'),
     createJob('supply', 'at 1:00 am'),
     createJob('tokens', 'at 1:05 am'),
     createJob('tvl', 'at 1:10 am'),
