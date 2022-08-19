@@ -1,4 +1,4 @@
-import { DateDisplay, DateTimeDisplay, Panel } from '../../components'
+import { DateTimeDisplay, Panel } from '../../components'
 
 const News = ({ news }) => {
   return (
@@ -6,7 +6,13 @@ const News = ({ news }) => {
       <h2 className="m-0 my-md text-center">Solana News</h2>
       {!news ? 'Loading...' : (<div>
         {news.data.map(article => (
-          <a className="d-block p-md odd:bg-inset no-underline text-inherit" key={article.url} href={article.url} target="_blank">
+          <a
+            className="d-block p-md odd:bg-inset no-underline text-inherit"
+            key={article.url}
+            href={article.url}
+            target="_blank"
+            rel="noreferrer"
+          >
             <article>
               <div className="text-muted text-right">
                 <address className="d-inline font-bold not-italic">{article.source}</address>, {' '}
