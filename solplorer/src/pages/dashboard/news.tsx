@@ -3,7 +3,7 @@ import { DateTimeDisplay, Panel } from '../../components'
 const News = ({ news }) => {
   return (
     <Panel>
-      <h2 className="m-0 my-md text-center">Solana News</h2>
+      <h2 className="m-0 mt-md mb-xl text-center">Solana News</h2>
       {!news ? 'Loading...' : (<div>
         {news.data.map(article => (
           <a

@@ -25,6 +25,7 @@
   --space-sm: .5rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
+  --space-xl: 2rem;
 
   --radius-md: 1rem;
 
@@ -108,13 +109,14 @@ th {
 }
 
 .m-0 { margin: 0; }
+.ml-sm { margin-left: var(--space-sm); }
 .mx-md { margin-left: var(--space-md); margin-right: var(--space-md); }
 .my-md { margin-top: var(--space-md); margin-bottom: var(--space-md); }
 .mt-md { margin-top: var(--space-md); }
 .mb-md { margin-bottom: var(--space-md); }
-.ml-sm { margin-left: var(--space-sm); }
 .ml-md { margin-left: var(--space-md); }
 .mr-md { margin-right: var(--space-md); }
+.mb-xl { margin-bottom: var(--space-xl); }
 
 @media (min-width: 576px) {
   .sm\:mb-0 { margin-bottom: 0; }
