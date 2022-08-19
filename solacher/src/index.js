@@ -7,6 +7,7 @@ const Graceful = require('@ladjs/graceful')
 
 const redisUrl = process.env.REDIS_URL
 const solanaUrl = process.env.SOLANA_API_URL
+const cryptopanicToken = process.env.CRYPTOPANIC_TOKEN
 
 const createJob = (name, interval = 0, data = {}, runOnStart = false) => ({
   name,
@@ -21,7 +22,7 @@ const jobScheduler = new Bree({
     createJob('stats', '10s'),
     createJob('epoch', '10m'),
     createJob('markets', '15m'),
-    createJob('news', '60m'),
+    createJob('news', '60m', { cryptopanicToken }),
     createJob('supply', 'at 1:00 am'),
     createJob('tokens', 'at 1:05 am'),
     createJob('tvl', 'at 1:10 am'),
