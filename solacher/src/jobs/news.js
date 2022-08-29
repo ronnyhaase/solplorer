@@ -18,16 +18,20 @@ const request = require('got-cjs').got
     'public': 'true',
     'currencies': 'SOL',
     'kind': 'news',
+    'filter': 'important',
   }})
     .json()
     .then(response => ({
       count: response.results.length,
-      data: response.results.map(newsItem => ({
-        publishedAt: new Date(newsItem.published_at).valueOf(),
-        source: newsItem.source.title,
-        title: newsItem.title,
-        url: newsItem.url,
-      })),
+      data: response.results
+        // Filter Twitter news
+        // .filter(newsItem => newsItem.source.domain !== 'twitter.com')
+        .map(newsItem => ({
+          publishedAt: new Date(newsItem.published_at).valueOf(),
+          source: newsItem.source.title,
+          title: newsItem.title,
+          url: newsItem.url,
+        })),
       type: 'list',
       updatedAt: Date.now(),
     }))
