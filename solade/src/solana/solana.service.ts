@@ -17,6 +17,14 @@ export class SolanaService {
     });
   }
 
+  async getBlock(blockNumber: number) {
+    const block: any = await this.solanaClient.getBlock(blockNumber);
+
+    return {
+      _raw: block,
+    };
+  }
+
   async getAccount(address: string) {
     let accKey: solana.PublicKey;
     try {
@@ -45,5 +53,13 @@ export class SolanaService {
       case 'vote': return buildVoteAccount(address, account);
       default: return buildStandardAccount(address, account);
     }
+  }
+
+  async getTransaction(signature: string) {
+    const transaction = await this.solanaClient.getParsedTransaction(signature);
+
+    return {
+      _raw: transaction,
+    };
   }
 }

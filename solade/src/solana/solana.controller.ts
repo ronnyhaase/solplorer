@@ -26,6 +26,11 @@ export class SolanaController {
     return { data: account };
   }
 
+  @Get('/blocks/:blockNo')
+  async getBlock(@Param() params): Promise<any> {
+    return this.solanaService.getBlock(parseInt(params.blockNo));
+  }
+
   @Get('/tokens')
   @Header('content-type', 'application/json; charset=utf-8')
   async getCoins(): Promise<string> {
@@ -66,6 +71,11 @@ export class SolanaController {
   @Header('content-type', 'application/json; charset=utf-8')
   getTvl(): Promise<string> {
     return this.dbService.getTvl();
+  }
+
+  @Get('/tx/:signature')
+  getTransaction(@Param() params): Promise<any> {
+    return this.solanaService.getTransaction(params.signature);
   }
 
   @Get('/validators')
