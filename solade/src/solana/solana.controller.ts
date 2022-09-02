@@ -28,7 +28,20 @@ export class SolanaController {
 
   @Get('/blocks/:blockNo')
   async getBlock(@Param() params): Promise<any> {
-    return this.solanaService.getBlock(parseInt(params.blockNo));
+    const blockNo = parseInt(params.blockNo);
+    if (isNaN(blockNo) || blockNo < 0) {
+      throw new HttpException('Invalid block number', HttpStatus.BAD_REQUEST);
+    }
+
+    let block = null;
+    try {
+      block = this.solanaService.getBlock(blockNo);
+    } catch (error) {
+      console.error(error)
+      throw new HttpException('Fetching block data failed', HttpStatus.BAD_GATEWAY);
+    }
+
+    return block;
   }
 
   @Get('/tokens')
