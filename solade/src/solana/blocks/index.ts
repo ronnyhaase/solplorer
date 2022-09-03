@@ -1,4 +1,4 @@
-import { lamportToSol } from '../helpers';
+import { epochByBlock, lamportToSol } from '../helpers';
 
 export const buildBlockTransaction = (tx) => ({
   signature: tx.transaction.signatures[0],
@@ -7,17 +7,28 @@ export const buildBlockTransaction = (tx) => ({
   fee: lamportToSol(tx.meta?.fee),
 });
 
-export const buildBlock = (blockNo, rawBlock) => ({
-  _raw: rawBlock,
-  base: {
-    blockNo,
-    ts: rawBlock.blockTime * 1000,
-    blockHash: rawBlock.blockhash,
-    prevBlockHash: rawBlock.previousBlockhash,
-    leader: rawBlock.rewards[0]?.pubkey || null,
-    leaderReward: lamportToSol(rawBlock.rewards[0]?.lamports),
+export function buildBlock (blockNo, rawBlock) {
+  let transactionsCountFailed = 0, transactionsCountSuccess = 0
+  rawBlock.transactions.map((tx) => {
+    if (tx.meta?.err) transactionsCountFailed += 1
+    else transactionsCountSuccess += 1
+  })
+
+  return {
+    _raw: rawBlock,
+    base: {
+      blockNo,
+      epoch: epochByBlock(blockNo),
+      ts: rawBlock.blockTime * 1000,
+      blockHash: rawBlock.blockhash,
+      prevBlockHash: rawBlock.previousBlockhash,
+      leader: rawBlock.rewards[0]?.pubkey || null,
+      leaderReward: lamportToSol(rawBlock.rewards[0]?.lamports),
+      transactionsCount: rawBlock.transactions.length,
+    },
+    transactions: rawBlock.transactions.map(buildBlockTransaction),
     transactionsCount: rawBlock.transactions.length,
-  },
-  transactions: rawBlock.transactions.map(buildBlockTransaction),
-  transactionsCount: rawBlock.transactions.length,
-});
+    transactionsCountFailed,
+    transactionsCountSuccess,
+  }
+};
