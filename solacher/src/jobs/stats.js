@@ -21,6 +21,12 @@ const { normalizeEpoch } = require('../lib/normalizers')
     solanaClient.getEpochInfo(),
   ])
 
+  if (!rawPerfSample || !rawPerfSample[0] || !epochInfo) {
+    console.error('Missing data', rawPerfSample, epochInfo)
+    if (workerParent) workerParent.postMessage('error')
+    else process.exit(1)
+  }
+
   const normalizedStats = {
     data: {
       epoch: normalizeEpoch(epochInfo),
