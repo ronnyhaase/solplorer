@@ -13,14 +13,21 @@ async function fetchData() {
   let data = []
 
   while (!done) {
-    const response = await request('https://api.coingecko.com/api/v3/coins/markets', {
-      searchParams: {
-        category: 'solana-ecosystem',
-        page,
-        per_page: 250,
-        vs_currency: 'usd',
-      },
-    }).json()
+    let response = null
+    try {
+      response = await request('https://api.coingecko.com/api/v3/coins/markets', {
+        searchParams: {
+          category: 'solana-ecosystem',
+          page,
+          per_page: 250,
+          vs_currency: 'usd',
+        },
+      }).json()
+    } catch (error) {
+      console.error('Request(s) failed for job "tokens"', error)
+      if (workerParent) workerParent.postMessage('error')
+      else process.exit(1)
+    }
 
     if (response.length === 0) {
       done = true

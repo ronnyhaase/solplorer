@@ -15,25 +15,32 @@ function calculateChange(oldVal, newVal) {
     ? workerData.data.redisUrl
     : process.env.REDIS_URL
 
-  const [rawPriceData, rawHistoryData, rawTvlData] = await Promise.all([
-    request('https://api.coingecko.com/api/v3/simple/price', {
-      searchParams: {
-        ids: 'solana',
-        vs_currencies: 'usd',
-        include_market_cap: true,
-        include_24hr_vol: true,
-        include_24hr_change: true,
-      },
-    }).json(),
-    request('https://api.coingecko.com/api/v3/coins/solana/market_chart', {
-      searchParams: {
-        vs_currency: 'usd',
-        days: 13,
-        interval: 'daily',
-      },
-    }).json(),
-    request('https://api.llama.fi/charts/Solana').json(),
-  ])
+  let rawPriceData = null, rawHistoryData = null, rawTvlData = null
+  try {
+    [rawPriceData, rawHistoryData, rawTvlData] = await Promise.all([
+      request('https://api.coingecko.com/api/v3/simple/price', {
+        searchParams: {
+          ids: 'solana',
+          vs_currencies: 'usd',
+          include_market_cap: true,
+          include_24hr_vol: true,
+          include_24hr_change: true,
+        },
+      }).json(),
+      request('https://api.coingecko.com/api/v3/coins/solana/market_chart', {
+        searchParams: {
+          vs_currency: 'usd',
+          days: 13,
+          interval: 'daily',
+        },
+      }).json(),
+      request('https://api.llama.fi/charts/Solana').json(),
+    ])
+  } catch (error) {
+    console.error('Request(s) failed for job "markets"', error)
+    if (workerParent) workerParent.postMessage('error')
+    else process.exit(1)
+  }
 
   const normalizedMarketsData = {
     data: {

@@ -17,10 +17,17 @@ const SOL_PER_LAMPORT = 0.000000001
 
   const solanaClient = new solana.Connection(solanaUrl)
 
-  const [rawSupplyData, rawValidatorsData] = await Promise.all([
-    solanaClient.getSupply({ excludeNonCirculatingAccountsList: true }),
-    solanaClient.getVoteAccounts(),
-  ]).then(([rawSupplyData, rawValidatorsData]) => [rawSupplyData.value, rawValidatorsData])
+  let rawSupplyData = null, rawValidatorsData = null
+  try {
+    [rawSupplyData, rawValidatorsData] = await Promise.all([
+      solanaClient.getSupply({ excludeNonCirculatingAccountsList: true }),
+      solanaClient.getVoteAccounts(),
+    ]).then(([rawSupplyData, rawValidatorsData]) => [rawSupplyData.value, rawValidatorsData])
+  } catch (error) {
+    console.error('Request(s) failed for job "supply"', error)
+    if (workerParent) workerParent.postMessage('error')
+    else process.exit(1)
+  }
 
   const activeStake = rawValidatorsData.current.reduce((total, v) => total + v.activatedStake, 0)
   const delinquentsStake = rawValidatorsData.delinquent.reduce((total, v) => total + v.activatedStake, 0)

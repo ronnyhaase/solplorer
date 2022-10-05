@@ -86,17 +86,24 @@ function mergeData (validators, validatorInfos, validatorImageUrls) {
 
   const solanaClient = new solana.Connection(solanaUrl)
 
-  const validators = await getValidators(solanaClient)
-  const validatorInfos = await getValidatorInfos(solanaClient)
-  const validatorImageUrls = await getValidatorImageUrls(validatorInfos)
+  let data = null
+  try {
+    const validators = await getValidators(solanaClient)
+    const validatorInfos = await getValidatorInfos(solanaClient)
+    const validatorImageUrls = await getValidatorImageUrls(validatorInfos)
 
-  const normalizedValidators = mergeData(validators, validatorInfos, validatorImageUrls)
-  const data = JSON.stringify({
-    data: normalizedValidators,
-    count: normalizedValidators.length,
-    type: 'list',
-    updatedAt: Date.now(),
-  })
+    const normalizedValidators = mergeData(validators, validatorInfos, validatorImageUrls)
+    data = JSON.stringify({
+      data: normalizedValidators,
+      count: normalizedValidators.length,
+      type: 'list',
+      updatedAt: Date.now(),
+    })
+  } catch (error) {
+    console.error('Request(s)/processing failed for job "validators"', error)
+    if (workerParent) workerParent.postMessage('error')
+    else process.exit(1)
+  }
 
   const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()

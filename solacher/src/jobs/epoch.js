@@ -16,7 +16,14 @@ const { normalizeEpoch } = require('../lib/normalizers');
 
   const solanaClient = new solana.Connection(solanaUrl)
 
-  const rawEpochInfo = await solanaClient.getEpochInfo()
+  let rawEpochInfo = null
+  try {
+    rawEpochInfo = await solanaClient.getEpochInfo()
+  } catch (error) {
+    console.error('Request(s) failed for job "epoch"', error)
+    if (workerParent) workerParent.postMessage('error')
+    else process.exit(1)
+  }
 
   const normalizedEpochInfo = {
     data: normalizeEpoch(rawEpochInfo),

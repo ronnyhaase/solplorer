@@ -61,9 +61,16 @@ function normalizeData([rawHistory, rawProtocols]) {
     ? workerData.data.redisUrl
     : process.env.REDIS_URL
 
-  const data = await fetchData()
-    .then(normalizeData)
-    .then(JSON.stringify)
+  let data = null
+  try {
+    data = await fetchData()
+      .then(normalizeData)
+      .then(JSON.stringify)
+  } catch (error) {
+    console.error('Request(s) / processing failed for job "tvl"', error)
+    if (workerParent) workerParent.postMessage('error')
+    else process.exit(1)
+  }
 
   const redisClient = redis.createClient({ url: redisUrl })
   await redisClient.connect()

@@ -16,10 +16,18 @@ const { normalizeEpoch } = require('../lib/normalizers')
 
   const solanaClient = new solana.Connection(solanaUrl)
 
-  const [rawPerfSample, epochInfo] = await Promise.all([
-    solanaClient.getRecentPerformanceSamples(1),
-    solanaClient.getEpochInfo(),
-  ])
+
+  let rawPerfSample = null, epochInfo = null
+  try {
+    [rawPerfSample, epochInfo] = await Promise.all([
+      solanaClient.getRecentPerformanceSamples(1),
+      solanaClient.getEpochInfo(),
+    ])
+  } catch (error) {
+    console.error('Request(s) failed for job "stats"', error)
+    if (workerParent) workerParent.postMessage('error')
+    else process.exit(1)
+  }
 
   if (!rawPerfSample || !rawPerfSample[0] || !epochInfo) {
     console.error('Missing data', rawPerfSample, epochInfo)
