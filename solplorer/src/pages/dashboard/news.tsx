@@ -7,6 +7,7 @@ const News = ({ news }) => {
       {!news ? 'Loading...' : (<div>
         {news.data.map(article => (
           <a
+            aria-label={`News link: ${article.title}`}
             className="d-block p-md odd:bg-inset no-underline text-inherit"
             key={article.url}
             href={article.url}

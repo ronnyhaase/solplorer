@@ -1,15 +1,15 @@
 :root {
   /* Colors */
-  --c-background: #2c2d30;
-  --c-danger: #ef4444;
-  --c-inset: #252629;
+  --c-background: #242933;
+  --c-danger: #EB9093;
+  --c-inset: #2e3440;
   --c-foreground: #fff;
-  --c-muted: #999999;
+  --c-muted: #88c0d0;
   --c-primary: #0EA5E9;
-  --c-outset: #35363a;
+  --c-outset: #383f4d;
   --c-solana-green: #14F195;
   --c-solana-purple: #9945FF;
-  --c-success: #10b981;
+  --c-success: #a3be8c;
 
   --c-link: var(--c-primary);
 
