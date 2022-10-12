@@ -39,7 +39,7 @@ const Epoch = ({ statsData }) => {
               </div>
               <Progress className="grow" min={0} max={100} value={epochProgress ? epochProgress : 0}></Progress>
             </div>
-            <Display className="text-inset text-xl">{nextEpoch}</Display>
+            <Display className="text-muted text-xl">{nextEpoch}</Display>
           </div>
           <div className="text-center">
             <span className="text-muted">Slot Range: </span>
