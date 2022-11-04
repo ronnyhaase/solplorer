@@ -4,7 +4,7 @@ const { parentPort: workerParent, workerData } = require('node:worker_threads')
 
 const redis = require('@redis/client')
 const solana = require('@solana/web3.js')
-const { normalizeEpoch } = require('../lib/normalizers')
+const { normalizeEpoch } = require('./lib/normalizers')
 
 ;(async function () {
   const redisUrl = workerParent

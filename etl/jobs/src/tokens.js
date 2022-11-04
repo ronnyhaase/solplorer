@@ -5,7 +5,7 @@ const { parentPort: workerParent, workerData } = require('node:worker_threads')
 const redis = require('@redis/client')
 const request = require('got-cjs').got
 
-const { pickAsWith } = require('../lib/utils')
+const { pickAsWith } = require('./lib/utils')
 
 async function fetchData() {
   let page = 1

@@ -7,7 +7,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def build_node_job(job_name):
-    return lambda: subprocess.run(["node", os.getcwd() + "/jobs/src" + job_name])
+    return lambda: subprocess.run(["node", os.getcwd() + "/jobs/src/" + job_name])
 
 
 def main():
