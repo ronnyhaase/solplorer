@@ -1,19 +1,54 @@
 from __future__ import annotations
 
+import json
+import logging
 import os
 import subprocess
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
+def log(message, level=logging.INFO, error=None):
+    output = {
+        "level": logging.getLevelName(level),
+        "message": message,
+    }
+    if error:
+        output["error"] = error
+    logger.log(level=level, msg=json.dumps(output, ensure_ascii=False))
+
+
+def log_error(message, error):
+    log(level=logging.ERROR, message=message, error=error)
+
+
+def log_warning(message):
+    log(level=logging.WARNING, message=message)
+
+
+def run_node_job(job_name):
+    result = subprocess.run(
+        ["node", os.getcwd() + "/jobs/src/" + job_name],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        encoding="utf-8",
+    )
+    if result.returncode == 0:
+        log('Job "{0}" completed.'.format(job_name))
+    else:
+        log_error('Job "{0}" failed.'.format(job_name), result.stdout)
+
+
 def build_node_job(job_name):
-    return lambda: subprocess.run(["node", os.getcwd() + "/jobs/src/" + job_name])
+    return lambda: run_node_job(job_name)
 
 
 def main():
-    """
-    main
-    """
+    logging.basicConfig(format="%(message)s", level=logging.INFO)
+    logging.getLogger("apscheduler").setLevel(logging.WARN)
+    global logger
+    logger = logging.getLogger(__name__)
+
     scheduler = BlockingScheduler(
         {
             "apscheduler.timezone": "UTC",
@@ -32,7 +67,9 @@ def main():
 
     try:
         scheduler.start()
+        log("Scheduler initialized and started")
     except (KeyboardInterrupt, SystemExit):
+        log_warning("Process interrupted")
         pass
 
 
