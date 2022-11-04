@@ -1,0 +1,6 @@
+APScheduler==3.9.1
+pytz==2022.4
+pytz-deprecation-shim==0.1.0.post0
+six==1.16.0
+tzdata==2022.5
+tzlocal==4.2
