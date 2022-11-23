@@ -1,15 +1,7 @@
-coverage:
-	coverage report
-
 format:
-	isort .
-	black .
-
+	poetry run isort .
+	poetry run black .
 lint:
-	flake8 .
-
-run:
-	python main.py
-
-tests:
-	pytest
+	poetry run flake8 .
+start:
+	poetry run python -m etl
