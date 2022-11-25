@@ -22,6 +22,10 @@ def now():
     return round(datetime.utcnow().timestamp() * 1000)
 
 
+def now_iso():
+    return datetime.utcnow().isoformat() + "Z"
+
+
 @curry
 def pick(picks, source):
     if not isinstance(picks, list) or not isinstance(source, dict):
