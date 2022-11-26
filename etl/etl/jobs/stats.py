@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from etl.connector import get_connections
 from etl.jobs.epoch import normalize_epoch
+from etl.utils import now
 
 
 def update_stats():
@@ -14,14 +15,19 @@ def update_stats():
 
     result = json.dumps(
         {
-            "epoch": normalize_epoch(raw_epoch),
-            "blockHeight": raw_epoch.block_height,
-            "slotHeight": raw_epoch.absolute_slot,
-            "transactionsCount": raw_epoch.transaction_count,
-            "tps": round(
-                raw_perf_samples[0].num_transactions
-                / raw_perf_samples[0].sample_period_secs
-            ),
+            "data": {
+                "epoch": normalize_epoch(raw_epoch),
+                "blockHeight": raw_epoch.block_height,
+                "slotHeight": raw_epoch.absolute_slot,
+                "transactionsCount": raw_epoch.transaction_count,
+                "tps": round(
+                    raw_perf_samples[0].num_transactions
+                    / raw_perf_samples[0].sample_period_secs
+                ),
+            },
+            "count": 0,
+            "type": "object",
+            "updatedAt": now(),
         }
     )
 

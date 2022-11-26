@@ -13,6 +13,8 @@ def normalize_tokens(raw_tokens):
             lambda raw_token: pick(
                 [
                     "id",
+                    "symbol",
+                    "name",
                     ["image", "imageUrl"],
                     ["current_price", "price"],
                     ["high_24h", "priceHigh_24h"],
