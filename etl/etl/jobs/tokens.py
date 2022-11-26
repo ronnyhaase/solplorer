@@ -65,7 +65,7 @@ def update_tokens():
         }
     )
 
-    redis.set("_tokens", result)
+    redis.set("tokens", result)
     redis.close()
 
     return result

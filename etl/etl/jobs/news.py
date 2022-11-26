@@ -45,7 +45,7 @@ def update_news():
         }
     )
 
-    redis.set("_news", result)
+    redis.set("news", result)
     redis.close()
 
     return result

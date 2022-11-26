@@ -45,7 +45,7 @@ def update_supply():
         }
     )
 
-    redis.set("_supply", result)
+    redis.set("supply", result)
     redis.close()
 
     print(stake_active, stake_delinquent)

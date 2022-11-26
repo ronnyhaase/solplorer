@@ -85,7 +85,7 @@ def update_markets():
         }
     )
 
-    redis.set("_markets", result)
+    redis.set("markets", result)
     redis.close()
 
     return result

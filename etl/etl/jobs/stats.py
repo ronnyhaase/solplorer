@@ -25,7 +25,7 @@ def update_stats():
         }
     )
 
-    redis.set("_stats", result)
+    redis.set("stats", result)
     redis.close()
 
     return result

@@ -36,7 +36,7 @@ def update_epoch():
         }
     )
 
-    redis.set("_epoch", result)
+    redis.set("epoch", result)
     redis.close()
 
     return result

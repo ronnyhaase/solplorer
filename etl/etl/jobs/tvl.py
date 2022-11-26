@@ -72,7 +72,7 @@ def update_tvl():
         }
     )
 
-    redis.set("_tvl", result)
+    redis.set("tvl", result)
     redis.close()
 
     return result
