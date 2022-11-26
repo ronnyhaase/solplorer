@@ -27,7 +27,7 @@ def now_iso():
 
 
 @curry
-def pick(picks, source):
+def pick(picks, source, enforce_unset=False):
     if not isinstance(picks, list) or not isinstance(source, dict):
         return source
     result = {}
@@ -43,6 +43,10 @@ def pick(picks, source):
                         if callable(transform)
                         else source[old_name]
                     )
+                elif enforce_unset and not source.get(old_name):
+                    result[new_name or old_name] = None
+            elif enforce_unset and not source.get(pick_key):
+                result[pick_key] = None
             else:
                 if src_key == pick_key:
                     result[src_key] = source[src_key]
