@@ -1,4 +1,5 @@
 from datetime import datetime
+import functools
 
 from dateutil.parser import parse as date_parse
 from toolz import curry
@@ -57,6 +58,9 @@ def safe_round(n, digits=None):
     """Rounds n but only when it is a float, otherwise returns it as is"""
     return round(n, digits) if type(n) == float else n
 
+@curry
+def sort(fn, seq):
+    return sorted(seq, key=functools.cmp_to_key(fn))
 
 def str_format_money(str_number):
     return round(float(str_number), 2)
