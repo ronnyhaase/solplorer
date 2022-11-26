@@ -12,7 +12,7 @@ def get_redis_connection():
 
 
 def get_solana_connection():
-    solana_client = Client(os.environ["SOLANA_RPC_URL"])
+    solana_client = Client(os.environ["SOLANA_RPC_URL"], timeout=30)
     if not solana_client.is_connected():
         raise Exception("Connection to Solana RPC failed")
     return solana_client
