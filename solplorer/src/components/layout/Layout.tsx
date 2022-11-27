@@ -9,6 +9,18 @@ const Layout = ({ children }) => {
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <script defer data-domain="solplorer.org" src="https://plausible.io/js/plausible.js"></script>
+        <title>Solplorer • Solana blockchain explorer</title>
+        <meta name="description" content="Solplorer - The independent and open-source Solana blockchain explorer"></meta>
+        <meta property="og:title" content="Solplorer • Solana blockchain explorer"></meta>
+        <meta property="og:descripion" content="Solplorer - The independent and open-source Solana blockchain explorer"></meta>
+        <meta property="og:url" content="https://solplorer.org"></meta>
+        <meta property="og:image" content="https://solplorer.org/assets/images/social-preview.jpg"></meta>
+        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta name="twitter:description" content="Solplorer - The independent and open-source Solana blockchain explorer"></meta>
+        <meta name="twitter:image" content="https://solplorer.org/assets/images/social-preview.jpg"></meta>
+        <meta name="twitter:image:alt" content="Solplorer • Solana blockchain explorer"></meta>
+        <meta name="twitter:site" content="@solplorer"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover"></meta>
       </Head>
       <header className="m-0 mb-md">
         <Logo />
