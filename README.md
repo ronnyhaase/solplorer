@@ -1,10 +1,10 @@
-# ![Logo](logo.png "Solplorer")<br> Solplorer
+# ![Logo](logo.jpg "Solplorer") Solplorer
 
 ## https://solplorer.org
 
-An independent and open-source (GPLv3) explorer for [Solana Blockchain](https://solana.com)
+The independent and open-source [Solana blockchain](https://solana.com) explorer
 
-![Current Screenshot](screenshot.png "Current Screenshot")
+![Current Screenshots](screenshots.jpg "Current Screenshots")
 
 Copyright © 2022 [Ronny Haase](https://ronnyhaase.com)
 
@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 All useable explorers for Solana are either built and / or backed by Validators, or people / companies with other commercial interests, or the Solana Foundation itself.
 
-I'm not saying this is bad per se (I eventually stake my SOL with them, too), but
+This is by no means wrong and means absolutely no disrespect or mistrust, but still
 
 **I felt an independent and open-source alternative is needed**.
 
