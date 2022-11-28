@@ -230,8 +230,6 @@ th {
   .sm\:text-center { text-align: center; }
 }
 
-.no-underline { text-decoration-line: none; }
-
 .whitespace-nowrap { white-space: nowrap; }
 
 .leading-none { line-height: 1; }
