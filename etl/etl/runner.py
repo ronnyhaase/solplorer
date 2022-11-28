@@ -1,5 +1,6 @@
-import logging
+import logging, sys
 
+from apscheduler.events import EVENT_JOB_ERROR
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from .jobs.epoch import update_epoch
@@ -22,10 +23,21 @@ class Runner:
                 "apscheduler.job_defaults.max_instances": "1",
             }
         )
+        self.scheduler.add_listener(
+            self.handle_scheduler_error, EVENT_JOB_ERROR
+        )
+
 
     @staticmethod
     def create(*args, **kwargs):
         return Runner(*args, **kwargs)
+
+
+    def handle_scheduler_error(self, ev):
+        self.logger.fatal("Unhandled job exception", ev.exception, ev.traceback)
+        self.scheduler.shutdown(False)
+        sys.exit(1)
+
 
     def run(self):
         self.scheduler.add_job(update_stats, "interval", seconds=15)
@@ -40,3 +52,7 @@ class Runner:
             self.scheduler.start()
         except (KeyboardInterrupt, SystemExit):
             self.logger.warn("Received exit signal, terminating.")
+        except Exception as error:
+            self.scheduler.shutdown(False)
+            self.logger.fatal("Unhandled exception", error)
+            sys.exit(1)
