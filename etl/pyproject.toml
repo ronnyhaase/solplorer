@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "etl"
+version = "0.0.0"
+description = ""
+authors = ["Ronny Haase <ronnyhaase@fastmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+start = "etl.__main__:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+redis = "^4.3.4"
+solana = "^0.28.0"
+apscheduler = "^3.9.1"
+python-dotenv = "^0.21.0"
+httpx = "^0.23.0"
+python-dateutil = "^2.8.2"
+toolz = "^0.12.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+pytest = "^7.2.0"
+pytest-cov = "^4.0.0"
+coverage = "^6.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
