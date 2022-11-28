@@ -13,8 +13,8 @@ const Logo = () => (
           </h1>
         </a>
       </Link>
-      <Link href="https://twitter.com/solplorer/status/1596979928826007552">
-        <a className="ml-sm no-underline">
+      <Link href="https://twitter.com/solplorer/status/1597198055199363072" target="_blank">
+        <a className="ml-sm no-underline" target="_blank">
           <sup>Alpha</sup>
         </a>
       </Link>
