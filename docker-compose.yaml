@@ -12,11 +12,11 @@ services:
       - 4000:3000
     volumes:
       - ./static:/home/static
-  solacher:
+  etl:
     depends_on:
       - redis
-    build: ./solacher
-    env_file: ./solacher/.env
+    build: ./etl
+    env_file: ./etl/.env
     environment:
       - REDIS_URL=redis://:sider@redis:6379
   solade:
