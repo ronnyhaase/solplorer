@@ -52,15 +52,18 @@ def normalize_tvl(raw_history, raw_protocols):
                                 "twitter",
                                 "url",
                             ],
-                            enforce_unset=True
+                            enforce_unset=True,
                         )(raw_protocol),
                         {
-                            "dominancePercent": (raw_protocol["chainTvls"]["Solana"] / total_tvl) * 100,
+                            "dominancePercent": (
+                                raw_protocol["chainTvls"]["Solana"] / total_tvl
+                            )
+                            * 100,
                             "tvl": raw_protocol["chainTvls"]["Solana"],
                         },
                     ),
                 ),
-                sort(lambda a, b: b["tvl"] - a["tvl"])
+                sort(lambda a, b: b["tvl"] - a["tvl"]),
             )(raw_protocols)
         ),
     }
