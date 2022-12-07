@@ -18,7 +18,7 @@ const NavItem = ({ children, curr, to }) => {
 
   return (
     <li className="pr-md whitespace-nowrap">
-      <Link href={to}>
+      <Link legacyBehavior href={to}>
         <a
           className={classNames(
             'd-block',
@@ -48,6 +48,7 @@ const Navigation = () => {
       <Container>
         <Nav>
           <NavItem curr={currentPath} to="/dashboard">Dashboard</NavItem>
+          <NavItem curr={currentPath} to="/nfts">NFTs</NavItem>
           <NavItem curr={currentPath} to="/tokens">Tokens</NavItem>
           <NavItem curr={currentPath} to="/protocols">Protocols &amp; TVL</NavItem>
           <NavItem curr={currentPath} to="/validators">Validators</NavItem>

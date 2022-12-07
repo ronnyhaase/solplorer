@@ -86,6 +86,7 @@ th {
   .md\:d-flex { display: flex !important; }
 }
 
+.overflow-hidden { overflow: hidden; }
 .overflow-scroll { overflow: scroll; }
 .overflow-x-auto { overflow-x: auto; }
 .overflow-y-hidden { overflow-y: hidden; }
@@ -96,6 +97,8 @@ th {
 .w-2\/3 { width: calc(200% / 3); }
 .w-1\/2 { width: 50%; }
 .w-1\/1 { width: 100%; }
+
+.max-w-full { max-width: 100%; }
 
 @media (min-width: 576px) {
   .sm\:w-1\/2 { width: 50%; }
@@ -110,6 +113,7 @@ th {
 
 .m-0 { margin: 0; }
 .ml-sm { margin-left: var(--space-sm); }
+.m-md { margin: var(--space-md); }
 .mx-md { margin-left: var(--space-md); margin-right: var(--space-md); }
 .my-md { margin-top: var(--space-md); margin-bottom: var(--space-md); }
 .mt-md { margin-top: var(--space-md); }
@@ -159,6 +163,7 @@ th {
 .border-collapse { border-collapse: collapse; }
 .border-solid { border-style: solid; }
 .border-0 { border-width: 0; }
+.border-1 { border-width: 1px; }
 .border-t { border-top-width: 1px; }
 .border-b { border-bottom-width: 1px; }
 .border-b-2 { border-bottom-width: 2px; }
@@ -180,8 +185,11 @@ th {
 
 .rounded { border-radius: 32767px; }
 .rounded-md { border-radius: var(--radius-md); }
+.rounded-tl-md { border-top-left-radius: var(--radius-md); }
+.rounded-bl-md { border-bottom-left-radius: var(--radius-md); }
 
 .flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
 .flex-wrap { flex-wrap: wrap; }
 .flex-nowrap { flex-wrap: nowrap; }
 .grow { flex-grow: 1; }
@@ -192,6 +200,7 @@ th {
 
 @media (min-width: 768px) {
   .md\:justify-start { justify-content: flex-start; }
+  .md\:flex-row { flex-direction: row; }
 }
 
 .list-none { list-style-type: none; }
@@ -230,9 +239,27 @@ th {
   .sm\:text-center { text-align: center; }
 }
 
+.text-ellipsis { text-overflow: ellipsis; }
+
 .whitespace-nowrap { white-space: nowrap; }
 
 .leading-none { line-height: 1; }
+
+/**/
+
+.VisuallyHidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/**/
 
 @keyframes fadeIn {
   from { opacity: 0; }

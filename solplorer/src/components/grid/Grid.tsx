@@ -9,7 +9,7 @@ type GridProps = StandardProps & {
 }
 
 const Grid = ({ className= '', children, columns = 2, ...rest }: GridProps) => (
-  <Box className={classNames(styles.grid, styles[`columns${columns}`], className)} {...rest}>{children}</Box>
+  <Box className={classNames(styles.grid, styles[`columns${columns}`], className as string)} {...rest}>{children}</Box>
 )
 
 export default Grid

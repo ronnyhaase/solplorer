@@ -36,6 +36,10 @@ export class DbService implements OnModuleDestroy {
     return this.db.get('news');
   }
 
+  getNftCollections() {
+    return this.db.get('nft-collections');
+  }
+
   getStats() {
     return this.db.get('stats');
   }

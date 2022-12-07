@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import Script from 'next/script'
+
 import Container from '../container'
 import Logo from './Logo'
 import Navigation from './Navigation'
@@ -6,9 +8,9 @@ import Navigation from './Navigation'
 const Layout = ({ children }) => {
   return (
     <>
+      <Script data-domain="solplorer.org" src="https://plausible.io/js/plausible.js" strategy="afterInteractive" />
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <script defer data-domain="solplorer.org" src="https://plausible.io/js/plausible.js"></script>
         <title>Solplorer • Solana blockchain explorer</title>
         <meta name="description" content="Solplorer - The independent and open-source Solana blockchain explorer"></meta>
         <meta property="og:title" content="Solplorer • Solana blockchain explorer"></meta>

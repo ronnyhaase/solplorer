@@ -22,8 +22,8 @@ const TR = ({ children, ...rest }) => (
   <tr {...rest}>{children}</tr>
 )
 
-const TH = ({ children }) => (
-  <th className="text-center">{children}</th>
+const TH = ({ children, ...rest }) => (
+  <th className="text-center" {...rest}>{children}</th>
 )
 
 const TD = ({ children, ...rest }) => (
