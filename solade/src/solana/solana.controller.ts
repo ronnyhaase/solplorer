@@ -50,6 +50,12 @@ export class SolanaController {
     return this.dbService.getNews();
   }
 
+  @Get('nft-collections')
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getNftCollections(): Promise<string> {
+    return this.dbService.getNftCollections();
+  }
+
   @Get('/supply')
   @Header('content-type', 'application/json; charset=utf-8')
   getSupply(): Promise<string> {
