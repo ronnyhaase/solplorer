@@ -48,6 +48,10 @@ export class DbService implements OnModuleDestroy {
     return this.db.get('supply');
   }
 
+  getTop10() {
+    return this.db.get('top10');
+  }
+
   getTokens() {
     return this.db.get('tokens');
   }

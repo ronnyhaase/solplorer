@@ -68,6 +68,12 @@ export class SolanaController {
     return this.dbService.getStats();
   }
 
+  @Get('top10')
+  @Header('content-type', 'application/json; charset=utf-8')
+  async getTop10(): Promise<string> {
+    return this.dbService.getTop10();
+  }
+
   @Get('/tvl')
   @Header('content-type', 'application/json; charset=utf-8')
   getTvl(): Promise<string> {
