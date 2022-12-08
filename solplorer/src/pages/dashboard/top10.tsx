@@ -62,4 +62,4 @@ const Top10 = ({ top10Data }) => (
   </Panel>
 )
 
-export { Top10 }
+export default Top10

@@ -5,7 +5,7 @@ import { Container, Grid } from '../../components'
 import Epoch from './epoch'
 import MarketAndSupply from './market-and-supply'
 import News from './news'
-import { Top10 } from './top10'
+import Top10 from './top10'
 
 const Dashboard = () => {
   const { data: news } = useSWR('/api/news', url => fetch(url).then((res) => res.json()))
