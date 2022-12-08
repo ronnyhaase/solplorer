@@ -11,6 +11,7 @@ from .jobs.nft_collections import update_nft_collections
 from .jobs.stats import update_stats
 from .jobs.supply import update_supply
 from .jobs.tokens import update_tokens
+from .jobs.top10 import update_top10
 from .jobs.tvl import update_tvl
 
 
@@ -41,10 +42,11 @@ class Runner:
         self.scheduler.add_job(update_epoch, "interval", minutes=10)
         self.scheduler.add_job(update_markets, "interval", minutes=15)
         self.scheduler.add_job(update_news, "interval", minutes=60)
-        self.scheduler.add_job(update_supply, "cron", hour=1, minute=0)
-        self.scheduler.add_job(update_tokens, "cron", hour=1, minute=5)
-        self.scheduler.add_job(update_tvl, "cron", hour=1, minute=10)
-        self.scheduler.add_job(update_nft_collections, "cron", hour=1, minute=15)
+        self.scheduler.add_job(update_top10, "cron", hour="*", minute=0)
+        self.scheduler.add_job(update_supply, "cron", hour=1, minute=5)
+        self.scheduler.add_job(update_tokens, "cron", hour=1, minute=10)
+        self.scheduler.add_job(update_tvl, "cron", hour=1, minute=15)
+        self.scheduler.add_job(update_nft_collections, "cron", hour=1, minute=20)
 
         try:
             self.scheduler.start()
