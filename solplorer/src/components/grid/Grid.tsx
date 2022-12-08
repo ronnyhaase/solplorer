@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-import Box from '../box'
+import { Box } from '../box'
 import StandardProps from '../StandardProps'
 import styles from './Grid.module.css'
 
@@ -12,4 +12,4 @@ const Grid = ({ className= '', children, columns = 2, ...rest }: GridProps) => (
   <Box className={classNames(styles.grid, styles[`columns${columns}`], className as string)} {...rest}>{children}</Box>
 )
 
-export default Grid
+export { Grid }

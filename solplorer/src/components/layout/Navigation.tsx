@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 
-import Container from '../container'
+import { Container } from '../container'
 
 const Nav = ({ children }) => (
   <ul className={classNames(

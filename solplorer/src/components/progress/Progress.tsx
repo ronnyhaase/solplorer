@@ -1,4 +1,4 @@
-import Box from '../box'
+import { Box } from '../box'
 import StandardProps from '../StandardProps'
 
 interface ProgressProps extends StandardProps {
@@ -28,4 +28,4 @@ const Progress = ({
   )
 }
 
-export default Progress
+export { Progress }

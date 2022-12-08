@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script'
 
-import Container from '../container'
+import { Container } from '../container'
 import Logo from './Logo'
 import Navigation from './Navigation'
 
@@ -48,4 +48,4 @@ const Layout = ({ children }) => {
   )
 }
 
-export default Layout
+export { Layout }
