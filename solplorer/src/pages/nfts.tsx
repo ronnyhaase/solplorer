@@ -88,12 +88,12 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                       <TD>
                         <NumberDisplay prefix="◎ "  val={collection.price.floor} />
                         {' '}
-                        <ChangeDisplay val={collection.price.floorChangePercent_24h} />
+                        <ChangeDisplay percent val={collection.price.floorChangePercent_24h} />
                       </TD>
                       <TD>
                         <NumberDisplay prefix="◎ " val={collection.price.avg} />
                         {' '}
-                        <ChangeDisplay val={collection.price.avgChangePercent_24h} />
+                        <ChangeDisplay percent val={collection.price.avgChangePercent_24h} />
                       </TD>
                       <TD>
                         <NumberDisplay prefix="◎ " val={collection.price.max} />
