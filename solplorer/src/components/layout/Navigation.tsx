@@ -18,23 +18,22 @@ const NavItem = ({ children, curr, to }) => {
 
   return (
     <li className="pr-md whitespace-nowrap">
-      <Link legacyBehavior href={to}>
-        <a
-          className={classNames(
-            'd-block',
-            'pb-xs',
-            'no-underline',
-            {
-              'text-inherit': active,
-              'text-muted': !active,
-              'border-solid': active,
-              'border-0': active,
-              'border-b-2': active,
-              'border-image-solana': active,
-            },
-        )}>
+      <Link
+        href={to}
+        className={classNames(
+          'd-block',
+          'pb-xs',
+          'no-underline',
+          {
+            'text-inherit': active,
+            'text-muted': !active,
+            'border-solid': active,
+            'border-0': active,
+            'border-b-2': active,
+            'border-image-solana': active,
+          },
+      )}>
           {children}
-        </a>
       </Link>
     </li>
   )
