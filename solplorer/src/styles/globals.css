@@ -1,5 +1,7 @@
 :root {
   /* Colors */
+  --c-pink: #B48EAD;
+
   --c-background: #242933;
   --c-danger: #EB9093;
   --c-inset: #2e3440;
@@ -219,6 +221,7 @@ th {
 .not-italic { font-style: normal; }
 
 .text-inherit { color: inherit }
+.text-pink { color: var(--c-pink) }
 .text-danger { color: var(--c-danger) }
 .text-inset { color: var(--c-inset) }
 .text-muted { color: var(--c-muted) }

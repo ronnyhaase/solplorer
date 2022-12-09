@@ -56,7 +56,7 @@ const Market = ({ marketData }) => {
         </tbody>
       </table>
       <div className="d-flex sm:d-block md:d-flex items-center mt-md whitespace-nowrap">
-        <CurrencyDisplay as="div" className="text-xl" short prefix="TVL " val={tvl} suffix={<>&nbsp;</>} />
+        <CurrencyDisplay as="div" className="text-xl text-pink" short prefix="TVL " val={tvl} suffix={<>&nbsp;</>} />
         <Display as="div" className={`text-${tvlChangeColor}`} prefix={tvlChangeSymbol + ' '} suffix=" %">{tvlChange}</Display>
       </div>
     </>
