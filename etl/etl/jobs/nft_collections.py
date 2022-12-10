@@ -34,7 +34,7 @@ def normalize_nft_collection(raw_collection):
         "name": raw_collection["project"]["display_name"],
         "slug": raw_collection["project"]["project_slug"],
         "description": raw_collection["project"]["description"],
-        "imageUrl": raw_collection["project"]["img_url"],
+        "imageUrl": raw_collection["project"]["img_url"].strip(),
         "isMinting": bool(raw_collection["project"]["is_minting"]),
         "urlTwitter": raw_collection["project"]["twitter"],
         "urlDiscord": raw_collection["project"]["discord"],
