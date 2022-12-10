@@ -15,6 +15,7 @@ const nextConfig = {
     domains: [
       'assets.coingecko.com',
       'icons.llama.fi',
+      'ckaumumkea.cloudimg.io',
     ],
   }
 }

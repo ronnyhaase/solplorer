@@ -1,5 +1,6 @@
 import request from 'got'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import { FaDiscord, FaTwitter, FaLink } from 'react-icons/fa'
 
@@ -59,9 +60,17 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                       <TD>{n + 1}</TD>
                       <TD>
                         <Box
-                          className="overflow-hidden text-ellipsis whitespace-nowrap"
+                          className="d-flex items-center py-xs overflow-hidden text-ellipsis whitespace-nowrap"
                           style={{ maxWidth: '28ch' }}
                         >
+                            <Image
+                              alt={collection.name}
+                              src={`https://ckaumumkea.cloudimg.io/${collection.imageUrl}?w=128&q=80`}
+                              className="rounded mr-sm"
+                              width={48}
+                              height={48}
+                            />
+                            {' '}
                             {collection.name}
                         </Box>
                       </TD>
