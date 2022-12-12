@@ -8,6 +8,7 @@ import {
   Box,
   ChangeDisplay,
   Container,
+  CurrencyDisplay,
   DateDisplay,
   Grid,
   NumberDisplay,
@@ -50,7 +51,7 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                     <TH>24h</TH>
                     <TH>7d</TH>
                     <TH>Listed</TH>
-                    <TH>Held</TH>
+                    <TH>Holders</TH>
                     <TH>Total</TH>
                   </TR>
                 </THead>
@@ -92,7 +93,7 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                           : null}
                       </TD>
                       <TD>
-                        <NumberDisplay short val={collection.marketCap} />
+                        <CurrencyDisplay currency="USD" short val={collection.marketCap} />
                       </TD>
                       <TD>
                         <NumberDisplay prefix="◎ "  val={collection.price.floor} />
@@ -107,9 +108,9 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                       <TD>
                         <NumberDisplay prefix="◎ " val={collection.price.max} />
                       </TD>
-                      <TD><NumberDisplay short val={collection.volume['1h']} /></TD>
-                      <TD><NumberDisplay short val={collection.volume['24h']} /></TD>
-                      <TD><NumberDisplay short val={collection.volume['7day']} /></TD>
+                      <TD><CurrencyDisplay currency="USD" short val={collection.volume['1h']} /></TD>
+                      <TD><CurrencyDisplay currency="USD" short val={collection.volume['24h']} /></TD>
+                      <TD><CurrencyDisplay currency="USD" short val={collection.volume['7day']} /></TD>
                       <TD><NumberDisplay short val={collection.supply.listed} /></TD>
                       <TD><NumberDisplay short val={collection.supply.holders} /></TD>
                       <TD><NumberDisplay short val={collection.supply.total} /></TD>

@@ -58,15 +58,15 @@ export default function Tokens({ tokenData }) {
                           {token.name}
                         </TD>
                         <TD>
-                          <CurrencyDisplay val={token.price} />
+                          <CurrencyDisplay currency="USD" val={token.price} />
                           {' '}
                           <ChangeDisplay percent val={token.priceChangePercent_24h} />
                         </TD>
                         <TD>
-                          <NumberDisplay short val={token.volume} />
+                          <CurrencyDisplay currency="USD" short val={token.volume} />
                         </TD>
                         <TD>
-                          <NumberDisplay short val={token.marketCap} />
+                          <CurrencyDisplay currency="USD" short val={token.marketCap} />
                           {' '}
                           <ChangeDisplay percent val={token.marketCapChangePercent_24h} />
                         </TD>
