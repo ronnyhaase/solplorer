@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaDiscord, FaLink, FaTwitter } from 'react-icons/fa'
 
-import { Box, ChangeDisplay, NumberDisplay, Panel, Table, TBody, TD, TH, THead, TR } from '../../components'
+import { Box, ChangeDisplay, CurrencyDisplay, NumberDisplay, Panel, Table, TBody, TD, TH, THead, TR } from '../../components'
 
 const Top10 = ({ top10Data }) => (
   <Panel>
@@ -55,7 +55,9 @@ const Top10 = ({ top10Data }) => (
                 </Link>
                 : null}
             </TD>
-            <TD><NumberDisplay short val={collection.volume['1h']} /></TD>
+            <TD>
+              <CurrencyDisplay currency="USD" short val={collection.volume['1h']} />
+            </TD>
             <TD>
               <NumberDisplay prefix="◎ "  val={collection.price.floor} />
               {' '}
