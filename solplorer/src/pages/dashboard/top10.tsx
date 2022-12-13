@@ -30,7 +30,7 @@ const Top10 = ({ top10Data }) => (
                 <Image
                   alt={collection.name}
                   src={`https://ckaumumkea.cloudimg.io/${collection.imageUrl}?w=128&q=80`}
-                  className="rounded mr-sm"
+                  className="rounded mr-sm overflow-hidden"
                   width={32}
                   height={32}
                 />

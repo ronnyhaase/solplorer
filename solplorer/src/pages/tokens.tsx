@@ -50,7 +50,14 @@ export default function Tokens({ tokenData }) {
                         </TD>
                         <TD>
                           <div className="d-flex items-center">
-                            <Image alt={`${token.name} Logo`} src={token.imageUrl} layout="fixed" width={16} height={16} />
+                            <Image
+                              alt={`${token.name} Logo`}
+                              src={token.imageUrl}
+                              layout="fixed"
+                              width={16}
+                              height={16}
+                              className="overflow-hidden"
+                            />
                             <span>&nbsp;{token.symbol.toUpperCase()}</span>
                           </div>
                         </TD>
