@@ -1,6 +1,14 @@
 import classNames from 'classnames'
+import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
 
 import styles from './table.module.css'
+
+// Fallback: ⬍⬆︎⬇︎ ⇅↑↓
+const SortingDisplay = ({ state = null, ...rest }: { state?: 'ASC' | 'DESC' | null }) => {
+  if (state === 'ASC') return (<FaSortUp {...rest} />)
+  else if (state === 'DESC') return (<FaSortDown {...rest} />)
+  else return (<FaSort className="text-background" {...rest} />)
+}
 
 const Table = ({ children, responsive = true }) => (
   <div className={classNames({ 'overflow-x-auto': responsive })}>
@@ -22,8 +30,8 @@ const TR = ({ children, ...rest }) => (
   <tr {...rest}>{children}</tr>
 )
 
-const TH = ({ children, ...rest }) => (
-  <th className="text-center" {...rest}>{children}</th>
+const TH = ({ children, className = null, ...rest }) => (
+  <th className={classNames('text-center', className)} {...rest}>{children}</th>
 )
 
 const TD = ({ children, ...rest }) => (
@@ -31,6 +39,7 @@ const TD = ({ children, ...rest }) => (
 )
 
 export {
+  SortingDisplay,
   TBody,
   TD,
   TH,
