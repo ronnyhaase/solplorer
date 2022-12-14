@@ -48,7 +48,7 @@ def normalize_tvl(raw_history, raw_protocols):
                                 ["logo", "imageUrl"],
                                 ["mcap", "marketCap"],
                                 "name",
-                                "symbol",
+                                ["symbol", "symbol", lambda s: None if s == "-" else s],
                                 "twitter",
                                 "url",
                             ],
