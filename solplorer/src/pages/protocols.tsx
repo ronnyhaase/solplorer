@@ -12,6 +12,7 @@ import {
   Panel,
 } from '../components'
 import { TableRenderer } from '../components/table-renderer'
+import { sortTableData } from '../components/table-renderer/helper'
 
 export default function Protocols({ tvlData }) {
   return (
@@ -61,19 +62,7 @@ export default function Protocols({ tvlData }) {
                   data={tvlData.data.protocols}
                   rowKeyColId="name"
                   onSortChange={(col, dir, updateData) => {
-                    const sortedData = tvlData.data.protocols.sort((colA, colB) => {
-                      let a = get(colA, col.id)
-                      let b = get(colB, col.id)
-
-                      if (a === null && typeof b === 'number') a = Number.MIN_SAFE_INTEGER
-                      if (a === null && typeof b === 'string') a = String.fromCodePoint(0x10ffff)
-                      if (typeof a === 'number' && b === null) b = Number.MIN_SAFE_INTEGER
-                      if (typeof a === 'string' && b === null) b = String.fromCodePoint(0x10ffff)
-
-                      if (a < b) return (dir === 'ASC') ? -1 : 1
-                      else if (a > b) return (dir === 'ASC') ? 1 : -1
-                      else return 0
-                    })
+                    const sortedData = tvlData.data.protocols.sort(sortTableData(col, dir))
                     updateData(sortedData)
                   }}
                 />) : null}
