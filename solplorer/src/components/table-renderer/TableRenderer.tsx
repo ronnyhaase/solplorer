@@ -18,6 +18,7 @@ type ColumnDefinition = {
   id: string,
   title: string,
   sortable?: boolean,
+  defaultSortOrder?: 'ASC' | 'DESC' | null
   renderContent?: (rowData: any) => JSX.Element,
 }
 
@@ -59,13 +60,16 @@ function TableRenderer({
   onSortChange = null,
   renderHeadContent = ({ children }) => (<>{children}</>)
 }: TableRendererProps) {
+  if (!Array.isArray(columns) || !Array.isArray(data)) return null
+  if (rowKeyColId == null) console.warn('rowKeyColId was not defined, we highly suggest to specify it to have a key for iterating')
+
   const [currData, setCurrData] = useState(data)
   const [currSortingColId, setCurrSortingColId] = useState(sortingColId)
   const [currSortingDirection, setCurrSortingDirection] = useState(sortingDirection)
 
   const handleSortClick = (col) => {
     const newSortingDirection = currSortingColId !== col.id
-      ? 'DESC'
+      ? col.defaultSortOrder || 'DESC'
       : nextSortingState(currSortingDirection)
     setCurrSortingColId(col.id)
     setCurrSortingDirection(newSortingDirection)
@@ -73,9 +77,6 @@ function TableRenderer({
     if (typeof(onSortChange) === 'function')
       onSortChange(col, newSortingDirection, setCurrData)
   }
-
-  if (!Array.isArray(columns) || !Array.isArray(data)) return null
-  if (rowKeyColId == null) console.warn('rowKeyColId was not defined, we highly suggest to specify it to have a key for iterating')
 
   return (
     <Table>

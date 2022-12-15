@@ -27,7 +27,7 @@ export default function Protocols({ tvlData }) {
               {tvlData ? (
                 <TableRenderer
                   columns={[
-                    { id: 'symbol', title: 'Symbol', sortable: true, renderContent: (protocol) => (
+                    { id: 'symbol', title: 'Symbol', sortable: true, defaultSortOrder: 'ASC', renderContent: (protocol) => (
                       <div className="d-flex items-center">
                         <Image
                           alt={`${protocol.name} Logo`}
@@ -39,8 +39,8 @@ export default function Protocols({ tvlData }) {
                         <span>&nbsp;{(protocol.symbol || '').toUpperCase()}</span>
                       </div>
                     )},
-                    { id: 'name', title: 'Name', sortable: true },
-                    { id: 'category', title: 'Category', sortable: true },
+                    { id: 'name', title: 'Name', sortable: true, defaultSortOrder: 'ASC' },
+                    { id: 'category', title: 'Category', sortable: true, defaultSortOrder: 'ASC' },
                     { id: 'tvl', title: 'TVL', sortable: true, renderContent: (protocol) => (
                       <>
                         <CurrencyDisplay short val={protocol.tvl} />

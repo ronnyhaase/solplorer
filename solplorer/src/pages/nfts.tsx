@@ -42,7 +42,7 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                   </>
                 )}
                 columns={[
-                  { id: 'name', title: 'Collection', sortable: true, renderContent: (collection) => (
+                  { id: 'name', title: 'Collection', sortable: true, defaultSortOrder: 'ASC', renderContent: (collection) => (
                     <Box
                       className="d-flex items-center py-xs overflow-hidden text-ellipsis whitespace-nowrap"
                       style={{ maxWidth: '28ch' }}
