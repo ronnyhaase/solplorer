@@ -65,6 +65,8 @@ export default function Protocols({ tvlData }) {
                     const sortedData = tvlData.data.protocols.sort(sortTableData(col, dir))
                     updateData(sortedData)
                   }}
+                  sortingColId="tvl"
+                  sortingDirection="DESC"
                 />) : null}
             </Panel>
           </Grid>
