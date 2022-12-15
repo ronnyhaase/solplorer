@@ -60,12 +60,12 @@ function TableRenderer({
   onSortChange = null,
   renderHeadContent = ({ children }) => (<>{children}</>)
 }: TableRendererProps) {
-  if (!Array.isArray(columns) || !Array.isArray(data)) return null
-  if (rowKeyColId == null) console.warn('rowKeyColId was not defined, we highly suggest to specify it to have a key for iterating')
-
   const [currData, setCurrData] = useState(data)
   const [currSortingColId, setCurrSortingColId] = useState(sortingColId)
   const [currSortingDirection, setCurrSortingDirection] = useState(sortingDirection)
+
+  if (!Array.isArray(columns) || !Array.isArray(data)) return null
+  if (rowKeyColId == null) console.warn('rowKeyColId was not defined, we highly suggest to specify it to have a key for iterating')
 
   const handleSortClick = (col) => {
     const newSortingDirection = currSortingColId !== col.id
