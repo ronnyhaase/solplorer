@@ -15,8 +15,8 @@ import {
   Panel,
   TH,
   TR,
+  TableRenderer,
 } from '../components'
-import { TableRenderer } from '../components/table-renderer'
 import { sortTableData } from '../components/table-renderer/helper'
 
 export default function NftCollectionsPage({ nftCollectionsData }) {

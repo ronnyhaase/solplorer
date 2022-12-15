@@ -9,15 +9,8 @@ import {
   Grid,
   NumberDisplay,
   Panel,
-  TBody,
-  TD,
-  TH,
-  THead,
-  TR,
-  Table,
-  DateDisplay,
+  TableRenderer,
 } from '../components'
-import { TableRenderer } from '../components/table-renderer'
 import { sortTableData } from '../components/table-renderer/helper'
 
 export default function Tokens({ tokenData }) {

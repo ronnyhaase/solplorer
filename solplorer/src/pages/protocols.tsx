@@ -1,5 +1,4 @@
 import request from 'got'
-import get from 'lodash/get'
 import Head from 'next/head'
 import Image from 'next/image'
 
@@ -10,8 +9,8 @@ import {
   Grid,
   NumberDisplay,
   Panel,
+  TableRenderer,
 } from '../components'
-import { TableRenderer } from '../components/table-renderer'
 import { sortTableData } from '../components/table-renderer/helper'
 
 export default function Protocols({ tvlData }) {
