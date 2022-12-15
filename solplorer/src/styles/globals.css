@@ -75,6 +75,8 @@ th {
   height: 100%;
 }
 
+.relative { position: relative; }
+
 .d-block { display: block; }
 .d-flex { display: flex; }
 .d-inline { display: inline; }
@@ -212,6 +214,9 @@ th {
 .bg-foreground { background-color: var(--c-foreground); }
 .bg-inset { background-color: var(--c-inset); }
 .odd\:bg-inset:nth-child(2n+1) { background-color: var(--c-background); }
+
+.hover\:bg-inset:hover { background-color: var(--c-inset); }
+
 .bg-outset { background-color: var(--c-outset); }
 
 .font-mono { font-family: 'Ubuntu Mono', monospace; }
@@ -222,6 +227,7 @@ th {
 .not-italic { font-style: normal; }
 
 .text-inherit { color: inherit }
+.text-background { color: var(--c-background) }
 .text-pink { color: var(--c-pink) }
 .text-danger { color: var(--c-danger) }
 .text-inset { color: var(--c-inset) }

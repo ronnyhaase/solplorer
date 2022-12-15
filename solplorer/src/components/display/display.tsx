@@ -49,11 +49,12 @@ const CurrencyDisplay = ({
   val,
   short = false,
   currency = 'USD',
+  maxDecimals = 2,
   ...rest
-}: DisplayProps & { val: number, short?: boolean, currency?: string }) => {
+}: DisplayProps & { val: number, short?: boolean, currency?: string, maxDecimals?: number }) => {
   const format: Intl.NumberFormatOptions = short
-    ? { style: 'currency', currency, notation: 'compact', compactDisplay: 'short' }
-    : { style: 'currency', currency }
+    ? { style: 'currency', currency, notation: 'compact', compactDisplay: 'short', minimumFractionDigits: 0, maximumFractionDigits: maxDecimals }
+    : { style: 'currency', currency, minimumFractionDigits: 0, maximumFractionDigits: maxDecimals }
 
   return (<NumberFormatDisplay val={val} format={format} {...rest} />)
 }
