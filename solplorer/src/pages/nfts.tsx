@@ -30,17 +30,6 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
           <Grid columns={1}>
             <Panel>
               {nftCollectionsData ? <TableRenderer
-                renderHeadContent={({ children }) => (
-                  <>
-                    <TR>
-                      <TH colSpan={4}>{' '}</TH>
-                      <TH colSpan={3}>Price</TH>
-                      <TH colSpan={3}>Volume</TH>
-                      <TH colSpan={3}>Supply</TH>
-                    </TR>
-                    {children}
-                  </>
-                )}
                 columns={[
                   { id: 'name', title: 'Collection', sortable: true, defaultSortOrder: 'ASC', renderContent: (collection) => (
                     <Box
@@ -124,6 +113,17 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                 }}
                 sortingColId="marketCap"
                 sortingDirection="DESC"
+                renderHeadContent={({ children }) => (
+                  <>
+                    <TR>
+                      <TH colSpan={4}>{' '}</TH>
+                      <TH colSpan={3}>Price</TH>
+                      <TH colSpan={3}>Volume</TH>
+                      <TH colSpan={3}>Supply</TH>
+                    </TR>
+                    {children}
+                  </>
+                )}
               /> : null}
               <div>
                   <div className="d-flex items-center justify-center my-md">
