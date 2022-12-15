@@ -3,13 +3,6 @@ import { useState } from 'react'
 
 import { SortingDisplay, TBody, TD, TH, THead, TR, Table } from '../table'
 
-type ColumnDefinition = {
-  id: string,
-  title: string,
-  sortable?: boolean,
-  renderContent?: (val: any) => JSX.Element,
-}
-
 const colKey = (rowKey, colKey) => {
   if (rowKey == null || colKey == null) return null
   else return `${rowKey}-${colKey}`
@@ -21,7 +14,15 @@ const nextSortingState = (currentState) => {
   else if (currentState === 'ASC') return 'DESC'
 }
 
+type ColumnDefinition = {
+  id: string,
+  title: string,
+  sortable?: boolean,
+  renderContent?: (rowData: any) => JSX.Element,
+}
+
 type ColumnDefinitions = Array<ColumnDefinition>
+
 type TableRendererProps = {
   /** Columns of the data */
   columns: ColumnDefinitions,
@@ -36,11 +37,16 @@ type TableRendererProps = {
   /** Direction by which the data are sorted, can be null if data are not sorted */
   sortingDirection?: 'ASC' | 'DESC' | null,
   /** Callback */
-  onSortChange: (
+  onSortChange?: (
     col: ColumnDefinition,
     direction: string,
     updateData: (sortedData: Array<any>) => void,
   ) => void | null
+  /**
+   * A render function or component, to add custom content into the THead
+   * Will get passed { children } with the auto-generated content
+   */
+  renderHeadContent?: ({ children}: { children: JSX.Element }) => JSX.Element,
 }
 
 function TableRenderer({
@@ -51,6 +57,7 @@ function TableRenderer({
   sortingColId = null,
   sortingDirection = null,
   onSortChange = null,
+  renderHeadContent = ({ children }) => (<>{children}</>)
 }: TableRendererProps) {
   const [currData, setCurrData] = useState(data)
   const [currSortingColId, setCurrSortingColId] = useState(sortingColId)
@@ -73,37 +80,39 @@ function TableRenderer({
   return (
     <Table>
       <THead>
-        <TR>
-          {displayRowNumbers ? (<TH>#</TH>) : null}
-          {columns.map(col => (
-            <TH
-              key={col.id || null}
-              className={col.sortable ? 'relative hover:bg-inset' : null}
-              style={{ paddingLeft: '22px', paddingRight: '22px' }}
-            >
-              {col.title}
-              {col.sortable
-                ? (
-                  <button
-                    onClick={() => handleSortClick(col)}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      border: 0,
-                      background: 'transparent',
-                      color: 'inherit',
-                      textAlign: 'right',
-                    }}
-                  >
-                    <SortingDisplay state={col.sortable && col.id === currSortingColId && currSortingDirection ? currSortingDirection : null} />
-                  </button>
-                ) : null}
-            </TH>
-          ))}
-        </TR>
+        {renderHeadContent({ children: (
+          <TR>
+            {displayRowNumbers ? (<TH>#</TH>) : null}
+            {columns.map(col => (
+              <TH
+                key={col.id || null}
+                className={col.sortable ? 'relative hover:bg-inset' : null}
+                style={{ paddingLeft: '22px', paddingRight: '22px' }}
+              >
+                {col.title}
+                {col.sortable
+                  ? (
+                    <button
+                      onClick={() => handleSortClick(col)}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 0,
+                        background: 'transparent',
+                        color: 'inherit',
+                        textAlign: 'right',
+                      }}
+                    >
+                      <SortingDisplay state={col.sortable && col.id === currSortingColId && currSortingDirection ? currSortingDirection : null} />
+                    </button>
+                  ) : null}
+              </TH>
+            ))}
+          </TR>
+        )})}
       </THead>
       <TBody>
         {currData.map((row, n) => (
