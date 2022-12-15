@@ -17,6 +17,8 @@ import {
   Table,
   DateDisplay,
 } from '../components'
+import { TableRenderer } from '../components/table-renderer'
+import { sortTableData } from '../components/table-renderer/helper'
 
 export default function Tokens({ tokenData }) {
   return (
@@ -29,75 +31,63 @@ export default function Tokens({ tokenData }) {
           <Grid columns={1}>
             <Panel>
               {tokenData ? (
-                <>
-                <Table>
-                  <THead>
-                    <TR>
-                      <TH>#</TH>
-                      <TH>Symbol</TH>
-                      <TH>Name</TH>
-                      <TH>Price</TH>
-                      <TH>Volume</TH>
-                      <TH>Market Cap.</TH>
-                      <TH>Supply (Circ. / Total)</TH>
-                    </TR>
-                  </THead>
-                  <TBody>
-                    {tokenData.data.map((token, n) => (
-                      <TR key={token.id}>
-                        <TD className="text-center">
-                          {n + 1}
-                        </TD>
-                        <TD>
-                          <div className="d-flex items-center">
-                            <Image
-                              alt={`${token.name} Logo`}
-                              src={token.imageUrl}
-                              layout="fixed"
-                              width={16}
-                              height={16}
-                              className="overflow-hidden"
-                            />
-                            <span>&nbsp;{token.symbol.toUpperCase()}</span>
-                          </div>
-                        </TD>
-                        <TD>
-                          {token.name}
-                        </TD>
-                        <TD>
-                          <CurrencyDisplay currency="USD" val={token.price} />
-                          {' '}
-                          <ChangeDisplay percent val={token.priceChangePercent_24h} />
-                        </TD>
-                        <TD>
-                          <CurrencyDisplay currency="USD" short val={token.volume} />
-                        </TD>
-                        <TD>
-                          <CurrencyDisplay currency="USD" short val={token.marketCap} />
-                          {' '}
-                          <ChangeDisplay percent val={token.marketCapChangePercent_24h} />
-                        </TD>
-                        <TD>
-                          <NumberDisplay short val={token.supplyCirculating} />
-                          {' '}/{' '}
-                          <NumberDisplay short val={token.supplyTotal} />
-                        </TD>
-                      </TR>
-                    ))}
-                  </TBody>
-                </Table>
-                <div>
-                  <div className="d-flex items-center justify-center my-md">
-                    <span>Data provided by</span>
-                    <a href="https://www.coingecko.com" className="d-flex">
-                      <img alt="CoinGecko" src="/assets/images/coingecko.svg" />
-                    </a>
-                  </div>
-                  <div className="text-center">
-                    Last updated: <DateDisplay val={new Date(tokenData.updatedAt)} dateStyle="long" />
-                  </div>
-                </div>
-              </>) : null}
+                <TableRenderer
+                  columns={[
+                    { id: 'symbol', title: 'Symbol', sortable: true, defaultSortOrder: 'ASC', renderContent: (token) => (
+                      <div className="d-flex items-center">
+                        <Image
+                          alt={`${token.name} Logo`}
+                          src={token.imageUrl}
+                          width={16}
+                          height={16}
+                          className="overflow-hidden"
+                        />
+                        <span>&nbsp;{token.symbol.toUpperCase()}</span>
+                      </div>
+                    )},
+                    { id: 'name', title: 'Name', sortable: true, defaultSortOrder: 'ASC', renderContent: (token) => (
+                      <div
+                        style={{ maxWidth: '24ch' }}
+                        className="overflow-hidden text-ellipsis whitespace-nowrap"
+                      >
+                        {token.name}
+                      </div>
+                    ) },
+                    { id: 'price', title: 'Price', sortable: true, renderContent: (token) => (
+                      <>
+                        <CurrencyDisplay currency="USD" maxDecimals={3} val={token.price} />
+                        {' '}
+                        <ChangeDisplay percent val={token.priceChangePercent_24h} />
+                      </>
+                    )},
+                    { id: 'volume', title: 'Volume', sortable: true, renderContent: (token) => (
+                      <CurrencyDisplay currency="USD" short val={token.volume} />
+                    )},
+                    { id: 'marketCap', title: 'Market Cap.', sortable: true, renderContent: (token) => (
+                      <>
+                        <CurrencyDisplay currency="USD" short val={token.marketCap} />
+                        {' '}
+                        <ChangeDisplay percent val={token.marketCapChangePercent_24h} />
+                      </>
+                    )},
+                    { id: 'supplyTotal', title: 'Supply (Circ. / Total)', renderContent: (token) => (
+                      <>
+                        <NumberDisplay short val={token.supplyCirculating} />
+                        {' '}/{' '}
+                        <NumberDisplay short val={token.supplyTotal} />
+                      </>
+                    )},
+                  ]}
+                  data={tokenData.data}
+                  rowKeyColId="id"
+                  onSortChange={(col, dir, updateData) => {
+                    const sortedData = tokenData.data.sort(sortTableData(col, dir))
+                    updateData(sortedData)
+                  }}
+                  sortingColId="marketCap"
+                  sortingDirection="DESC"
+                />
+              ) : null}
             </Panel>
           </Grid>
         </Container>
