@@ -1,3 +1,6 @@
-.table tbody tr:nth-child(odd) {
+.table tbody tr:nth-child(even) td, .table tbody tr:nth-child(even) th {
+  background-color: var(--c-outset);
+}
+.table tbody tr:nth-child(odd) td, .table tbody tr:nth-child(odd) th {
   background-color: var(--c-background);
 }

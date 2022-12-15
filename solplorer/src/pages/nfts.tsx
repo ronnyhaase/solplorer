@@ -31,11 +31,10 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
             <Panel>
               {nftCollectionsData ? <TableRenderer
                 columns={[
-                  { id: 'name', title: 'Collection', sortable: true, defaultSortOrder: 'ASC', renderContent: (collection) => (
-                    <Box
-                      className="d-flex items-center py-xs overflow-hidden text-ellipsis whitespace-nowrap"
-                      style={{ maxWidth: '28ch' }}
-                    >
+                  {
+                    id: 'imageUrl', title: 'Image', sortable: false,
+                    renderContent: (collection) => (
+                      <Box className="d-flex py-xs">
                         <Image
                           alt={collection.name}
                           src={`https://ckaumumkea.cloudimg.io/${collection.imageUrl}?w=128&q=80`}
@@ -43,29 +42,41 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                           width={48}
                           height={48}
                         />
-                        {' '}
-                        {collection.name}
+                      </Box>
+                    ),
+                    renderTHContent: ({ title }) => (<Box className="VisuallyHidden">{title}</Box>),
+                  },
+                  { id: 'name', title: 'Collection', sortable: true, defaultSortOrder: 'ASC', renderContent: (collection) => (
+                    <Box
+                      className="overflow-hidden text-ellipsis whitespace-nowrap"
+                      style={{ maxWidth: '24ch' }}
+                    >
+                      {collection.name}
                     </Box>
                   )},
-                  { id: 'links', title: 'Links', sortable: false, renderContent: (collection) => (
-                    <>
-                      {collection.urlWebsite
-                        ? <Link className="ml-sm" href={collection.urlWebsite}>
-                          <FaLink title="Website" />
-                        </Link>
-                        : null}
-                      {collection.urlTwitter
-                        ? <Link className="ml-sm" href={collection.urlTwitter}>
-                          <FaTwitter title="Twitter" />
-                        </Link>
-                        : null}
-                      {collection.urlDiscord
-                        ? <Link className="ml-sm" href={collection.urlDiscord}>
-                          <FaDiscord title="Discord" />
-                        </Link>
-                        : null}
-                    </>
-                  )},
+                  {
+                    id: 'links', title: 'Links', sortable: false,
+                    renderTHContent: ({ title }) => (<Box className="VisuallyHidden">{title}</Box>),
+                    renderContent: (collection) => (
+                      <>
+                        {collection.urlWebsite
+                          ? <Link className="ml-sm" href={collection.urlWebsite}>
+                            <FaLink title="Website" />
+                          </Link>
+                          : null}
+                        {collection.urlTwitter
+                          ? <Link className="ml-sm" href={collection.urlTwitter}>
+                            <FaTwitter title="Twitter" />
+                          </Link>
+                          : null}
+                        {collection.urlDiscord
+                          ? <Link className="ml-sm" href={collection.urlDiscord}>
+                            <FaDiscord title="Discord" />
+                          </Link>
+                          : null}
+                      </>
+                    )
+                  },
                   { id: 'marketCap', title: 'Market Cap.', sortable: true, renderContent: (collection) => (
                     <CurrencyDisplay currency="USD" short val={collection.marketCap} />
                   )},
@@ -107,6 +118,7 @@ export default function NftCollectionsPage({ nftCollectionsData }) {
                 ]}
                 data={nftCollectionsData.data}
                 rowKeyColId="hyperspace_id"
+                stickyFirstCol={true}
                 onSortChange={(col, dir, updateData) => {
                   const sortedData = nftCollectionsData.data.sort(sortTableData(col, dir))
                   updateData(sortedData)

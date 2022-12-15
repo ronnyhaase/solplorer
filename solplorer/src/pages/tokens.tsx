@@ -73,6 +73,7 @@ export default function Tokens({ tokenData }) {
                   ]}
                   data={tokenData.data}
                   rowKeyColId="id"
+                  stickyFirstCol={true}
                   onSortChange={(col, dir, updateData) => {
                     const sortedData = tokenData.data.sort(sortTableData(col, dir))
                     updateData(sortedData)

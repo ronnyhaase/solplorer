@@ -60,6 +60,7 @@ export default function Protocols({ tvlData }) {
                   ]}
                   data={tvlData.data.protocols}
                   rowKeyColId="name"
+                  stickyFirstCol={true}
                   onSortChange={(col, dir, updateData) => {
                     const sortedData = tvlData.data.protocols.sort(sortTableData(col, dir))
                     updateData(sortedData)

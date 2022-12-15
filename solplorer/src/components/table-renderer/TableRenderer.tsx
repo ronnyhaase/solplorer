@@ -20,6 +20,7 @@ type ColumnDefinition = {
   sortable?: boolean,
   defaultSortOrder?: 'ASC' | 'DESC' | null
   renderContent?: (rowData: any) => JSX.Element,
+  renderTHContent?: ({ title }: { title: string }) => JSX.Element,
 }
 
 type ColumnDefinitions = Array<ColumnDefinition>
@@ -37,6 +38,7 @@ type TableRendererProps = {
   sortingColId?: string | null,
   /** Direction by which the data are sorted, can be null if data are not sorted */
   sortingDirection?: 'ASC' | 'DESC' | null,
+  stickyFirstCol?: boolean,
   /** Callback */
   onSortChange?: (
     col: ColumnDefinition,
@@ -57,6 +59,7 @@ function TableRenderer({
   rowKeyColId = null,
   sortingColId = null,
   sortingDirection = null,
+  stickyFirstCol = false,
   onSortChange = null,
   renderHeadContent = ({ children }) => (<>{children}</>)
 }: TableRendererProps) {
@@ -90,7 +93,7 @@ function TableRenderer({
                 className={col.sortable ? 'relative hover:bg-inset' : null}
                 style={{ paddingLeft: '22px', paddingRight: '22px' }}
               >
-                {col.title}
+                {col.renderTHContent ? col.renderTHContent({ title: col.title}) : col.title}
                 {col.sortable
                   ? (
                     <button
@@ -119,8 +122,14 @@ function TableRenderer({
         {currData.map((row, n) => (
           <TR key={rowKeyColId ? get(row, rowKeyColId) : null}>
               {displayRowNumbers ? (<TD>{n + 1}</TD>) : null}
-              {columns.map(col => (
-                <TD key={colKey(get(row, rowKeyColId), col.id)}>
+              {columns.map((col, n) => (
+                <TD
+                  key={colKey(get(row, rowKeyColId), col.id)}
+                  style={{
+                    position: stickyFirstCol && n === 0 ? 'sticky' : 'static',
+                    left: stickyFirstCol && n === 0 ? 0 : 'auto',
+                  }}
+                >
                   {col.renderContent
                     ? col.renderContent(row)
                     : get(row, col.id)}
