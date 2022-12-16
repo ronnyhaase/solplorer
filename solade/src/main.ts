@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
@@ -15,6 +16,12 @@ import { AppModule } from './app/app.module';
   process.once('SIGINT', closeGracefully);
   process.once('SIGTERM', closeGracefully);
 
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }))
   app.enableCors({
     origin: process.env.CORS_ORIGINS
       ? process.env.CORS_ORIGINS.split(',')

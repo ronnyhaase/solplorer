@@ -1,11 +1,49 @@
-import { Controller, Get, Header, HttpException, HttpStatus, Param } from '@nestjs/common';
-import { InvalidAddressError } from '~/common/errors';
+import { Controller, Get, Header, HttpException, HttpStatus, Logger, Param, Query } from '@nestjs/common';
+import { Type } from 'class-transformer';
+import { IsIn, IsInt, IsOptional, IsString,  } from 'class-validator';
+import {get} from 'lodash'
 
+import { InvalidAddressError } from '~/common/errors';
 import { DbService } from '~/db/db.service';
 import { SolanaService } from './solana.service';
 
+class GetNftCollectionsQuery {
+  @IsInt()
+  @IsOptional()
+  @Type(() => Number)
+  limit: number;
+
+  @IsInt()
+  @IsOptional()
+  @Type(() => Number)
+  offset: number;
+
+  @IsString()
+  @IsOptional()
+  @IsIn([
+    '+marketCap',      '-marketCap',
+    '+name',           '-name',
+    '+price.avg',      '-price.avg',
+    '+price.floor',    '-price.floor',
+    '+price.max',      '-price.max',
+    '+supply.holders', '-supply.holders',
+    '+supply.listed',  '-supply.listed',
+    '+supply.total',   '-supply.total',
+    '+volume.1h',      '-volume.1h',
+    '+volume.24h',     '-volume.24h',
+    '+volume.7day',    '-volume.7day',
+  ])
+  orderBy: string;
+
+  @IsString()
+  @IsOptional()
+  q: string;
+}
+
 @Controller('/')
 export class SolanaController {
+  private readonly logger: Logger = new Logger(SolanaController.name);
+
   constructor(
     private dbService: DbService,
     private solanaService: SolanaService,
@@ -52,8 +90,58 @@ export class SolanaController {
 
   @Get('nft-collections')
   @Header('content-type', 'application/json; charset=utf-8')
-  async getNftCollections(): Promise<string> {
-    return this.dbService.getNftCollections();
+  async getNftCollections(
+    @Query() query: GetNftCollectionsQuery,
+  ): Promise<any> {
+    const start = global.performance.now();
+
+    const response = JSON.parse(
+      await this.dbService.getNftCollections()
+    )
+    let data = response.data
+
+    // Search
+    if (query.q) {
+      data = data.filter(collection => {
+        return collection.name && collection.name.toLowerCase().indexOf(query.q) !== -1;
+      });
+    }
+
+    // Sorting
+    if (query.orderBy) {
+      const id = query.orderBy.slice(1);
+      const dir = query.orderBy[0] === '+' ? 'ASC' : 'DESC';
+
+      data = data.sort((colA, colB) => {
+        let a = get(colA, id);
+        let b = get(colB, id);
+
+        if (a === null && typeof b === 'number') a = Number.MIN_SAFE_INTEGER;
+        if (a === null && typeof b === 'string') a = String.fromCodePoint(0x10ffff);
+        if (typeof a === 'number' && b === null) b = Number.MIN_SAFE_INTEGER;
+        if (typeof a === 'string' && b === null) b = String.fromCodePoint(0x10ffff);
+
+        if (a < b) return (dir === 'ASC') ? -1 : 1
+        else if (a > b) return (dir === 'ASC') ? 1 : -1
+        else return 0;
+      })
+    }
+
+    // Pagination
+    const limit = query.limit || 100;
+    const offset = query.offset || 0;
+    const count = data.length;
+    data = data.slice(offset, offset + limit);
+
+    const stop = global.performance.now();
+    this.logger.log(`getNftCollections performance: ${Math.round(stop-start)}ms`);
+
+    return {
+      data,
+      count,
+      type: "list",
+      updatedAt: response.updatedAt,
+    };
   }
 
   @Get('/supply')
