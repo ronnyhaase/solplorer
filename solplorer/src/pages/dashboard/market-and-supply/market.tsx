@@ -31,7 +31,7 @@ const Market = ({ marketData }) => {
       setTvlChangeColor('danger')
       setTvlChangeSymbol('▼')
     }
-  }, [marketData])
+  }, [change, tvlChange])
 
   return (
     <>
