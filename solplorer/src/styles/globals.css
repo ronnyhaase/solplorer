@@ -208,6 +208,7 @@ th {
 .justify-start { justify-content: flex-start; }
 
 @media (min-width: 768px) {
+  .md\:justify-evenly { justify-content: space-evenly; }
   .md\:justify-start { justify-content: flex-start; }
   .md\:flex-row { flex-direction: row; }
 }
