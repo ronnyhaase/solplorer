@@ -67,8 +67,6 @@ const calcPageCount = (count, limit) => Math.ceil(count / limit)
 const calcPageIndex = (limit, offset) => Math.ceil(offset / limit)
 
 export default function NftCollectionsPage({ initialNftCollectionsData }) {
-  const [nftCollections, setNftCollections] = useState(initialNftCollectionsData)
-
   const [pageCount, setPageCount] = useState(
     calcPageCount(initialNftCollectionsData.meta.count, initialNftCollectionsData.meta.limit)
   )
@@ -78,28 +76,25 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
   const nextPage = () => setPageIndex(pageIndex+1 < pageCount ? pageIndex + 1 : pageIndex)
   const prevPage = () => setPageIndex(pageIndex > 0 ? pageIndex - 1 : pageIndex)
 
-  const { data: updatedNftCollections } = useSWR(
+  const { data: nftCollections, isLoading } = useSWR(
     `/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=${pageIndex * PAGINATION_LIMIT}`,
     url => fetch(url).then((res) => res.json()),
     {
-      revalidateIfStale: false,
+      keepPreviousData: true,
       fallback: {
-        [`/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=0`]: initialNftCollectionsData
-      }
+        [`/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=0`]: initialNftCollectionsData,
+      },
     },
   )
 
   useEffect(() => {
-    if (updatedNftCollections) {
-      const { offset, limit, count } = updatedNftCollections.meta
-      const _pageCount = calcPageCount(count, limit)
-      const _pageIndex = calcPageIndex(limit, offset)
+    const { offset, limit, count } = nftCollections.meta
+    const _pageCount = calcPageCount(count, limit)
+    const _pageIndex = calcPageIndex(limit, offset)
 
-      setNftCollections(updatedNftCollections)
-      setPageCount(_pageCount)
-      setPageIndex(_pageIndex)
-    }
-  }, [updatedNftCollections])
+    setPageCount(_pageCount)
+    setPageIndex(_pageIndex)
+  }, [nftCollections])
 
   return (
     <>
