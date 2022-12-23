@@ -99,6 +99,8 @@ export class SolanaController {
       await this.dbService.getNftCollections()
     )
     let data = response.data
+    let orderBy = 'marketCap'
+    let orderDirection = 'DESC'
 
     // Search
     if (query.q) {
@@ -109,20 +111,20 @@ export class SolanaController {
 
     // Sorting
     if (query.orderBy) {
-      const id = query.orderBy.slice(1);
-      const dir = query.orderBy[0] === '+' ? 'ASC' : 'DESC';
+      orderBy = query.orderBy.slice(1);
+      orderDirection = query.orderBy[0] === '+' ? 'ASC' : 'DESC';
 
       data = data.sort((colA, colB) => {
-        let a = get(colA, id);
-        let b = get(colB, id);
+        let a = get(colA, orderBy);
+        let b = get(colB, orderBy);
 
         if (a === null && typeof b === 'number') a = Number.MIN_SAFE_INTEGER;
         if (a === null && typeof b === 'string') a = String.fromCodePoint(0x10ffff);
         if (typeof a === 'number' && b === null) b = Number.MIN_SAFE_INTEGER;
         if (typeof a === 'string' && b === null) b = String.fromCodePoint(0x10ffff);
 
-        if (a < b) return (dir === 'ASC') ? -1 : 1
-        else if (a > b) return (dir === 'ASC') ? 1 : -1
+        if (a < b) return (orderDirection === 'ASC') ? -1 : 1
+        else if (a > b) return (orderDirection === 'ASC') ? 1 : -1
         else return 0;
       })
     }
@@ -137,6 +139,7 @@ export class SolanaController {
     this.logger.log(`getNftCollections performance: ${Math.round(stop-start)}ms`);
 
     return {
+      meta: { offset, limit, count, orderBy, orderDirection },
       data,
       count,
       type: "list",
