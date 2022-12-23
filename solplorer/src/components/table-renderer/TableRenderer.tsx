@@ -40,10 +40,6 @@ type TableRendererProps = {
   sortingColId?: string | null,
   /** Direction by which the data are sorted, can be null if data are not sorted */
   sortingDirection?: 'ASC' | 'DESC' | null,
-  /** Current page */
-  page?: number,
-  /** Page count */
-  pageCount?: number,
   stickyFirstCol?: boolean,
   /** Sorting Callback */
   onSortChange?: (
@@ -56,21 +52,11 @@ type TableRendererProps = {
     filters: any,
     updateData: (filteredData: Array<any>) => void,
   ) => void | null
-  /** Pagination Callback */
-  onPageChange?: (
-    page: number,
-    updateData: (paginatedData: Array<any>) => void,
-  ) => void | null
   /**
    * A render function or component, to add custom content into the THead
    * Will get passed { children } with the auto-generated content
    */
   renderTHeadContent?: ({ children }: { children: JSX.Element }) => JSX.Element,
-  /**
-   * A render function or component, to build an action panel (search,
-   * pagination, filtering, etc.)
-   */
-  renderTopActionPanel?: (state: any, actions: any) => JSX.Element,
 }
 
 function TableRenderer({
@@ -80,28 +66,19 @@ function TableRenderer({
   rowKeyColId = null,
   sortingColId = null,
   sortingDirection = null,
-  page = 1,
-  pageCount = 1,
   stickyFirstCol = false,
   onFiltersChange = noop,
-  onPageChange = noop,
   onSortChange = null,
   renderTHeadContent = ({ children }) => (<>{children}</>),
-  renderTopActionPanel = noop,
 }: TableRendererProps) {
   const [currData, setCurrData] = useState(data)
   const [filters, setFilters] = useState({})
-  const [currPage, setCurrPage] = useState(page)
   const [currSortingColId, setCurrSortingColId] = useState(sortingColId)
   const [currSortingDirection, setCurrSortingDirection] = useState(sortingDirection)
 
   useEffect(() => {
     onFiltersChange(filters, setCurrData)
   }, [filters])
-
-  useEffect(() => {
-    onPageChange(currPage, setCurrData)
-  }, [currPage])
 
   if (!Array.isArray(columns) || !Array.isArray(data)) return null
   if (rowKeyColId == null) console.warn('rowKeyColId was not defined, we highly suggest to specify it to have a key for iterating')
@@ -119,14 +96,6 @@ function TableRenderer({
 
   return (
     <>
-      {renderTopActionPanel(
-        { filters, page: currPage, pageCount },
-        {
-          setFilters,
-          nextPage: () => setCurrPage(currPage < pageCount ? currPage + 1 : currPage),
-          prevPage: () => setCurrPage(currPage > 1 ? currPage - 1 : currPage),
-        },
-      )}
       <Table>
         <THead>
           {renderTHeadContent({ children: (

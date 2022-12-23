@@ -30,7 +30,7 @@ const TR = ({ children, ...rest }) => (
   <tr {...rest}>{children}</tr>
 )
 
-const TH = ({ children, className = null, ...rest }) => (
+const TH = ({ children, className = null, sortable = false, defaultSortingDirection = 'DESC', ...rest }) => (
   <th className={classNames('text-center', className)} {...rest}>{children}</th>
 )
 
