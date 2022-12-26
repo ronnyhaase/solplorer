@@ -202,6 +202,14 @@ th {
   .lg\:border-r { border-right-width: 1px; }
 }
 
+.opacity-50 { opacity: 0.5; }
+.opacity-100 { opacity: 1; }
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .rounded { border-radius: 32767px; }
 .rounded-sm { border-radius: var(--radius-sm); }
 .rounded-md { border-radius: var(--radius-md); }

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { FaDiscord, FaTwitter, FaLink, FaArrowLeft, FaArrowRight, FaSearch } from 'react-icons/fa'
 import useDebounce from 'react-use/lib/useDebounce'
 import useSWR from 'swr'
+import clx from 'classnames'
 
 import {
   Box,
@@ -89,11 +90,11 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
 
   useEffect(() => {
     const { offset, limit, count } = nftCollections.meta
-    const _pageCount = calcPageCount(count, limit)
-    const _pageIndex = calcPageIndex(limit, offset)
+    const pageCount = calcPageCount(count, limit)
+    const pageIndex = calcPageIndex(limit, offset)
 
-    setPageCount(_pageCount)
-    setPageIndex(_pageIndex)
+    setPageCount(pageCount)
+    setPageIndex(pageIndex)
   }, [nftCollections])
 
   return (
@@ -106,7 +107,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
           <Panel>
             {true ? (<>
             <TableActions pageIndex={pageIndex} pageCount={pageCount} prevPage={prevPage} nextPage={nextPage} />
-            <Table>
+            <Table className={clx({'opacity-50': isLoading, 'opacity-100': !isLoading}, 'transition-opacity')}>
               <THead>
                 <TR>
                   <TH colSpan={5}>{' '}</TH>
