@@ -97,13 +97,15 @@ export class SolanaController {
 
     const response = JSON.parse(
       await this.dbService.getNftCollections()
-    )
-    let data = response.data
-    let orderBy = 'marketCap'
-    let orderDirection = 'DESC'
+    );
+    let data = response.data;
+    let orderBy = 'marketCap';
+    let orderDirection = 'DESC';
+    let filters: any = {};
 
     // Search
     if (query.q) {
+      filters.q = query.q;
       data = data.filter(collection => {
         return collection.name && collection.name.toLowerCase().indexOf(query.q) !== -1;
       });
@@ -139,7 +141,7 @@ export class SolanaController {
     this.logger.log(`getNftCollections performance: ${Math.round(stop-start)}ms`);
 
     return {
-      meta: { offset, limit, count, orderBy, orderDirection },
+      meta: { offset, limit, count, orderBy, orderDirection, filters },
       data,
       count,
       type: "list",
