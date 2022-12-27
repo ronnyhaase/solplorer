@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { FaDiscord, FaTwitter, FaLink, FaArrowLeft, FaArrowRight, FaSearch } from 'react-icons/fa'
+import { FaDiscord, FaTwitter, FaLink, FaArrowLeft, FaArrowRight, FaSearch, FaTimesCircle } from 'react-icons/fa'
 import useDebounce from 'react-use/lib/useDebounce'
 import useSWR from 'swr'
 import clx from 'classnames'
@@ -26,6 +26,7 @@ import {
   TBody,
   Table,
   TD,
+  IconButton,
 } from '../components'
 
 const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, setFilters }) => {
@@ -63,6 +64,7 @@ const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, 
           value={searchVal}
           onInput={el => setSearchVal(el.target.value)}
         />
+        <IconButton onClick={el => setSearchVal('')}><FaTimesCircle /></IconButton>
       </Box>
     </Box>
   )

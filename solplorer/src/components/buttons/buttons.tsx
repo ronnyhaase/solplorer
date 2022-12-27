@@ -15,6 +15,18 @@ const Button = ({ children, className = '', ...rest }) => (
   </button>
 )
 
+const IconButton = ({ children, className = '', ...rest }) => (
+  <Button
+    className={cls(
+      styles.IconButton,
+      className,
+    )}
+    {...rest}
+  >
+    {children}
+  </Button>
+)
+
 const ButtonGroup = ({ children, className = '', ...rest }) => (
   <Box
     className={cls(styles.ButtonGroup, className)}
@@ -27,4 +39,5 @@ const ButtonGroup = ({ children, className = '', ...rest }) => (
 export {
   Button,
   ButtonGroup,
+  IconButton,
 }
