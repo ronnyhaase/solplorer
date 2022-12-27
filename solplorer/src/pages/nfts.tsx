@@ -28,12 +28,18 @@ import {
   TD,
 } from '../components'
 
-const TableActions = ({ pageIndex, pageCount, prevPage, nextPage }) => {
+const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, setFilters }) => {
   const [searchVal, setSearchVal] = useState('')
 
-  // useDebounce(() => {
-  //   actions.setFilters({ search: searchVal })
-  // }, 500, [searchVal])
+  useDebounce(() => {
+    if(searchVal.trim()) {
+      setFilters({ q: encodeURI(searchVal.trim()) })
+      setPageIndex(0)
+    } else {
+      setFilters({})
+      setPageIndex(0)
+    }
+  }, 500, [searchVal])
 
   return (
     <Box className="d-flex flex-col md:flex-row justify-evenly bg-slant p-md rounded-md rounded-tr-md">
@@ -77,8 +83,14 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
   const nextPage = () => setPageIndex(pageIndex+1 < pageCount ? pageIndex + 1 : pageIndex)
   const prevPage = () => setPageIndex(pageIndex > 0 ? pageIndex - 1 : pageIndex)
 
+  const [filters, setFilters] = useState({})
+
+  let url = `/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=${pageIndex * PAGINATION_LIMIT}`
+  Object.keys(filters).forEach(key => {
+    url += `&${key}=${filters[key]}`
+  })
   const { data: nftCollections, isLoading } = useSWR(
-    `/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=${pageIndex * PAGINATION_LIMIT}`,
+    url,
     url => fetch(url).then((res) => res.json()),
     {
       keepPreviousData: true,
@@ -89,12 +101,13 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
   )
 
   useEffect(() => {
-    const { offset, limit, count } = nftCollections.meta
+    const { offset, limit, count, filters } = nftCollections.meta
     const pageCount = calcPageCount(count, limit)
     const pageIndex = calcPageIndex(limit, offset)
 
     setPageCount(pageCount)
     setPageIndex(pageIndex)
+    setFilters(filters)
   }, [nftCollections])
 
   return (
@@ -105,8 +118,14 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
       <main className="grow">
         <Container>
           <Panel>
-            {true ? (<>
-            <TableActions pageIndex={pageIndex} pageCount={pageCount} prevPage={prevPage} nextPage={nextPage} />
+            <TableActions
+              pageIndex={pageIndex}
+              pageCount={pageCount}
+              prevPage={prevPage}
+              nextPage={nextPage}
+              setPageIndex={setPageIndex}
+              setFilters={setFilters}
+            />
             <Table className={clx({'opacity-50': isLoading, 'opacity-100': !isLoading}, 'transition-opacity')}>
               <THead>
                 <TR>
@@ -190,7 +209,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
                     <TD><NumberDisplay prefix="◎ " val={collection.price.max} /></TD>
                     <TD><CurrencyDisplay currency="USD" short val={collection.volume['1h']} /></TD>
                     <TD><CurrencyDisplay currency="USD" short val={collection.volume['24h']} /></TD>
-                    <TD><CurrencyDisplay currency="USD" short val={collection.volume['7d']} /></TD>
+                    <TD><CurrencyDisplay currency="USD" short val={collection.volume['7day']} /></TD>
                     <TD><NumberDisplay short val={collection.supply.listed} /></TD>
                     <TD><NumberDisplay short val={collection.supply.holders} /></TD>
                     <TD><NumberDisplay short val={collection.supply.total} /></TD>
@@ -208,7 +227,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
               <div className="text-center">
                 Last updated: <DateDisplay val={new Date(nftCollections.updatedAt)} dateStyle="long" />
               </div>
-            </div></>) : null}
+            </div>
           </Panel>
         </Container>
       </main>
