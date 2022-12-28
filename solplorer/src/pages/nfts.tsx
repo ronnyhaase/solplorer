@@ -281,9 +281,9 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
               </TBody>
             </Table>
             <div>
-              <div className="d-flex items-center justify-center my-md">
-                <span>Data provided by</span>
-                <a href="https://hyperspace.xyz/" className="d-flex">
+              <div className="my-md text-center">
+                Data provided by<br />
+                <a href="https://hyperspace.xyz/" target="_blank">
                   <img alt="Hyperspace" src="/assets/images/hyperspace.svg" />
                 </a>
               </div>

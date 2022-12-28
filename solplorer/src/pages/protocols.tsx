@@ -6,6 +6,7 @@ import {
   ChangeDisplay,
   Container,
   CurrencyDisplay,
+  DateDisplay,
   Grid,
   NumberDisplay,
   Panel,
@@ -68,6 +69,17 @@ export default function Protocols({ tvlData }) {
                   sortingColId="tvl"
                   sortingDirection="DESC"
                 />) : null}
+              <div>
+                <div className="my-md text-center">
+                  Data provided by<br />
+                  <a href="https://defillama.com" target="_blank">
+                    <img alt="DefiLlama" src="/assets/images/defillama.svg" />
+                  </a>
+                </div>
+                <div className="text-center">
+                  Last updated: <DateDisplay val={new Date(tvlData.updatedAt)} dateStyle="long" />
+                </div>
+              </div>
             </Panel>
           </Grid>
         </Container>
