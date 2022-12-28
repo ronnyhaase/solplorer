@@ -112,7 +112,7 @@ export class SolanaController {
     }
 
     // Sorting
-    if (query.orderBy) {
+    if (query.orderBy && query.orderBy !== '-marketCap') {
       orderBy = query.orderBy.slice(1);
       orderDirection = query.orderBy[0] === '+' ? 'ASC' : 'DESC';
 
