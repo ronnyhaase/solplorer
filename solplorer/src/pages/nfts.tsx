@@ -27,6 +27,7 @@ import {
   Table,
   TD,
   IconButton,
+  SortingDisplay,
 } from '../components'
 
 const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, setFilters }) => {
@@ -34,7 +35,7 @@ const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, 
 
   useDebounce(() => {
     if(searchVal.trim()) {
-      setFilters({ q: encodeURI(searchVal.trim()) })
+      setFilters({ q: searchVal.trim() })
       setPageIndex(0)
     } else {
       setFilters({})
@@ -70,6 +71,44 @@ const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, 
   )
 }
 
+const nextSortDirection = (currDirection, defaultDirection) => {
+  if (currDirection === null) return defaultDirection || 'DESC'
+  else if (currDirection === 'DESC') return 'ASC'
+  else return 'DESC'
+}
+
+const SortableTH = ({
+  colId,
+  direction = null,
+  defaultDirection = null,
+  updateSorting,
+  children,
+}) => {
+  return (
+    <TH className="relative">
+      <div className="relative d-flex items-center px-sm hover:bg-inset">
+        <div className="grow mr-xs">
+          {children}
+        </div>
+        <SortingDisplay state={direction} />
+        <button
+          onClick={() => updateSorting(colId, direction, defaultDirection)}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            border: 0,
+            background: 'transparent',
+            color: 'inherit',
+          }}
+        />
+      </div>
+    </TH>
+  )
+}
+
 const PAGINATION_LIMIT = 100
 
 const calcPageCount = (count, limit) => Math.ceil(count / limit)
@@ -85,19 +124,34 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
   const nextPage = () => setPageIndex(pageIndex+1 < pageCount ? pageIndex + 1 : pageIndex)
   const prevPage = () => setPageIndex(pageIndex > 0 ? pageIndex - 1 : pageIndex)
 
-  const [filters, setFilters] = useState({})
+  const [filters, setFilters] = useState(initialNftCollectionsData.meta.filters)
+
+  const [sorting, setSorting] = useState({
+    by: initialNftCollectionsData.meta.orderBy,
+    dir: initialNftCollectionsData.meta.orderDirection,
+  })
+  const updateSorting = (colId, currDir, defaultDir) => {
+    let dir = defaultDir || 'DESC'
+    if (colId === sorting.by) {
+      if (currDir === 'ASC') dir = 'DESC'
+      else if (currDir === 'DESC') dir = 'ASC'
+      setSorting({ by: colId, dir: dir})
+    } else {
+      setSorting({ by: colId, dir })
+    }
+  }
+  const getSortingForColId = colId => colId === sorting.by ? sorting.dir : null
 
   let url = `/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=${pageIndex * PAGINATION_LIMIT}`
-  Object.keys(filters).forEach(key => {
-    url += `&${key}=${filters[key]}`
-  })
+  Object.keys(filters).forEach(key => { url += `&${key}=${encodeURIComponent(filters[key])}` })
+  url += '&orderBy=' + encodeURIComponent(`${sorting.dir === 'ASC' ? '+' : '-'}${sorting.by}`)
   const { data: nftCollections, isLoading } = useSWR(
     url,
     url => fetch(url).then((res) => res.json()),
     {
       keepPreviousData: true,
       fallback: {
-        [`/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=0`]: initialNftCollectionsData,
+        [`/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=0&orderBy=-marketCap`]: initialNftCollectionsData,
       },
     },
   )
@@ -139,18 +193,18 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
                 <TR>
                   <TH>#</TH>
                   <TH><Box className="VisuallyHidden">Image</Box></TH>
-                  <TH id="name" sortable defaultSortingDirection="ASC">Collection</TH>
+                  <SortableTH colId="name" defaultDirection="ASC" direction={getSortingForColId('name')} updateSorting={updateSorting}>Collection</SortableTH>
                   <TH><Box className="VisuallyHidden">Links</Box></TH>
-                  <TH id="marketCap" sortable>Market Cap.</TH>
-                  <TH id="price.floor" sortable>Floor</TH>
-                  <TH id="price.avg" sortable>Avg</TH>
-                  <TH id="price.max" sortable>High</TH>
-                  <TH id="volume.1h" sortable>1h</TH>
-                  <TH id="volume.24h" sortable>1d</TH>
-                  <TH id="volume.7d" sortable>7d</TH>
-                  <TH id="supply.listed" sortable>Listed</TH>
-                  <TH id="supply.holders" sortable>Holders</TH>
-                  <TH id="supply.total" sortable>Total</TH>
+                  <SortableTH colId="marketCap" direction={getSortingForColId('marketCap')} updateSorting={updateSorting}>Market Cap.</SortableTH>
+                  <SortableTH colId="price.floor" direction={getSortingForColId('price.floor')} updateSorting={updateSorting}>Floor</SortableTH>
+                  <SortableTH colId="price.avg" direction={getSortingForColId('price.avg')} updateSorting={updateSorting}>Avg</SortableTH>
+                  <SortableTH colId="price.max" direction={getSortingForColId('price.max')} updateSorting={updateSorting}>High</SortableTH>
+                  <SortableTH colId="volume.1h" direction={getSortingForColId('volume.1h')} updateSorting={updateSorting}>1h</SortableTH>
+                  <SortableTH colId="volume.24h" direction={getSortingForColId('volume.24h')} updateSorting={updateSorting}>1d</SortableTH>
+                  <SortableTH colId="volume.7day" direction={getSortingForColId('volume.7day')} updateSorting={updateSorting}>7d</SortableTH>
+                  <SortableTH colId="supply.listed" direction={getSortingForColId('supply.listed')} updateSorting={updateSorting}>Listed</SortableTH>
+                  <SortableTH colId="supply.holders" direction={getSortingForColId('supply.holders')} updateSorting={updateSorting}>Holders</SortableTH>
+                  <SortableTH colId="supply.total" direction={getSortingForColId('supply.total')} updateSorting={updateSorting}>Total</SortableTH>
                 </TR>
               </THead>
               <TBody>

@@ -131,6 +131,7 @@ th {
 .mb-xl { margin-bottom: var(--space-xl); }
 .ml-sm { margin-left: var(--space-sm); }
 .ml-md { margin-left: var(--space-md); }
+.mr-xs { margin-right: var(--space-xs); }
 .mr-sm { margin-right: var(--space-sm); }
 .mr-md { margin-right: var(--space-md); }
 

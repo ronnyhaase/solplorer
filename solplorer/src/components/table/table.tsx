@@ -10,7 +10,7 @@ const SortingDisplay = ({ state = null, ...rest }: { state?: 'ASC' | 'DESC' | nu
   else return (<FaSort className="text-background" {...rest} />)
 }
 
-const Table = ({ children, className, responsive = true, ...rest }) => (
+const Table = ({ children, className = '', responsive = true, ...rest }) => (
   <div className={classNames({ 'overflow-x-auto': responsive })}>
     <table className={classNames(styles.table, 'w-full border-collapse text-sm md:text-md whitespace-nowrap', className)} {...rest}>
       {children}
@@ -30,7 +30,7 @@ const TR = ({ children, ...rest }) => (
   <tr {...rest}>{children}</tr>
 )
 
-const TH = ({ children, className = null, sortable = false, defaultSortingDirection = 'DESC', ...rest }) => (
+const TH = ({ children, className = null, ...rest }) => (
   <th className={classNames('text-center', className)} {...rest}>{children}</th>
 )
 
