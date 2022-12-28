@@ -78,6 +78,10 @@ th {
 }
 
 .relative { position: relative; }
+.sticky { position: sticky; }
+@media (min-width: 768px) {
+  .md\:sticky { position: sticky; }
+}
 
 .d-block { display: block; }
 .d-flex { display: flex; }
@@ -96,6 +100,14 @@ th {
 .overflow-scroll { overflow: scroll; }
 .overflow-x-auto { overflow-x: auto; }
 .overflow-y-hidden { overflow-y: hidden; }
+
+.z-10 { z-index: 10; }
+
+.top-0 { top: 0; }
+.left-0 { left: 0; }
+@media (min-width: 768px) {
+  .md\:left-0 { left: 0; }
+}
 
 .w-auto { width: auto; }
 .w-full { width: 100%; }
@@ -153,12 +165,13 @@ th {
 .p-0 { padding: 0; }
 .p-1px { padding: 1px; }
 
-.py-xs { padding-top: var(--space-xs); padding-bottom: var(--space-xs);}
+.p-xs { padding: var(--space-xs); }
+.py-xs { padding-top: var(--space-xs); padding-bottom: var(--space-xs); }
 .pb-xs { padding-bottom: var(--space-xs); }
 
 .p-sm { padding: var(--space-sm); }
-.px-sm { padding-left: var(--space-sm); padding-right: var(--space-sm);}
-.py-sm { padding-top: var(--space-sm); padding-bottom: var(--space-sm);}
+.px-sm { padding-left: var(--space-sm); padding-right: var(--space-sm); }
+.py-sm { padding-top: var(--space-sm); padding-bottom: var(--space-sm); }
 
 .p-md { padding: var(--space-md); }
 .pt-md { padding-top: var(--space-md); }

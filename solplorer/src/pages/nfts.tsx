@@ -218,8 +218,8 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
                 {nftCollections.data.map(collection => (
                   <TR key={collection.hyperspace_id}>
                     <TD>{collection.rank}</TD>
-                    <TD>
-                      <Box className="d-flex py-xs">
+                    <TD className="sticky left-0">
+                      <Box className="d-flex p-xs">
                         <Box style={{ width: '48px', height: '48px', overflow: 'hidden' }}>
                           <Image
                             alt={collection.name}
@@ -231,7 +231,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
                         </Box>
                       </Box>
                     </TD>
-                    <TD>
+                    <TD className="md:sticky" style={{ left: '58px' }}>
                       <Box
                         className="overflow-hidden text-ellipsis whitespace-nowrap"
                         style={{ maxWidth: '24ch' }}
