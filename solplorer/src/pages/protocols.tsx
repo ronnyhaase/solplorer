@@ -72,7 +72,7 @@ export default function Protocols({ tvlData }) {
               <div>
                 <div className="my-md text-center">
                   Data provided by<br />
-                  <a href="https://defillama.com" target="_blank">
+                  <a href="https://defillama.com" target="_blank" rel="noreferrer">
                     <img alt="DefiLlama" src="/assets/images/defillama.svg" />
                   </a>
                 </div>

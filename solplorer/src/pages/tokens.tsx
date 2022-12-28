@@ -86,7 +86,7 @@ export default function Tokens({ tokenData }) {
             <div>
               <div className="my-md text-center">
                 Data provided by<br />
-                <a href="https://coingecko.com/" target="_blank">
+                <a href="https://coingecko.com/" target="_blank" rel="noreferrer">
                   <img alt="Coingecko" src="/assets/images/coingecko.svg" />
                 </a>
               </div>

@@ -283,7 +283,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
             <div>
               <div className="my-md text-center">
                 Data provided by<br />
-                <a href="https://hyperspace.xyz/" target="_blank">
+                <a href="https://hyperspace.xyz/" target="_blank" rel="noreferrer">
                   <img alt="Hyperspace" src="/assets/images/hyperspace.svg" />
                 </a>
               </div>
