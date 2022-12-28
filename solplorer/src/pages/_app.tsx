@@ -1,3 +1,5 @@
+import '../../scripts/wdyr'
+
 import 'ronalize.css'
 
 import '../styles/fonts.css'

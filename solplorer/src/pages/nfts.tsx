@@ -30,16 +30,17 @@ import {
   SortingDisplay,
 } from '../components'
 
-const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, setFilters }) => {
+const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, filters, setFilters }) => {
   const [searchVal, setSearchVal] = useState('')
 
   useDebounce(() => {
-    if(searchVal.trim()) {
-      setFilters({ q: searchVal.trim() })
-      setPageIndex(0)
+    const newSearchVal = searchVal.trim()
+    if (newSearchVal) {
+      if (filters && filters.q !== newSearchVal) setFilters({ q: newSearchVal })
+      if (pageIndex !== 0) setPageIndex(0)
     } else {
-      setFilters({})
-      setPageIndex(0)
+      if (filters.q) setFilters({})
+      if (pageIndex !== 0) setPageIndex(0)
     }
   }, 500, [searchVal])
 
@@ -69,12 +70,6 @@ const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, 
       </Box>
     </Box>
   )
-}
-
-const nextSortDirection = (currDirection, defaultDirection) => {
-  if (currDirection === null) return defaultDirection || 'DESC'
-  else if (currDirection === 'DESC') return 'ASC'
-  else return 'DESC'
 }
 
 const SortableTH = ({
@@ -149,6 +144,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
     url,
     url => fetch(url).then((res) => res.json()),
     {
+      revalidateOnMount: false,
       keepPreviousData: true,
       fallback: {
         [`/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=0&orderBy=-marketCap`]: initialNftCollectionsData,
@@ -157,13 +153,23 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
   )
 
   useEffect(() => {
-    const { offset, limit, count, filters } = nftCollections.meta
-    const pageCount = calcPageCount(count, limit)
-    const pageIndex = calcPageIndex(limit, offset)
+    const {
+      offset,
+      limit,
+      count,
+      filters: newFilters,
+      orderBy: newOrderBy,
+      orderDirection: newOrderDirection
+    } = nftCollections.meta
+    const newPageCount = calcPageCount(count, limit)
+    const newPageIndex = calcPageIndex(limit, offset)
 
-    setPageCount(pageCount)
-    setPageIndex(pageIndex)
-    setFilters(filters)
+    if (newPageCount !== pageCount) setPageCount(newPageCount)
+    if (newPageIndex !== pageIndex) setPageIndex(newPageIndex)
+    if (newFilters.q !== filters.q) setFilters(newFilters)
+    if (newOrderBy !== sorting.by || newOrderDirection !== sorting.dir) {
+      setSorting({ by: newOrderBy, dir: newOrderDirection })
+    }
   }, [nftCollections])
 
   return (
@@ -180,6 +186,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
               prevPage={prevPage}
               nextPage={nextPage}
               setPageIndex={setPageIndex}
+              filters={filters}
               setFilters={setFilters}
             />
             <Table className={clx({'opacity-50': isLoading, 'opacity-100': !isLoading}, 'transition-opacity')}>
