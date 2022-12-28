@@ -46,7 +46,7 @@ const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, 
 
   return (
     <Box className="d-flex flex-col md:flex-row justify-evenly bg-slant p-md rounded-md rounded-tr-md">
-      <Box className="d-flex items-center md:w-1/2">
+      <Box className="d-flex justify-center md:justify-start items-center md:w-1/2">
         <ButtonGroup className="mr-sm">
           <Button onClick={() => prevPage()}>
             <FaArrowLeft /><span className="VisuallyHidden">Previous page</span>
