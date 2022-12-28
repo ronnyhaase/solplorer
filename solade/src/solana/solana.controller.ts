@@ -107,7 +107,7 @@ export class SolanaController {
     if (query.q) {
       filters.q = query.q;
       data = data.filter(collection => {
-        return collection.name && collection.name.toLowerCase().indexOf(query.q) !== -1;
+        return collection.name && collection.name.toLowerCase().indexOf(query.q.toLowerCase()) !== -1;
       });
     }
 
