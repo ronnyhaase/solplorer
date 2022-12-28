@@ -1,0 +1,26 @@
+.Button {
+  display: inline-flex;
+  padding: var(--space-sm);
+  border: 2px solid var(--c-muted);
+  background-color: transparent;
+  color: var(--c-muted);
+}
+.Button:hover, .Button:active {
+  border-color: var(--c-foreground);
+  color: var(--c-foreground);
+}
+
+.ButtonGroup > .Button:first-child {
+  border-right-width: 1px;
+  border-top-left-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-sm);
+}
+.ButtonGroup > .Button:last-child {
+  border-left-width: 1px;
+  border-top-right-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.IconButton, .IconButton:hover, .IconButton:active {
+  border-color: transparent;
+}

@@ -7,7 +7,7 @@ import { Container } from '../container'
 const Nav = ({ children }) => (
   <ul className={classNames(
     'd-flex', 'overflow-x-auto', 'overflow-y-hidden', 'flex-nowrap',
-    'justify-evenly', 'list-none', 'm-0', 'p-0'
+    'justify-start', 'md:justify-evenly', 'list-none', 'm-0', 'p-0'
   )}>
     {children}
   </ul>
