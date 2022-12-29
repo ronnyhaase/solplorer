@@ -41,16 +41,16 @@ export default function Protocols({ tvlData }) {
                     )},
                     { id: 'name', title: 'Name', sortable: true, defaultSortOrder: 'ASC' },
                     { id: 'category', title: 'Category', sortable: true, defaultSortOrder: 'ASC' },
-                    { id: 'tvl', title: 'TVL', sortable: true, renderContent: (protocol) => (
+                    { id: 'tvl.current', title: 'TVL', sortable: true, renderContent: (protocol) => (
                       <>
-                        <CurrencyDisplay short val={protocol.tvl} />
+                        <CurrencyDisplay short val={protocol.tvl.current} />
                         {' '}
-                        <ChangeDisplay percent val={protocol.change_24h} />
+                        <ChangeDisplay percent val={protocol.tvl.change_24h} />
                       </>
                     )},
-                    { id: 'dominancePercent', title: 'Dominance', sortable: true, renderContent: (protocol) => (
+                    { id: 'tvl.dominancePercent', title: 'Dominance', sortable: true, renderContent: (protocol) => (
                       <>
-                        <NumberDisplay val={protocol.dominancePercent} suffix=" %" />
+                        <NumberDisplay val={protocol.tvl.dominancePercent} suffix=" %" />
                       </>
                     )},
                     { id: 'marketCap', title: 'Market Cap.', sortable: true, renderContent: (protocol) => (
@@ -66,7 +66,7 @@ export default function Protocols({ tvlData }) {
                     const sortedData = tvlData.data.protocols.sort(sortTableData(col, dir))
                     updateData(sortedData)
                   }}
-                  sortingColId="tvl"
+                  sortingColId="tvl.current"
                   sortingDirection="DESC"
                 />) : null}
               <div>
