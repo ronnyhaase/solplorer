@@ -47,7 +47,7 @@ export default function Tokens({ tokenData }) {
                         {token.name}
                       </div>
                     ) },
-                    { id: 'price', title: 'Price', sortable: true, renderContent: (token) => (
+                    { id: 'price.current', title: 'Price', sortable: true, renderContent: (token) => (
                       <>
                         <CurrencyDisplay currency="USD" maxDecimals={3} val={token.price.current} />
                         {' '}
@@ -57,7 +57,7 @@ export default function Tokens({ tokenData }) {
                     { id: 'volume', title: 'Volume', sortable: true, renderContent: (token) => (
                       <CurrencyDisplay currency="USD" short val={token.volume} />
                     )},
-                    { id: 'marketCap', title: 'Market Cap.', sortable: true, renderContent: (token) => (
+                    { id: 'marketCap.current', title: 'Market Cap.', sortable: true, renderContent: (token) => (
                       <>
                         <CurrencyDisplay currency="USD" short val={token.marketCap.current} />
                         {' '}
