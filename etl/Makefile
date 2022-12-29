@@ -2,7 +2,7 @@ format:
 	poetry run isort .
 	poetry run black .
 lint:
-	poetry run flake8 .
+	poetry run black . --diff --color
 start:
 	poetry run python -m etl
 run-jobs:
