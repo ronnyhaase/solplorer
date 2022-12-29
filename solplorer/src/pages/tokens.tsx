@@ -49,9 +49,9 @@ export default function Tokens({ tokenData }) {
                     ) },
                     { id: 'price', title: 'Price', sortable: true, renderContent: (token) => (
                       <>
-                        <CurrencyDisplay currency="USD" maxDecimals={3} val={token.price} />
+                        <CurrencyDisplay currency="USD" maxDecimals={3} val={token.price.current} />
                         {' '}
-                        <ChangeDisplay percent val={token.priceChangePercent_24h} />
+                        <ChangeDisplay percent val={token.price.changePercent_24h} />
                       </>
                     )},
                     { id: 'volume', title: 'Volume', sortable: true, renderContent: (token) => (
@@ -59,17 +59,20 @@ export default function Tokens({ tokenData }) {
                     )},
                     { id: 'marketCap', title: 'Market Cap.', sortable: true, renderContent: (token) => (
                       <>
-                        <CurrencyDisplay currency="USD" short val={token.marketCap} />
+                        <CurrencyDisplay currency="USD" short val={token.marketCap.current} />
                         {' '}
-                        <ChangeDisplay percent val={token.marketCapChangePercent_24h} />
+                        <ChangeDisplay percent val={token.marketCap.changePercent_24h} />
                       </>
                     )},
-                    { id: 'supplyTotal', title: 'Supply (Circ. / Total)', renderContent: (token) => (
+                    { id: 'supply', title: 'Supply (Circ. / Total)', renderContent: (token) => (
                       <>
-                        <NumberDisplay short val={token.supplyCirculating} />
+                        <NumberDisplay short val={token.supply.circulating} />
                         {' '}/{' '}
-                        <NumberDisplay short val={token.supplyTotal} />
+                        <NumberDisplay short val={token.supply.total} />
                       </>
+                    )},
+                    { id: 'fdv', title: 'FDV', sortable: true, renderContent: (token) => (
+                      <><NumberDisplay short val={token.fdv} /></>
                     )},
                   ]}
                   data={tokenData.data}
