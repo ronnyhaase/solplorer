@@ -29,10 +29,11 @@ const Top10 = ({ top10Data }) => (
             >
                 <Image
                   alt={collection.name}
-                  src={`https://ckaumumkea.cloudimg.io/${collection.imageUrl}?w=128&q=80`}
-                  className="rounded mr-sm"
+                  src={collection.imageUrl}
+                  quality={80}
                   width={32}
                   height={32}
+                  className="rounded mr-sm"
                 />
                 {' '}
                 {collection.name}

@@ -12,6 +12,8 @@ const nextConfig = {
     ]
   },
   images: {
+    loader: 'custom',
+    loaderFile: './src/loaders/image.js',
     domains: [
       'assets.coingecko.com',
       'icons.llama.fi',

@@ -223,10 +223,11 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
                         <Box style={{ width: '48px', height: '48px', overflow: 'hidden' }}>
                           <Image
                             alt={collection.name}
-                            src={`https://ckaumumkea.cloudimg.io/${collection.imageUrl}?w=128&q=80`}
-                            className="rounded mr-sm"
+                            src={collection.imageUrl}
+                            quality={80}
                             width={48}
                             height={48}
+                            className="rounded mr-sm"
                           />
                         </Box>
                       </Box>
