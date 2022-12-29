@@ -17,7 +17,7 @@ def normalize_tvl(raw_history, raw_protocols):
             map(
                 pick(
                     [
-                        ["date", "ts", s_to_ms],
+                        ["date", "ts", lambda val, _: s_to_ms(val)],
                         ["totalLiquidityUSD", "tvl"],
                     ]
                 ),
@@ -32,38 +32,38 @@ def normalize_tvl(raw_history, raw_protocols):
                     and "Solana" in raw_protocol["chainTvls"]
                 ),
                 map(
-                    lambda raw_protocol: merge(
-                        pick(
+                    pick(
+                        [
+                            ["symbol", "symbol", lambda s, _: None if s == "-" else s],
+                            "name",
+                            "description",
+                            ["logo", "imageUrl"],
+                            ["twitter", "urlTwitter"],
+                            ["url", "urlWebsite"],
+                            ["listedAt", "listedAt", lambda val, _: s_to_ms(val)],
+                            ["mcap", "marketCap"],
                             [
-                                [
-                                    "category",
-                                    "category",
-                                    lambda c: "DEX" if c == "Dexes" else c,
-                                ],
-                                "change_1h",
-                                "change_7d",
-                                ["change_1d", "change_24h"],
-                                "description",
-                                ["listedAt", "listedAt", s_to_ms],
-                                ["logo", "imageUrl"],
-                                ["mcap", "marketCap"],
-                                "name",
-                                ["symbol", "symbol", lambda s: None if s == "-" else s],
-                                "twitter",
-                                "url",
+                                "category",
+                                "category",
+                                lambda c, _: "DEX" if c == "Dexes" else c,
                             ],
-                            enforce_unset=True,
-                        )(raw_protocol),
-                        {
-                            "dominancePercent": (
-                                raw_protocol["chainTvls"]["Solana"] / total_tvl
-                            )
-                            * 100,
-                            "tvl": raw_protocol["chainTvls"]["Solana"],
-                        },
+                            [
+                                "chainTvls",
+                                "tvl",
+                                lambda _, dic: {
+                                    "current": dic["chainTvls"]["Solana"],
+                                    "change_7day": dic["change_7d"],
+                                    "change_24h": dic["change_1d"],
+                                    "change_1h": dic["change_1h"],
+                                    "dominancePercent": (dic["chainTvls"]["Solana"] / total_tvl)
+                                    * 100,
+                                },
+                            ],
+                        ],
+                        enforce_unset=True,
                     ),
                 ),
-                sort(lambda a, b: b["tvl"] - a["tvl"]),
+                sort(lambda a, b: b["tvl"]["current"] - a["tvl"]["current"]),
             )(raw_protocols)
         ),
     }
