@@ -40,7 +40,7 @@ def pick(picks, source, enforce_unset=False):
                 transform = pick_key[2] if len(pick_key) > 2 else None
                 if src_key == old_name:
                     result[new_name or old_name] = (
-                        transform(source[old_name])
+                        transform(source[old_name], source)
                         if callable(transform)
                         else source[old_name]
                     )
