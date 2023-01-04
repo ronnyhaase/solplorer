@@ -16,16 +16,22 @@ from .jobs.tvl import update_tvl
 
 
 class Runner:
-    def __init__(self, loglevel=logging.WARN):
-        self.logger = logging.getLogger(__name__)
+    def __init__(self, loghandler=logging.StreamHandler(), loglevel=logging.WARN):
+        self.logger = logging.getLogger("solplorer.etl.Runner")
         self.logger.setLevel(loglevel)
 
         self.scheduler = BlockingScheduler(
             {
                 "apscheduler.timezone": "UTC",
-                "apscheduler.job_defaults.max_instances": "1",
+                "apscheduler.job_defaults.max_instances": "2",
             }
         )
+        ap_logger = logging.getLogger('apscheduler')
+        ap_logger.handler = []
+        ap_logger.setLevel(loglevel)
+        ap_logger.addHandler(loghandler)
+
+
         self.scheduler.add_listener(self.handle_scheduler_error, EVENT_JOB_ERROR)
 
     @staticmethod
