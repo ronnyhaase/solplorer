@@ -1,0 +1,11 @@
+DESCRIPTION >
+    Daily Active Users
+
+SCHEMA >
+    `date` DateTime `json:$.date`,
+    `active_users` UInt32 `json:$.active_users`
+
+ENGINE "MergeTree"
+ENGINE_KEY_COLUMNS "date"
+ENGINE_PARTITION_KEY "toYear(date)"
+ENGINE_SORTING_KEY "date, active_users"

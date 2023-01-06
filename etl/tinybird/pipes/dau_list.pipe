@@ -1,0 +1,7 @@
+
+NODE endpoint
+DESCRIPTION >
+    Get DAU, ordered descending by date
+SQL >
+    SELECT DISTINCT(date), * FROM dau ORDER BY date DESC
+
