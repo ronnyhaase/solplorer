@@ -14,9 +14,7 @@ def normalize_epoch(raw_epoch):
         "slotCurrent": raw_epoch.slot_index,
         "slotTarget": raw_epoch.slots_in_epoch,
         "slotRangeStart": raw_epoch.absolute_slot - raw_epoch.slot_index,
-        "slotRangeEnd": (
-            raw_epoch.absolute_slot - raw_epoch.slot_index + raw_epoch.slots_in_epoch
-        ),
+        "slotRangeEnd": (raw_epoch.absolute_slot - raw_epoch.slot_index + raw_epoch.slots_in_epoch),
         "epochETA": (raw_epoch.slots_in_epoch - raw_epoch.slot_index) * AVG_SLOTTIME,
         "epochProgress": round((raw_epoch.slot_index / raw_epoch.slots_in_epoch) * 100),
     }

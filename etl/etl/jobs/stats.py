@@ -21,8 +21,7 @@ def update_stats():
                 "slotHeight": raw_epoch.absolute_slot,
                 "transactionsCount": raw_epoch.transaction_count,
                 "tps": round(
-                    raw_perf_samples[0].num_transactions
-                    / raw_perf_samples[0].sample_period_secs
+                    raw_perf_samples[0].num_transactions / raw_perf_samples[0].sample_period_secs
                 ),
             },
             "count": 0,

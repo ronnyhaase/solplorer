@@ -1,8 +1,8 @@
 """
 Get and print all DAUs from Solana.FM since 2022-01-01 till yesterday in CSV format
 """
-from datetime import datetime, timedelta
 import json
+from datetime import datetime, timedelta
 from time import sleep
 
 import httpx

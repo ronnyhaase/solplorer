@@ -1,8 +1,8 @@
 import logging
 import os
 
-from logtail import LogtailHandler
 from dotenv import load_dotenv
+from logtail import LogtailHandler
 
 from .runner import Runner
 
@@ -19,7 +19,9 @@ def main():
         logger.setLevel(log_level)
         logger.addHandler(log_handler)
     else:
-        logging.basicConfig(format="%(asctime)s %(name)s.%(levelname)s - %(message)s", level=log_level)
+        logging.basicConfig(
+            format="%(asctime)s %(name)s.%(levelname)s - %(message)s", level=log_level
+        )
     Runner.create(loglevel=logging.INFO, loghandler=log_handler).run()
 
 

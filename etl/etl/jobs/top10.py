@@ -43,7 +43,10 @@ def normalize_token(raw_token):
 def normalize_top10(raw_tokens, raw_nfts):
     return [
         raw_tokens,
-        [normalize_nft_collection(raw_collection, n) for n, raw_collection in enumerate(raw_nfts["project_stats"])]
+        [
+            normalize_nft_collection(raw_collection, n)
+            for n, raw_collection in enumerate(raw_nfts["project_stats"])
+        ],
     ]
 
 

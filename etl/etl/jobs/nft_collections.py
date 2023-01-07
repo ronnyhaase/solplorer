@@ -11,7 +11,7 @@ from etl.utils import isodate_ts, now
 
 def fetch_nft_collections():
     data = []
-    for page_number in range(1,4):
+    for page_number in range(1, 4):
         partial = httpx.post(
             "https://beta.api.solanalysis.com/rest/get-project-stats",
             headers={"Authorization": os.environ["HYPERSPACE_TOKEN"]},
@@ -38,7 +38,9 @@ def normalize_nft_collection(raw_collection, n):
         "name": raw_collection["project"]["display_name"],
         "slug": raw_collection["project"]["project_slug"],
         "description": raw_collection["project"]["description"],
-        "imageUrl": raw_collection["project"]["img_url"].strip() if isinstance(raw_collection["project"]["img_url"], str) else None,
+        "imageUrl": raw_collection["project"]["img_url"].strip()
+        if isinstance(raw_collection["project"]["img_url"], str)
+        else None,
         "isMinting": bool(raw_collection["project"]["is_minting"]),
         "urlTwitter": raw_collection["project"]["twitter"],
         "urlDiscord": raw_collection["project"]["discord"],
@@ -77,7 +79,9 @@ def normalize_nft_collection(raw_collection, n):
 
 
 def normalize_nft_collections(raw_nfts):
-    return [normalize_nft_collection(raw_collection, n) for n, raw_collection in enumerate(raw_nfts)]
+    return [
+        normalize_nft_collection(raw_collection, n) for n, raw_collection in enumerate(raw_nfts)
+    ]
 
 
 def update_nft_collections():

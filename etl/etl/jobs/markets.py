@@ -38,16 +38,14 @@ def normalize_tvl_history(raw_tvl_data):
 def merge_price_tvl_history(price_history, tvl_history):
     merged_history = []
     for n, price in enumerate(price_history):
-        merged_history.append(
-            merge(price, tvl_history[n])
-        )
+        merged_history.append(merge(price, tvl_history[n]))
     return merged_history
 
 
 def normalize_markets_data(raw_price_data, raw_price_history, raw_tvl_history):
     price_history = normalize_price_history(raw_price_history)
     tvl_history = normalize_tvl_history(raw_tvl_history)
-    merged_history =  merge_price_tvl_history(price_history, tvl_history)
+    merged_history = merge_price_tvl_history(price_history, tvl_history)
 
     return {
         "price": str_format_money(raw_price_data["solana"]["usd"]),
@@ -62,7 +60,7 @@ def normalize_markets_data(raw_price_data, raw_price_history, raw_tvl_history):
         "volume": round(raw_price_data["solana"]["usd_24h_vol"]),
         "change": round(raw_price_data["solana"]["usd_24h_change"], 2),
         "marketCap": round(raw_price_data["solana"]["usd_market_cap"]),
-        "history": merged_history
+        "history": merged_history,
     }
 
 
@@ -91,9 +89,7 @@ def update_markets():
 
     result = json.dumps(
         {
-            "data": normalize_markets_data(
-                raw_price_data, raw_history_data, raw_tvl_data
-            ),
+            "data": normalize_markets_data(raw_price_data, raw_history_data, raw_tvl_data),
             "count": 0,
             "type": "object",
             "updatedAt": now(),

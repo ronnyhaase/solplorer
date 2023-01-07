@@ -10,9 +10,7 @@ SOL_PER_LAMPORT = 0.000000001
 
 
 def calc_stake(raw_validators):
-    stake_active = reduce(
-        lambda total, val: total + val.activated_stake, raw_validators.current, 0
-    )
+    stake_active = reduce(lambda total, val: total + val.activated_stake, raw_validators.current, 0)
     stake_delinquent = reduce(
         lambda total, val: total + val.activated_stake, raw_validators.delinquent, 0
     )
