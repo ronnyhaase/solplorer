@@ -4,6 +4,7 @@ import sys
 from apscheduler.events import EVENT_JOB_ERROR
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+from .jobs.dau import update_dau
 from .jobs.epoch import update_epoch
 from .jobs.markets import update_markets
 from .jobs.news import update_news
@@ -26,11 +27,10 @@ class Runner:
                 "apscheduler.job_defaults.max_instances": "2",
             }
         )
-        ap_logger = logging.getLogger('apscheduler')
+        ap_logger = logging.getLogger("apscheduler")
         ap_logger.handler = []
         ap_logger.setLevel(loglevel)
         ap_logger.addHandler(loghandler)
-
 
         self.scheduler.add_listener(self.handle_scheduler_error, EVENT_JOB_ERROR)
 
@@ -53,6 +53,7 @@ class Runner:
         self.scheduler.add_job(update_tokens, "cron", hour="*", minute=10)
         self.scheduler.add_job(update_tvl, "cron", hour="*", minute=15)
         self.scheduler.add_job(update_nft_collections, "cron", hour=1, minute=20)
+        self.scheduler.add_job(update_dau, "cron", hour=12)
 
         try:
             self.scheduler.start()
