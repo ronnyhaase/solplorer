@@ -16,13 +16,15 @@ def update_dau():
     dau_s = json.dumps(raw_dau) + "\n"
 
     # Ingest to Tinybird
-    resp = httpx.post(
+    response = httpx.post(
         "https://api.tinybird.co/v0/events?name=dau",
         headers={"Authorization": "Bearer " + os.environ["TINYBIRD_INGEST_TOKEN"]},
         content=dau_s,
-    ).json()
+    )
+    response.raise_for_status()
+    data = response.json()
 
-    if resp["successful_rows"] != 1:
+    if data["successful_rows"] != 1:
         raise Exception("Row was not inserted")
 
     return raw_dau

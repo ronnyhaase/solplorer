@@ -25,7 +25,7 @@ def normalize_news(raw_news):
 def update_news():
     redis = get_redis_connection()
 
-    raw_news = httpx.get(
+    response = httpx.get(
         "https://cryptopanic.com/api/v1/posts/",
         params={
             "auth_token": os.environ["CRYPTOPANIC_TOKEN"],
@@ -34,7 +34,9 @@ def update_news():
             "kind": "news",
             "filter": "important",
         },
-    ).json()["results"]
+    )
+    response.raise_for_status()
+    raw_news = response.json()["results"]
 
     result = json.dumps(
         {

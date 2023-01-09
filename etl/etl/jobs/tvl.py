@@ -72,8 +72,14 @@ def normalize_tvl(raw_history, raw_protocols):
 def update_tvl():
     redis = get_redis_connection()
 
-    raw_tvl_history = httpx.get("https://api.llama.fi/charts/Solana").json()
-    raw_protocols = httpx.get("https://api.llama.fi/protocols").json()
+
+    tvl_response = httpx.get("https://api.llama.fi/charts/Solana")
+    tvl_response.raise_for_status()
+    raw_tvl_history = tvl_response.json()
+
+    protocols_response = httpx.get("https://api.llama.fi/protocols")
+    protocols_response.raise_for_status()
+    raw_protocols = protocols_response.json()
 
     result = json.dumps(
         {

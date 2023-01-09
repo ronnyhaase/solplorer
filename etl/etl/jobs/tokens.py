@@ -81,7 +81,7 @@ def update_tokens():
     page = 1
     raw_tokens = []
     while not done:
-        dataset = httpx.get(
+        response = httpx.get(
             "https://api.coingecko.com/api/v3/coins/markets",
             params={
                 "category": "solana-ecosystem",
@@ -89,7 +89,10 @@ def update_tokens():
                 "per_page": 250,
                 "vs_currency": "usd",
             },
-        ).json()
+        )
+        response.raise_for_status()
+        dataset = response.json()
+
         if len(dataset) == 0:
             done = True
         else:

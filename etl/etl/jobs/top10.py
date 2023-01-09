@@ -14,7 +14,7 @@ def fetch_top10():
     # TODO
     tokens = None
 
-    nfts = httpx.post(
+    response = httpx.post(
         "https://beta.api.solanalysis.com/rest/get-project-stats",
         headers={"Authorization": os.environ["HYPERSPACE_TOKEN"]},
         json={
@@ -27,7 +27,9 @@ def fetch_top10():
                 "sort_order": "DESC",
             },
         },
-    ).json()
+    )
+    response.raise_for_status()
+    nfts = response.json()
 
     return [tokens, nfts]
 

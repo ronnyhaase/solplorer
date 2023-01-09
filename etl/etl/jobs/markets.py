@@ -67,7 +67,7 @@ def normalize_markets_data(raw_price_data, raw_price_history, raw_tvl_history):
 def update_markets():
     redis = get_redis_connection()
 
-    raw_price_data = httpx.get(
+    price_response = httpx.get(
         "https://api.coingecko.com/api/v3/simple/price",
         params={
             "ids": "solana",
@@ -76,16 +76,24 @@ def update_markets():
             "include_24hr_vol": True,
             "include_24hr_change": True,
         },
-    ).json()
-    raw_history_data = httpx.get(
+    )
+    price_response.raise_for_status()
+    raw_price_data = price_response.json()
+
+    history_response = httpx.get(
         "https://api.coingecko.com/api/v3/coins/solana/market_chart",
         params={
             "vs_currency": "usd",
             "days": 14,
             "interval": "daily",
         },
-    ).json()
-    raw_tvl_data = httpx.get("https://api.llama.fi/charts/Solana").json()
+    )
+    history_response.raise_for_status()
+    raw_history_data = history_response.json()
+
+    tvl_response = httpx.get("https://api.llama.fi/charts/Solana")
+    tvl_response.raise_for_status()
+    raw_tvl_data = tvl_response.json()
 
     result = json.dumps(
         {

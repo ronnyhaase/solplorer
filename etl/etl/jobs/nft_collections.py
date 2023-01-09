@@ -12,7 +12,7 @@ from etl.utils import isodate_ts, now
 def fetch_nft_collections():
     data = []
     for page_number in range(1, 4):
-        partial = httpx.post(
+        response = httpx.post(
             "https://beta.api.solanalysis.com/rest/get-project-stats",
             headers={"Authorization": os.environ["HYPERSPACE_TOKEN"]},
             json={
@@ -28,7 +28,9 @@ def fetch_nft_collections():
                     "sort_order": "DESC",
                 },
             },
-        ).json()
+        )
+        response.raise_for_status()
+        partial = response.json()
         data += partial["project_stats"]
     return data
 
