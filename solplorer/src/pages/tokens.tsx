@@ -82,7 +82,7 @@ export default function Tokens({ tokenData }) {
                     const sortedData = tokenData.data.sort(sortTableData(col, dir))
                     updateData(sortedData)
                   }}
-                  sortingColId="marketCap"
+                  sortingColId="marketCap.current"
                   sortingDirection="DESC"
                 />
               ) : null}
