@@ -21,8 +21,8 @@ const Top10 = ({ top10Data }) => (
       <TBody>
         {top10Data.nfts.map((collection, n) => (
           <TR key={collection.hyperspace_id}>
-            <TD>{n + 1}</TD>
-            <TD>
+            <TD _className="sticky" _style={{ left: 0 }}>{n + 1}</TD>
+            <TD className="sticky" style={{ left: 0 }}>
             <Box
               className="d-flex items-center py-xs overflow-hidden text-ellipsis whitespace-nowrap"
               style={{ maxWidth: '28ch' }}
