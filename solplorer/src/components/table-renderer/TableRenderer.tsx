@@ -44,7 +44,7 @@ type TableRendererProps = {
   /** Sorting Callback */
   onSortChange?: (
     col: ColumnDefinition,
-    direction: string,
+    direction: 'ASC' | 'DESC' | null,
     updateData: (sortedData: Array<any>) => void,
   ) => void | null
   /** Filtering Callback */
@@ -124,7 +124,7 @@ function TableRenderer({
                           textAlign: 'right',
                         }}
                       >
-                        <SortingDisplay state={col.sortable && col.id === currSortingColId && currSortingDirection ? currSortingDirection : null} />
+                        <SortingDisplay direction={col.sortable && col.id === currSortingColId && currSortingDirection ? currSortingDirection : null} />
                       </button>
                     ) : null}
                 </TH>

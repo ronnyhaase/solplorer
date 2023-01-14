@@ -79,7 +79,7 @@ export default function Tokens({ tokenData }) {
                   rowKeyColId="id"
                   stickyFirstCol={true}
                   onSortChange={(col, dir, updateData) => {
-                    const sortedData = tokenData.data.sort(sortTableData(col, dir))
+                    const sortedData = sortTableData(tokenData.data, col.id, dir)
                     updateData(sortedData)
                   }}
                   sortingColId="marketCap.current"

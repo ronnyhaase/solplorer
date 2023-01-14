@@ -1,6 +1,7 @@
 import request from 'got'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 import {
   ChangeDisplay,
@@ -10,11 +11,54 @@ import {
   Grid,
   NumberDisplay,
   Panel,
-  TableRenderer,
+  Table,
+  TBody,
+  TD,
+  THead,
+  THSortable,
+  TR,
 } from '../components'
 import { sortTableData } from '../components/table-renderer/helper'
 
 export default function Protocols({ tvlData }) {
+  const [protocols, setProtocols] = useState(tvlData ? tvlData.data.protocols : null)
+  const [sorting, _setSorting] = useState({
+    by: 'tvl.current',
+    dir: 'DESC',
+  })
+  const setSorting = ({ by, dir }: { by: string, dir: string }) => {
+    if (by !== sorting.by || dir != sorting.dir) {
+      _setSorting({ by, dir})
+    }
+  }
+
+  useEffect(() => {
+    setProtocols(sortTableData(protocols, sorting.by, sorting.dir as any))
+  }, [sorting, sorting.by, sorting.dir])
+
+  const createSortChangeHandler = (
+    colId, opts = { defaultDir: 'DESC' }
+  ) => function handleSortChange() {
+    let dir
+    if (colId === sorting.by) {
+      if (sorting.dir === 'ASC') dir = 'DESC'
+      else if (sorting.dir === 'DESC') dir = 'ASC'
+    } else {
+      dir = opts.defaultDir || 'DESC'
+    }
+    setSorting({ by: colId, dir })
+  }
+  const getSortingFor = colId => colId === sorting.by ? sorting.dir : null
+
+  const PreparedTHSortable = ({ colId, defaultDir = null, children }) => (
+    <THSortable
+      direction={getSortingFor(colId)}
+      onSortChange={createSortChangeHandler(colId, { defaultDir })}
+    >
+      {children}
+    </THSortable>
+  )
+
   return (
     <>
       <Head>
@@ -24,51 +68,53 @@ export default function Protocols({ tvlData }) {
         <Container>
           <Grid columns={1}>
             <Panel>
-              {tvlData ? (
-                <TableRenderer
-                  columns={[
-                    { id: 'symbol', title: 'Symbol', sortable: true, defaultSortOrder: 'ASC', renderContent: (protocol) => (
-                      <div className="d-flex items-center">
-                        <Image
-                          alt={`${protocol.name} Logo`}
-                          src={protocol.imageUrl}
-                          width={16}
-                          height={16}
-                          className="overflow-hidden"
-                        />
-                        <span>&nbsp;{(protocol.symbol || '').toUpperCase()}</span>
-                      </div>
-                    )},
-                    { id: 'name', title: 'Name', sortable: true, defaultSortOrder: 'ASC' },
-                    { id: 'category', title: 'Category', sortable: true, defaultSortOrder: 'ASC' },
-                    { id: 'tvl.current', title: 'TVL', sortable: true, renderContent: (protocol) => (
-                      <>
-                        <CurrencyDisplay short val={protocol.tvl.current} />
-                        {' '}
-                        <ChangeDisplay percent val={protocol.tvl.change_24h} />
-                      </>
-                    )},
-                    { id: 'tvl.dominancePercent', title: 'Dominance', sortable: true, renderContent: (protocol) => (
-                      <>
-                        <NumberDisplay val={protocol.tvl.dominancePercent} suffix=" %" />
-                      </>
-                    )},
-                    { id: 'marketCap', title: 'Market Cap.', sortable: true, renderContent: (protocol) => (
-                      <>
-                        <CurrencyDisplay short val={protocol.marketCap} />
-                      </>
-                    )},
-                  ]}
-                  data={tvlData.data.protocols}
-                  rowKeyColId="name"
-                  stickyFirstCol={true}
-                  onSortChange={(col, dir, updateData) => {
-                    const sortedData = tvlData.data.protocols.sort(sortTableData(col, dir))
-                    updateData(sortedData)
-                  }}
-                  sortingColId="tvl.current"
-                  sortingDirection="DESC"
-                />) : null}
+              {protocols ? (
+                <Table>
+                  <THead>
+                    <TR>
+                      <PreparedTHSortable colId="symbol" defaultDir="ASC">Symbol</PreparedTHSortable>
+                      <PreparedTHSortable colId="name" defaultDir="ASC">Name</PreparedTHSortable>
+                      <PreparedTHSortable colId="category" defaultDir="ASC">Category</PreparedTHSortable>
+                      <PreparedTHSortable colId="tvl.current">TVL</PreparedTHSortable>
+                      <PreparedTHSortable colId="tvl.dominancePercent">Dominance</PreparedTHSortable>
+                      <PreparedTHSortable colId="marketCap">Market Cap.</PreparedTHSortable>
+                    </TR>
+                  </THead>
+                  <TBody>
+                    {protocols.map(protocol => (
+                      <TR key={protocol.name}>
+                        <TD className="sticky px-sm" style={{ left: 0 }}>
+                          <div className="d-flex items-center leading-none">
+                            <div style={{ width: '16px', height: '16px', overflow: 'hidden' }}>
+                              <Image
+                                alt={`${protocol.name} Logo`}
+                                src={protocol.imageUrl}
+                                quality={80}
+                                width={16}
+                                height={16}
+                              />
+                            </div>
+                            <span>&nbsp;{(protocol.symbol || '').toUpperCase()}</span>
+                          </div>
+                        </TD>
+                        <TD>{protocol.name}</TD>
+                        <TD>{protocol.category}</TD>
+                        <TD>
+                          <CurrencyDisplay short val={protocol.tvl.current} />
+                          {' '}
+                          <ChangeDisplay percent val={protocol.tvl.change_24h} />
+                        </TD>
+                        <TD>
+                          <NumberDisplay val={protocol.tvl.dominancePercent} suffix=" %" />
+                        </TD>
+                        <TD>
+                          <CurrencyDisplay short val={protocol.marketCap} />
+                        </TD>
+                      </TR>
+                    ))}
+                  </TBody>
+                </Table>
+              ) : null}
               <div>
                 <div className="my-md text-center">
                   Data provided by<br />

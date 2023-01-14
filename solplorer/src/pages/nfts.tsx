@@ -21,7 +21,6 @@ import {
   Panel,
   TH,
   TR,
-  TableRenderer,
   THead,
   TBody,
   Table,
@@ -85,7 +84,7 @@ const SortableTH = ({
         <div className="grow mr-xs">
           {children}
         </div>
-        <SortingDisplay state={direction} />
+        <SortingDisplay direction={direction} />
         <button
           onClick={() => updateSorting(colId, direction, defaultDirection)}
           style={{
