@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
       <footer>
         <Container className="text-center text-sm">
           <p>
-            Copyright &copy; <a href="https://ronnyhaase.com">Ronny Haase</a>, 2022
+            Copyright &copy; <a href="https://ronnyhaase.com">Ronny Haase</a>, 2022 - 2023
           </p>
           <p>
             Solplorer is free software under <a href="https://www.gnu.org/licenses/gpl-3.0">GNU
