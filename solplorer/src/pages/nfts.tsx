@@ -1,4 +1,4 @@
-import request from 'got'
+import clx from 'classnames'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { FaDiscord, FaTwitter, FaLink, FaArrowLeft, FaArrowRight, FaSearch, FaTimesCircle } from 'react-icons/fa'
 import useDebounce from 'react-use/lib/useDebounce'
 import useSWR from 'swr'
-import clx from 'classnames'
 
 import {
   Box,
@@ -26,8 +25,8 @@ import {
   Table,
   TD,
   IconButton,
-  SortingDisplay,
   LoadingSpinner,
+  THSortable,
 } from '../components'
 
 const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, filters, setFilters }) => {
@@ -72,38 +71,6 @@ const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, 
   )
 }
 
-const SortableTH = ({
-  colId,
-  direction = null,
-  defaultDirection = null,
-  updateSorting,
-  children,
-}) => {
-  return (
-    <TH className="relative">
-      <div className="relative d-flex items-center px-sm hover:bg-inset">
-        <div className="grow mr-xs">
-          {children}
-        </div>
-        <SortingDisplay direction={direction} />
-        <button
-          onClick={() => updateSorting(colId, direction, defaultDirection)}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            border: 0,
-            background: 'transparent',
-            color: 'inherit',
-          }}
-        />
-      </div>
-    </TH>
-  )
-}
-
 const PAGINATION_LIMIT = 100
 
 const calcPageCount = (count, limit) => Math.ceil(count / limit)
@@ -121,21 +88,36 @@ export default function NftCollectionsPage() {
 
   const [filters, setFilters] = useState({})
 
-  const [sorting, setSorting] = useState({
+  const [sorting, _setSorting] = useState({
     by: 'marketCap',
     dir: 'DESC',
   })
-  const updateSorting = (colId, currDir, defaultDir) => {
-    let dir = defaultDir || 'DESC'
-    if (colId === sorting.by) {
-      if (currDir === 'ASC') dir = 'DESC'
-      else if (currDir === 'DESC') dir = 'ASC'
-      setSorting({ by: colId, dir: dir})
-    } else {
-      setSorting({ by: colId, dir })
+  const setSorting = ({ by, dir }: { by: string, dir: string }) => {
+    if (by !== sorting.by || dir != sorting.dir) {
+      _setSorting({ by, dir})
     }
   }
-  const getSortingForColId = colId => colId === sorting.by ? sorting.dir : null
+  const createSortChangeHandler = (
+    colId, opts = { defaultDir: 'DESC' }
+  ) => function handleSortChange() {
+    let dir
+    if (colId === sorting.by) {
+      if (sorting.dir === 'ASC') dir = 'DESC'
+      else if (sorting.dir === 'DESC') dir = 'ASC'
+    } else {
+      dir = opts.defaultDir || 'DESC'
+    }
+    setSorting({ by: colId, dir })
+  }
+  const getSortingFor = colId => colId === sorting.by ? sorting.dir : null
+  const PreparedTHSortable = ({ colId, defaultDir = null, children }) => (
+    <THSortable
+      direction={getSortingFor(colId)}
+      onSortChange={createSortChangeHandler(colId, { defaultDir })}
+    >
+      {children}
+    </THSortable>
+  )
 
   let url = `/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=${pageIndex * PAGINATION_LIMIT}`
   Object.keys(filters)
@@ -200,18 +182,18 @@ export default function NftCollectionsPage() {
                 <TR>
                   <TH>#</TH>
                   <TH><Box className="VisuallyHidden">Image</Box></TH>
-                  <SortableTH colId="name" defaultDirection="ASC" direction={getSortingForColId('name')} updateSorting={updateSorting}>Collection</SortableTH>
+                  <PreparedTHSortable colId="name" defaultDir="ASC">Collection</PreparedTHSortable>
                   <TH><Box className="VisuallyHidden">Links</Box></TH>
-                  <SortableTH colId="marketCap" direction={getSortingForColId('marketCap')} updateSorting={updateSorting}>Market Cap.</SortableTH>
-                  <SortableTH colId="price.floor" direction={getSortingForColId('price.floor')} updateSorting={updateSorting}>Floor</SortableTH>
-                  <SortableTH colId="price.avg" direction={getSortingForColId('price.avg')} updateSorting={updateSorting}>Avg</SortableTH>
-                  <SortableTH colId="price.max" direction={getSortingForColId('price.max')} updateSorting={updateSorting}>High</SortableTH>
-                  <SortableTH colId="volume.1h" direction={getSortingForColId('volume.1h')} updateSorting={updateSorting}>1h</SortableTH>
-                  <SortableTH colId="volume.24h" direction={getSortingForColId('volume.24h')} updateSorting={updateSorting}>1d</SortableTH>
-                  <SortableTH colId="volume.7day" direction={getSortingForColId('volume.7day')} updateSorting={updateSorting}>7d</SortableTH>
-                  <SortableTH colId="supply.listed" direction={getSortingForColId('supply.listed')} updateSorting={updateSorting}>Listed</SortableTH>
-                  <SortableTH colId="supply.holders" direction={getSortingForColId('supply.holders')} updateSorting={updateSorting}>Holders</SortableTH>
-                  <SortableTH colId="supply.total" direction={getSortingForColId('supply.total')} updateSorting={updateSorting}>Total</SortableTH>
+                  <PreparedTHSortable colId="marketCap">Market Cap.</PreparedTHSortable>
+                  <PreparedTHSortable colId="price.floor">Floor</PreparedTHSortable>
+                  <PreparedTHSortable colId="price.avg">Avg</PreparedTHSortable>
+                  <PreparedTHSortable colId="price.max">High</PreparedTHSortable>
+                  <PreparedTHSortable colId="volume.1h">1h</PreparedTHSortable>
+                  <PreparedTHSortable colId="volume.24h">1d</PreparedTHSortable>
+                  <PreparedTHSortable colId="volume.7day">7d</PreparedTHSortable>
+                  <PreparedTHSortable colId="supply.listed">Listed</PreparedTHSortable>
+                  <PreparedTHSortable colId="supply.holders">Holders</PreparedTHSortable>
+                  <PreparedTHSortable colId="supply.total">Total</PreparedTHSortable>
                 </TR>
               </THead>
               <TBody>

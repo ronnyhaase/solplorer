@@ -1,6 +1,6 @@
-import request from 'got'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 import {
@@ -12,12 +12,59 @@ import {
   LoadingSpinner,
   NumberDisplay,
   Panel,
-  TableRenderer,
+  Table,
+  TBody,
+  THSortable,
+  THead,
+  TR,
+  TD,
+  TH,
 } from '../components'
-import { sortTableData } from '../components/table-renderer/helper'
+import { sortTableData } from '../components/table/helper'
 
 export default function Tokens() {
   const { data: tokenData } = useSWR('api/tokens', url => fetch(url).then((res) => res.json()))
+
+  const [tokens, setTokens] = useState(tokenData ? tokenData.data : null)
+  useEffect(() => {
+    if (tokenData) setTokens(tokenData.data)
+  }, [tokenData])
+
+  const [sorting, _setSorting] = useState({
+    by: 'tvl.current',
+    dir: 'DESC',
+  })
+  const setSorting = ({ by, dir }: { by: string, dir: string }) => {
+    if (by !== sorting.by || dir != sorting.dir) {
+      _setSorting({ by, dir})
+    }
+  }
+  useEffect(() => {
+    if (tokens) setTokens(sortTableData(tokens, sorting.by, sorting.dir as any))
+  }, [sorting, sorting.by, sorting.dir])
+
+  const createSortChangeHandler = (
+    colId, opts = { defaultDir: 'DESC' }
+  ) => function handleSortChange() {
+    let dir
+    if (colId === sorting.by) {
+      if (sorting.dir === 'ASC') dir = 'DESC'
+      else if (sorting.dir === 'DESC') dir = 'ASC'
+    } else {
+      dir = opts.defaultDir || 'DESC'
+    }
+    setSorting({ by: colId, dir })
+  }
+  const getSortingFor = colId => colId === sorting.by ? sorting.dir : null
+
+  const PreparedTHSortable = ({ colId, defaultDir = null, children }) => (
+    <THSortable
+      direction={getSortingFor(colId)}
+      onSortChange={createSortChangeHandler(colId, { defaultDir })}
+    >
+      {children}
+    </THSortable>
+  )
 
   return (
     <>
@@ -26,54 +73,64 @@ export default function Tokens() {
       </Head>
       <main className="grow">
         <Container>
-          {tokenData ? (<Grid columns={1}>
+          {(tokenData && tokens) ? (<Grid columns={1}>
             <Panel>
-              <TableRenderer
+              <Table>
+                <THead>
+                  <PreparedTHSortable colId="symbol" defaultDir="ASC">Symbol</PreparedTHSortable>
+                  <PreparedTHSortable colId="name" defaultDir="ASC">Name</PreparedTHSortable>
+                  <PreparedTHSortable colId="price.current">Price</PreparedTHSortable>
+                  <PreparedTHSortable colId="volume">Volume</PreparedTHSortable>
+                  <PreparedTHSortable colId="marketCap.current">Market Cap.</PreparedTHSortable>
+                  <TH>Supply (Circ. / Total)</TH>
+                  <PreparedTHSortable colId="fdv">FDV</PreparedTHSortable>
+                </THead>
+                <TBody>
+                  {tokens.map(token =>(
+                    <TR key={token.id}>
+                      <TD>
+                        <div className="d-flex items-center">
+                          <Image
+                            alt={`${token.name} Logo`}
+                            src={token.imageUrl}
+                            width={16}
+                            height={16}
+                            className="overflow-hidden"
+                          />
+                          <span>&nbsp;{token.symbol.toUpperCase()}</span>
+                        </div>
+                      </TD>
+                      <TD>
+                        <div
+                          style={{ maxWidth: '24ch' }}
+                          className="overflow-hidden text-ellipsis whitespace-nowrap"
+                        >
+                          {token.name}
+                        </div>
+                      </TD>
+                      <TD>
+                        <CurrencyDisplay currency="USD" maxDecimals={3} val={token.price.current} />
+                        {' '}
+                        <ChangeDisplay percent val={token.price.changePercent_24h} />
+                      </TD>
+                      <TD><CurrencyDisplay currency="USD" short val={token.volume} /></TD>
+                      <TD>
+                        <CurrencyDisplay currency="USD" short val={token.marketCap.current} />
+                        {' '}
+                        <ChangeDisplay percent val={token.marketCap.changePercent_24h} />
+                      </TD>
+                      <TD>
+                        <NumberDisplay short val={token.supply.circulating} />
+                        {' '}/{' '}
+                        <NumberDisplay short val={token.supply.total} />
+                      </TD>
+                      <TD><NumberDisplay short val={token.fdv} /></TD>
+                    </TR>
+                  ))}
+                </TBody>
+              </Table>
+              {/* <TableRenderer
                 columns={[
-                  { id: 'symbol', title: 'Symbol', sortable: true, defaultSortOrder: 'ASC', renderContent: (token) => (
-                    <div className="d-flex items-center">
-                      <Image
-                        alt={`${token.name} Logo`}
-                        src={token.imageUrl}
-                        width={16}
-                        height={16}
-                        className="overflow-hidden"
-                      />
-                      <span>&nbsp;{token.symbol.toUpperCase()}</span>
-                    </div>
-                  )},
-                  { id: 'name', title: 'Name', sortable: true, defaultSortOrder: 'ASC', renderContent: (token) => (
-                    <div
-                      style={{ maxWidth: '24ch' }}
-                      className="overflow-hidden text-ellipsis whitespace-nowrap"
-                    >
-                      {token.name}
-                    </div>
-                  ) },
-                  { id: 'price.current', title: 'Price', sortable: true, renderContent: (token) => (
-                    <>
-                      <CurrencyDisplay currency="USD" maxDecimals={3} val={token.price.current} />
-                      {' '}
-                      <ChangeDisplay percent val={token.price.changePercent_24h} />
-                    </>
-                  )},
-                  { id: 'volume', title: 'Volume', sortable: true, renderContent: (token) => (
-                    <CurrencyDisplay currency="USD" short val={token.volume} />
-                  )},
-                  { id: 'marketCap.current', title: 'Market Cap.', sortable: true, renderContent: (token) => (
-                    <>
-                      <CurrencyDisplay currency="USD" short val={token.marketCap.current} />
-                      {' '}
-                      <ChangeDisplay percent val={token.marketCap.changePercent_24h} />
-                    </>
-                  )},
-                  { id: 'supply', title: 'Supply (Circ. / Total)', renderContent: (token) => (
-                    <>
-                      <NumberDisplay short val={token.supply.circulating} />
-                      {' '}/{' '}
-                      <NumberDisplay short val={token.supply.total} />
-                    </>
-                  )},
                   { id: 'fdv', title: 'FDV', sortable: true, renderContent: (token) => (
                     <><NumberDisplay short val={token.fdv} /></>
                   )},
@@ -87,7 +144,7 @@ export default function Tokens() {
                 }}
                 sortingColId="marketCap.current"
                 sortingDirection="DESC"
-              />
+              /> */}
               <div>
                 <div className="my-md text-center">
                   Data provided by<br />
