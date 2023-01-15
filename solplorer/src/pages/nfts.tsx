@@ -27,6 +27,7 @@ import {
   TD,
   IconButton,
   SortingDisplay,
+  LoadingSpinner,
 } from '../components'
 
 const TableActions = ({ pageIndex, pageCount, prevPage, nextPage, setPageIndex, filters, setFilters }) => {
@@ -108,21 +109,21 @@ const PAGINATION_LIMIT = 100
 const calcPageCount = (count, limit) => Math.ceil(count / limit)
 const calcPageIndex = (limit, offset) => Math.ceil(offset / limit)
 
-export default function NftCollectionsPage({ initialNftCollectionsData }) {
+export default function NftCollectionsPage() {
   const [pageCount, setPageCount] = useState(
-    calcPageCount(initialNftCollectionsData.meta.count, initialNftCollectionsData.meta.limit)
+    calcPageCount(100, 100)
   )
   const [pageIndex, setPageIndex] = useState(
-    calcPageIndex(initialNftCollectionsData.meta.limit, initialNftCollectionsData.meta.offset)
+    calcPageIndex(100, 0)
   )
   const nextPage = () => setPageIndex(pageIndex+1 < pageCount ? pageIndex + 1 : pageIndex)
   const prevPage = () => setPageIndex(pageIndex > 0 ? pageIndex - 1 : pageIndex)
 
-  const [filters, setFilters] = useState(initialNftCollectionsData.meta.filters)
+  const [filters, setFilters] = useState({})
 
   const [sorting, setSorting] = useState({
-    by: initialNftCollectionsData.meta.orderBy,
-    dir: initialNftCollectionsData.meta.orderDirection,
+    by: 'marketCap',
+    dir: 'DESC',
   })
   const updateSorting = (colId, currDir, defaultDir) => {
     let dir = defaultDir || 'DESC'
@@ -137,21 +138,21 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
   const getSortingForColId = colId => colId === sorting.by ? sorting.dir : null
 
   let url = `/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=${pageIndex * PAGINATION_LIMIT}`
-  Object.keys(filters).forEach(key => { url += `&${key}=${encodeURIComponent(filters[key])}` })
+  Object.keys(filters)
+    .forEach(key => { url += `&${key}=${encodeURIComponent(filters[key])}` })
   url += '&orderBy=' + encodeURIComponent(`${sorting.dir === 'ASC' ? '+' : '-'}${sorting.by}`)
+
   const { data: nftCollections, isLoading } = useSWR(
     url,
     url => fetch(url).then((res) => res.json()),
     {
-      revalidateOnMount: false,
       keepPreviousData: true,
-      fallback: {
-        [`/api/nft-collections?limit=${PAGINATION_LIMIT}&offset=0&orderBy=-marketCap`]: initialNftCollectionsData,
-      },
     },
   )
 
   useEffect(() => {
+    if (!nftCollections) return
+
     const {
       offset,
       limit,
@@ -178,7 +179,7 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
       </Head>
       <main className="grow">
         <Container>
-          <Panel>
+          {nftCollections ? (<Panel>
             <TableActions
               pageIndex={pageIndex}
               pageCount={pageCount}
@@ -291,15 +292,9 @@ export default function NftCollectionsPage({ initialNftCollectionsData }) {
                 Last updated: <DateDisplay val={new Date(nftCollections.updatedAt)} dateStyle="long" />
               </div>
             </div>
-          </Panel>
+          </Panel>) : (<LoadingSpinner />)}
         </Container>
       </main>
     </>
   )
-}
-
-export async function getServerSideProps() {
-  return { props: {
-    initialNftCollectionsData: await request(`${process.env.API_URL}/nft-collections`).json()
-  }}
 }

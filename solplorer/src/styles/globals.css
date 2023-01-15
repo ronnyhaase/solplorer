@@ -71,7 +71,7 @@ th {
   text-align: left;
 }
 
-[data-reactroot] {
+#__next {
   display: flex;
   flex-direction: column;
   height: 100%;

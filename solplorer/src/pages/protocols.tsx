@@ -2,6 +2,7 @@ import request from 'got'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import useSWR from 'swr'
 
 import {
   ChangeDisplay,
@@ -9,6 +10,7 @@ import {
   CurrencyDisplay,
   DateDisplay,
   Grid,
+  LoadingSpinner,
   NumberDisplay,
   Panel,
   Table,
@@ -20,8 +22,14 @@ import {
 } from '../components'
 import { sortTableData } from '../components/table-renderer/helper'
 
-export default function Protocols({ tvlData }) {
+export default function Protocols() {
+  const { data: tvlData } = useSWR('api/tvl', url => fetch(url).then((res) => res.json()))
+
   const [protocols, setProtocols] = useState(tvlData ? tvlData.data.protocols : null)
+  useEffect(() => {
+    if (tvlData) setProtocols(tvlData.data.protocols)
+  }, [tvlData])
+
   const [sorting, _setSorting] = useState({
     by: 'tvl.current',
     dir: 'DESC',
@@ -31,9 +39,8 @@ export default function Protocols({ tvlData }) {
       _setSorting({ by, dir})
     }
   }
-
   useEffect(() => {
-    setProtocols(sortTableData(protocols, sorting.by, sorting.dir as any))
+    if (protocols) setProtocols(sortTableData(protocols, sorting.by, sorting.dir as any))
   }, [sorting, sorting.by, sorting.dir])
 
   const createSortChangeHandler = (
@@ -66,7 +73,7 @@ export default function Protocols({ tvlData }) {
       </Head>
       <main>
         <Container>
-          <Grid columns={1}>
+          {(tvlData && protocols) ? (<Grid columns={1}>
             <Panel>
               {protocols ? (
                 <Table>
@@ -127,15 +134,9 @@ export default function Protocols({ tvlData }) {
                 </div>
               </div>
             </Panel>
-          </Grid>
+          </Grid>) : (<LoadingSpinner />)}
         </Container>
       </main>
     </>
   )
-}
-
-export async function getServerSideProps() {
-  return { props: {
-    tvlData: await request(`${process.env.API_URL}/tvl`).json()
-  }}
 }
