@@ -7,72 +7,72 @@ from etl.connector import get_redis_connection
 from etl.utils import now, pick
 
 
-def normalize_tokens(raw_tokens):
-    return list(
-        map(
-            lambda raw_token: pick(
-                [
-                    "id",
-                    "symbol",
-                    "name",
-                    ["image", "imageUrl"],
-                    ["total_volume", "volume"],
-                    [
-                        "current_price",
-                        "price",
-                        lambda _, dic: {
-                            "current": dic["current_price"],
-                            "change_24h": dic["price_change_24h"],
-                            "changePercent_24h": dic["price_change_percentage_24h"],
-                            "low_24h": dic["low_24h"],
-                            "high_24h": dic["high_24h"],
-                        },
-                    ],
-                    [
-                        "market_cap",
-                        "marketCap",
-                        lambda _, dic: {
-                            "current": dic["market_cap"],
-                            "change_24h": dic["market_cap_change_24h"],
-                            "changePercent_24h": dic["market_cap_change_percentage_24h"],
-                        },
-                    ],
-                    [
-                        "max_supply",
-                        "supply",
-                        lambda _, dic: {
-                            "circulating": dic["circulating_supply"],
-                            "total": dic["total_supply"],
-                            "max": dic["max_supply"],
-                        },
-                    ],
-                    ["fully_diluted_valuation", "fdv"],
-                    [
-                        "ath",
-                        "ath",
-                        lambda _, dic: {
-                            "val": dic["ath"],
-                            "changePercent": dic["ath_change_percentage"],
-                            "ts": dic["ath_date"],
-                        },
-                    ],
-                    [
-                        "atl",
-                        "atl",
-                        lambda _, dic: {
-                            "val": dic["atl"],
-                            "changePercent": dic["atl_change_percentage"],
-                            "ts": dic["atl_date"],
-                        },
-                    ],
-                    ["last_updated", "updatedAt"],
-                ],
-                raw_token,
-            ),
-            raw_tokens,
-        )
+def normalize_token(raw_token, n):
+    return pick(
+        [
+            "id",
+            "symbol",
+            "name",
+            ["image", "imageUrl"],
+            ["total_volume", "volume"],
+            [
+                "current_price",
+                "price",
+                lambda _, dic: {
+                    "current": dic["current_price"],
+                    "change_24h": dic["price_change_24h"],
+                    "changePercent_24h": dic["price_change_percentage_24h"],
+                    "low_24h": dic["low_24h"],
+                    "high_24h": dic["high_24h"],
+                },
+            ],
+            [
+                "market_cap",
+                "marketCap",
+                lambda _, dic: {
+                    "current": dic["market_cap"],
+                    "change_24h": dic["market_cap_change_24h"],
+                    "changePercent_24h": dic["market_cap_change_percentage_24h"],
+                },
+            ],
+            ["market_cap", "rank", lambda val, dic: n + 1],
+            [
+                "max_supply",
+                "supply",
+                lambda _, dic: {
+                    "circulating": dic["circulating_supply"],
+                    "total": dic["total_supply"],
+                    "max": dic["max_supply"],
+                },
+            ],
+            ["fully_diluted_valuation", "fdv"],
+            [
+                "ath",
+                "ath",
+                lambda _, dic: {
+                    "val": dic["ath"],
+                    "changePercent": dic["ath_change_percentage"],
+                    "ts": dic["ath_date"],
+                },
+            ],
+            [
+                "atl",
+                "atl",
+                lambda _, dic: {
+                    "val": dic["atl"],
+                    "changePercent": dic["atl_change_percentage"],
+                    "ts": dic["atl_date"],
+                },
+            ],
+            ["last_updated", "updatedAt"],
+        ],
+        raw_token,
     )
 
+def normalize_tokens(raw_tokens):
+    return [
+        normalize_token(raw_token, n) for n, raw_token in enumerate(raw_tokens)
+    ]
 
 def update_tokens():
     redis = get_redis_connection()
