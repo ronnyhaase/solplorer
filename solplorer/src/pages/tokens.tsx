@@ -88,7 +88,7 @@ export default function Tokens() {
                 <TBody>
                   {tokens.map(token =>(
                     <TR key={token.id}>
-                      <TD>
+                      <TD className="sticky px-sm" style={{ left: 0 }}>
                         <div className="d-flex items-center">
                           <Image
                             alt={`${token.name} Logo`}
