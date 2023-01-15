@@ -166,7 +166,7 @@ export default function NftCollectionsPage() {
 
     if (newPageCount !== pageCount) setPageCount(newPageCount)
     if (newPageIndex !== pageIndex) setPageIndex(newPageIndex)
-    if (newFilters.q !== filters.q) setFilters(newFilters)
+    if (newFilters.q !== (filters as any).q) setFilters(newFilters)
     if (newOrderBy !== sorting.by || newOrderDirection !== sorting.dir) {
       setSorting({ by: newOrderBy, dir: newOrderDirection })
     }
