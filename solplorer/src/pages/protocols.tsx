@@ -15,6 +15,7 @@ import {
   Table,
   TBody,
   TD,
+  TH,
   THead,
   THSortable,
   TR,
@@ -77,6 +78,7 @@ export default function Protocols() {
               <Table>
                 <THead>
                   <TR>
+                    <TH>#</TH>
                     <PreparedTHSortable colId="symbol" defaultDir="ASC">Symbol</PreparedTHSortable>
                     <PreparedTHSortable colId="name" defaultDir="ASC">Name</PreparedTHSortable>
                     <PreparedTHSortable colId="category" defaultDir="ASC">Category</PreparedTHSortable>
@@ -88,6 +90,7 @@ export default function Protocols() {
                 <TBody>
                   {protocols.map(protocol => (
                     <TR key={protocol.name}>
+                      <TD>{protocol.rank}</TD>
                       <TD className="sticky px-sm" style={{ left: 0 }}>
                         <div className="d-flex items-center leading-none">
                           <div style={{ width: '16px', height: '16px', overflow: 'hidden' }}>

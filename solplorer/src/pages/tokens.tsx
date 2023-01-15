@@ -77,17 +77,21 @@ export default function Tokens() {
             <Panel>
               <Table>
                 <THead>
-                  <PreparedTHSortable colId="symbol" defaultDir="ASC">Symbol</PreparedTHSortable>
-                  <PreparedTHSortable colId="name" defaultDir="ASC">Name</PreparedTHSortable>
-                  <PreparedTHSortable colId="price.current">Price</PreparedTHSortable>
-                  <PreparedTHSortable colId="volume">Volume</PreparedTHSortable>
-                  <PreparedTHSortable colId="marketCap.current">Market Cap.</PreparedTHSortable>
-                  <TH>Supply (Circ. / Total)</TH>
-                  <PreparedTHSortable colId="fdv">FDV</PreparedTHSortable>
+                  <TR>
+                    <TH>#</TH>
+                    <PreparedTHSortable colId="symbol" defaultDir="ASC">Symbol</PreparedTHSortable>
+                    <PreparedTHSortable colId="name" defaultDir="ASC">Name</PreparedTHSortable>
+                    <PreparedTHSortable colId="price.current">Price</PreparedTHSortable>
+                    <PreparedTHSortable colId="volume">Volume</PreparedTHSortable>
+                    <PreparedTHSortable colId="marketCap.current">Market Cap.</PreparedTHSortable>
+                    <TH>Supply (Circ. / Total)</TH>
+                    <PreparedTHSortable colId="fdv">FDV</PreparedTHSortable>
+                  </TR>
                 </THead>
                 <TBody>
                   {tokens.map(token =>(
                     <TR key={token.id}>
+                      <TD>{token.rank}</TD>
                       <TD className="sticky px-sm" style={{ left: 0 }}>
                         <div className="d-flex items-center">
                           <Image
