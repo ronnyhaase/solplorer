@@ -5,6 +5,7 @@ from apscheduler.events import EVENT_JOB_ERROR
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from .jobs.dau import update_dau
+from .jobs.dtxfees import update_dtxfees
 from .jobs.epoch import update_epoch
 from .jobs.markets import update_markets
 from .jobs.news import update_news
@@ -54,6 +55,7 @@ class Runner:
         self.scheduler.add_job(update_tvl, "cron", hour="*", minute=15)
         self.scheduler.add_job(update_nft_collections, "cron", hour=1, minute=20)
         self.scheduler.add_job(update_dau, "cron", hour=12)
+        self.scheduler.add_job(update_dtxfees, "cron", hour=12, minute=5)
 
         try:
             self.scheduler.start()

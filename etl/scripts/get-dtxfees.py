@@ -1,5 +1,5 @@
 """
-Get and print all DAUs from Solana.FM since 2022-01-01 till yesterday
+Get and print all daily transaction fees from Solana.FM since 2022-01-01 till yesterday
 """
 import json
 from datetime import datetime, timedelta
@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     while date < yesterday:
         data = httpx.get(
-            "https://hyper.solana.fm/v1/stats/active-users?date=" + date.strftime("%d-%m-%Y")
+            "https://hyper.solana.fm/v1/stats/tx-fees?date=" + date.strftime("%d-%m-%Y")
         ).json()
 
         # "2023-01-05 0:00:00.0" -> "2023-01-05 00:00:00"

@@ -1,9 +1,9 @@
 DESCRIPTION >
-    Daily Active Users
+    Daily Transaction Fees
 
 SCHEMA >
     `date` DateTime `json:$.date`,
-    `active_users` UInt32 `json:$.active_users`
+    `total_tx_fees` Float32 `json:$.total_tx_fees`
 
 ENGINE ReplacingMergeTree
 ENGINE_SORTING_KEY date
