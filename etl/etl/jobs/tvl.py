@@ -19,7 +19,7 @@ def normalize_protocol(raw_protocol, total_tvl, n):
             ["url", "urlWebsite"],
             ["listedAt", "listedAt", lambda val, _: s_to_ms(val)],
             ["mcap", "marketCap"],
-            ["mcap", "rank", lambda val, dic: n + 1],
+            ["name", "rank", lambda val, dic: n + 1],
             [
                 "category",
                 "category",
