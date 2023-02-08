@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as solana from '@solana/web3.js';
 import { InvalidAddressError } from '~/common/errors';
 import { buildStandardAccount, buildTokenAccount, buildVoteAccount } from './accounts';
+import { buildBlock } from './blocks';
 
 @Injectable()
 export class SolanaService {
@@ -15,6 +16,12 @@ export class SolanaService {
     this.solanaClient.getVersion().then(version => {
       this.logger.log(`Connected to Solana RPC ${apiUrl}, version: ${version['solana-core']}.${version['feature-set']}`)
     });
+  }
+
+  async getBlock(blockNumber: number) {
+    const rawBlock: solana.BlockResponse = await this.solanaClient.getBlock(blockNumber);
+
+    return buildBlock(blockNumber, rawBlock);
   }
 
   async getAccount(address: string) {
@@ -45,5 +52,13 @@ export class SolanaService {
       case 'vote': return buildVoteAccount(address, account);
       default: return buildStandardAccount(address, account);
     }
+  }
+
+  async getTransaction(signature: string) {
+    const transaction = await this.solanaClient.getParsedTransaction(signature);
+
+    return {
+      _raw: transaction,
+    };
   }
 }
