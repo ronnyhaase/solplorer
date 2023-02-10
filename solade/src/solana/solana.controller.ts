@@ -1,7 +1,8 @@
 import { Controller, Get, Header, HttpException, HttpStatus, Logger, Param, Query } from '@nestjs/common';
 import { Type } from 'class-transformer';
 import { IsIn, IsInt, IsOptional, IsString,  } from 'class-validator';
-import {get} from 'lodash'
+import request from 'got-cjs'
+import { get } from 'lodash'
 
 import { InvalidAddressError } from '~/common/errors';
 import { DbService } from '~/db/db.service';
@@ -177,5 +178,47 @@ export class SolanaController {
   @Header('content-type', 'application/json; charset=utf-8')
   async getValidators(): Promise<string> {
     return this.dbService.getValidators();
+  }
+
+  @Get('/dau')
+  async getDAU(): Promise<any> {
+    const tdResp: any = await request('https://api.tinybird.co/v0/pipes/dau_list.json', {
+      searchParams: {
+        'token': process.env.TINYBIRD_API_TOKEN,
+      },
+    }).json();
+
+    const data = tdResp.data.map(row => ({
+      ts: new Date(row.date).getTime(),
+      activeUsers: row.active_users,
+    }));
+
+    return {
+      data,
+      count: data.length,
+      type: 'list',
+      updatedAt: data[0].ts,
+    }
+  }
+
+  @Get('/dtxfees')
+  async getDTxFees(): Promise<any> {
+    const tdResp: any = await request('https://api.tinybird.co/v0/pipes/dtxfees_list.json', {
+      searchParams: {
+        'token': process.env.TINYBIRD_API_TOKEN,
+      },
+    }).json();
+
+    const data = tdResp.data.map(row => ({
+      ts: new Date(row.date).getTime(),
+      totalTxFees: row.total_tx_fees
+    }));
+
+    return {
+      data,
+      count: data.length,
+      type: 'list',
+      updatedAt: data[0].ts,
+    }
   }
 }
