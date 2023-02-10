@@ -3,4 +3,4 @@ NODE endpoint
 DESCRIPTION >
     Get Daily Transaction Fees, ordered descending by date
 SQL >
-    SELECT * FROM dtxfees ORDER BY date DESC
+    SELECT DISTINCT(date), total_tx_fees FROM dtxfees ORDER BY date DESC
