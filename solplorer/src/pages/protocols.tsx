@@ -79,7 +79,6 @@ export default function Protocols() {
                 <THead>
                   <TR>
                     <TH>#</TH>
-                    <PreparedTHSortable colId="symbol" defaultDir="ASC">Symbol</PreparedTHSortable>
                     <PreparedTHSortable colId="name" defaultDir="ASC">Name</PreparedTHSortable>
                     <PreparedTHSortable colId="category" defaultDir="ASC">Category</PreparedTHSortable>
                     <PreparedTHSortable colId="tvl.current">TVL</PreparedTHSortable>
@@ -102,10 +101,15 @@ export default function Protocols() {
                               height={16}
                             />
                           </div>
-                          <span>&nbsp;{(protocol.symbol || '').toUpperCase()}</span>
+                          <span>
+                            &nbsp;
+                            {protocol.name}
+                            {protocol.symbol ? (
+                              <>{' '}({(protocol.symbol || '').toUpperCase()})</>
+                            ) : null}
+                          </span>
                         </div>
                       </TD>
-                      <TD>{protocol.name}</TD>
                       <TD>{protocol.category}</TD>
                       <TD>
                         <CurrencyDisplay short val={protocol.tvl.current} />
