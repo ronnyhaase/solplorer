@@ -8,7 +8,7 @@ const Logo = () => (
         Solplorer
       </h1>
     </Link>
-    <Link className="ml-sm no-underline" href="https://twitter.com/solplorer/status/1597198055199363072" target="_blank">
+    <Link className="ml-sm no-underline" href="https://twitter.com/solplorer/status/1597198055199363072" target="_blank" rel="noreferrer">
       <sup>Alpha</sup>
     </Link>
   </div>

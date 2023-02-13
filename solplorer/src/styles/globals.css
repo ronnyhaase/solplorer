@@ -137,6 +137,7 @@ th {
 .m-md { margin: var(--space-md); }
 .mx-md { margin-left: var(--space-md); margin-right: var(--space-md); }
 .my-md { margin-top: var(--space-md); margin-bottom: var(--space-md); }
+.my-lg { margin-top: var(--space-lg); margin-bottom: var(--space-lg); }
 .mt-sm { margin-top: var(--space-sm); }
 .mt-md { margin-top: var(--space-md); }
 .mb-md { margin-bottom: var(--space-md); }
@@ -178,6 +179,7 @@ th {
 .pb-md { padding-bottom: var(--space-md); }
 .pr-md { padding-right: var(--space-md); }
 
+.py-md { padding-top: var(--space-md); padding-bottom: var(--space-md); }
 .py-lg { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
 
 @media (min-width: 576px) {

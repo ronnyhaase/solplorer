@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
+import { BsDiscord, BsGithub, BsTwitter } from 'react-icons/bs'
 
 import { Container } from '../container'
 import Logo from './Logo'
@@ -32,14 +33,31 @@ const Layout = ({ children }) => {
         {children}
       </>
       <footer>
+        <div className="bg-slant my-lg py-md">
+          <Container className="text-center text-sm">
+            <div className="pb-md">
+              We love Solana. We love you. &hearts;<br />
+              We&apos;d love to hear from you!
+            </div>
+            <a href="https://twitter.com/solplorer" target="_blank" rel="noreferrer" title="Solplorer @ Twitter">
+              <BsTwitter size={32} />
+            </a>
+            <a href="https://discord.gg/SynhV94E8r" target="_blank" rel="noreferrer" title="Join Solplorer Discord" className="mx-md">
+              <BsDiscord size={32} />
+            </a>
+            <a href="https://github.com/ronnyhaase/solplorer" target="_blank" rel="noreferrer" title="Solplorer @ Github">
+              <BsGithub size={32} />
+            </a>
+            <div className="pt-md">
+              Copyright &copy; <a href="https://ronnyhaase.com">Ronny Haase</a>, 2022 - 2023
+            </div>
+          </Container>
+        </div>
         <Container className="text-center text-sm">
           <p>
-            Copyright &copy; <a href="https://ronnyhaase.com">Ronny Haase</a>, 2022 - 2023
-          </p>
-          <p>
-            Solplorer is free software under <a href="https://www.gnu.org/licenses/gpl-3.0">GNU
+            Solplorer is free software under <a href="https://www.gnu.org/licenses/gpl-3.0" target="_blank" rel="noreferrer">GNU
             General Public License</a> version 3 and you&apos;re invited
-            <a href="https://github.com/ronnyhaase/solplorer"> to contribute</a>.<br />
+            <a href="https://github.com/ronnyhaase/solplorer" target="_blank" rel="noreferrer"> to contribute</a>.<br />
             This program comes with ABSOLUTELY NO WARRANTY.
           </p>
         </Container>
