@@ -31,7 +31,7 @@ export default function Tokens() {
   }, [tokenData])
 
   const [sorting, _setSorting] = useState({
-    by: 'tvl.current',
+    by: 'marketCap',
     dir: 'DESC',
   })
   const setSorting = ({ by, dir }: { by: string, dir: string }) => {
@@ -82,16 +82,16 @@ export default function Tokens() {
                     <PreparedTHSortable colId="symbol" defaultDir="ASC">Symbol</PreparedTHSortable>
                     <PreparedTHSortable colId="name" defaultDir="ASC">Name</PreparedTHSortable>
                     <PreparedTHSortable colId="price.current">Price</PreparedTHSortable>
-                    <PreparedTHSortable colId="volume">Volume</PreparedTHSortable>
-                    <PreparedTHSortable colId="marketCap.current">Market Cap.</PreparedTHSortable>
+                    <PreparedTHSortable colId="volume.current">Volume</PreparedTHSortable>
+                    <PreparedTHSortable colId="marketCap">Market Cap.</PreparedTHSortable>
                     <TH>Supply (Circ. / Total)</TH>
                     <PreparedTHSortable colId="fdv">FDV</PreparedTHSortable>
                   </TR>
                 </THead>
                 <TBody>
-                  {tokens.map(token =>(
-                    <TR key={token.id}>
-                      <TD>{token.rank}</TD>
+                  {tokens.map((token, n) =>(
+                    <TR key={token.cmc.id}>
+                      <TD>{n + 1}</TD>
                       <TD className="sticky px-sm" style={{ left: 0 }}>
                         <div className="d-flex items-center">
                           <Image
@@ -101,7 +101,7 @@ export default function Tokens() {
                             height={16}
                             className="overflow-hidden"
                           />
-                          <span>&nbsp;{token.symbol.toUpperCase()}</span>
+                          <span>&nbsp;{token.symbol}</span>
                         </div>
                       </TD>
                       <TD>
@@ -117,11 +117,13 @@ export default function Tokens() {
                         {' '}
                         <ChangeDisplay percent val={token.price.changePercent_24h} />
                       </TD>
-                      <TD><CurrencyDisplay currency="USD" short val={token.volume} /></TD>
                       <TD>
-                        <CurrencyDisplay currency="USD" short val={token.marketCap.current} />
+                        <CurrencyDisplay currency="USD" short val={token.volume.current} />
                         {' '}
-                        <ChangeDisplay percent val={token.marketCap.changePercent_24h} />
+                        <ChangeDisplay percent val={token.volume.changePercent_24h} />
+                      </TD>
+                      <TD>
+                        <CurrencyDisplay currency="USD" short val={token.marketCap} />
                       </TD>
                       <TD>
                         <NumberDisplay short val={token.supply.circulating} />
@@ -133,27 +135,11 @@ export default function Tokens() {
                   ))}
                 </TBody>
               </Table>
-              {/* <TableRenderer
-                columns={[
-                  { id: 'fdv', title: 'FDV', sortable: true, renderContent: (token) => (
-                    <><NumberDisplay short val={token.fdv} /></>
-                  )},
-                ]}
-                data={tokenData.data}
-                rowKeyColId="id"
-                stickyFirstCol={true}
-                onSortChange={(col, dir, updateData) => {
-                  const sortedData = sortTableData(tokenData.data, col.id, dir)
-                  updateData(sortedData)
-                }}
-                sortingColId="marketCap.current"
-                sortingDirection="DESC"
-              /> */}
               <div>
                 <div className="my-md text-center">
                   Data provided by<br />
-                  <a href="https://coingecko.com/" target="_blank" rel="noreferrer">
-                    <img alt="Coingecko" src="/assets/images/coingecko.svg" />
+                  <a href="https://coinmarketcap.com/view/solana-ecosystem/" target="_blank" rel="noreferrer">
+                    <img alt="CoinMarketCap" src="/assets/images/cmc.svg" />
                   </a>
                 </div>
                 <div className="text-center">
