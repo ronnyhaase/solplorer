@@ -46,7 +46,7 @@ class Runner:
 
     def run(self):
         self.scheduler.add_job(update_stats, "interval", seconds=15)
-        self.scheduler.add_job(update_epoch, "cron", minutes="*/10")
+        self.scheduler.add_job(update_epoch, "cron", minute="*/10")
         self.scheduler.add_job(update_markets, "cron", minute="*/15")
         self.scheduler.add_job(update_top10, "cron", minute=0)
         self.scheduler.add_job(update_news, "cron", minute=5)
