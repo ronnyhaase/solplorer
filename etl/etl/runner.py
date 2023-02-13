@@ -46,11 +46,11 @@ class Runner:
 
     def run(self):
         self.scheduler.add_job(update_stats, "interval", seconds=15)
-        self.scheduler.add_job(update_epoch, "interval", minutes=10)
-        self.scheduler.add_job(update_markets, "interval", minutes=15)
-        self.scheduler.add_job(update_news, "interval", minutes=60)
-        self.scheduler.add_job(update_top10, "cron", hour="*", minute=0)
-        self.scheduler.add_job(update_tvl, "cron", hour="*", minute=15)
+        self.scheduler.add_job(update_epoch, "cron", minutes="*/10")
+        self.scheduler.add_job(update_markets, "cron", minute="*/15")
+        self.scheduler.add_job(update_top10, "cron", minute=0)
+        self.scheduler.add_job(update_news, "cron", minute=5)
+        self.scheduler.add_job(update_tvl, "cron", minute=10)
         self.scheduler.add_job(update_tokens, "cron", hour=1, minute=0)
         self.scheduler.add_job(update_supply, "cron", hour=1, minute=5)
         self.scheduler.add_job(update_nft_collections, "cron", hour=1, minute=10)

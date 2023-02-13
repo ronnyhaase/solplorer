@@ -1,4 +1,5 @@
 import json
+import os
 
 import httpx
 from dotenv import load_dotenv
@@ -48,7 +49,8 @@ def normalize_markets_data(raw_price_data, raw_price_history, raw_tvl_history):
     merged_history = merge_price_tvl_history(price_history, tvl_history)
 
     return {
-        "price": str_format_money(raw_price_data["solana"]["usd"]),
+        "price": str_format_money(raw_price_data["quote"]["USD"]["price"]),
+        "change": round(raw_price_data["quote"]["USD"]["percent_change_24h"], 2),
         "tvl": raw_tvl_history[-1]["totalLiquidityUSD"],
         "tvlChange": round(
             calc_change(
@@ -57,9 +59,10 @@ def normalize_markets_data(raw_price_data, raw_price_history, raw_tvl_history):
             ),
             2,
         ),
-        "volume": round(raw_price_data["solana"]["usd_24h_vol"]),
-        "change": round(raw_price_data["solana"]["usd_24h_change"], 2),
-        "marketCap": round(raw_price_data["solana"]["usd_market_cap"]),
+        "volume": round(raw_price_data["quote"]["USD"]["volume_24h"]),
+        "volumeChangePercent": round(raw_price_data["quote"]["USD"]["volume_change_24h"], 2),
+        "marketCap": round(raw_price_data["quote"]["USD"]["market_cap"]),
+        "marketCapRank": raw_price_data["cmc_rank"],
         "history": merged_history,
     }
 
@@ -68,17 +71,17 @@ def update_markets():
     redis = get_redis_connection()
 
     price_response = httpx.get(
-        "https://api.coingecko.com/api/v3/simple/price",
+        "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest",
         params={
-            "ids": "solana",
-            "vs_currencies": "usd",
-            "include_market_cap": True,
-            "include_24hr_vol": True,
-            "include_24hr_change": True,
+            "id": 5426,
+            "aux": "cmc_rank",
+        },
+        headers={
+            "X-CMC_PRO_API_KEY": os.environ["CMC_TOKEN"],
         },
     )
     price_response.raise_for_status()
-    raw_price_data = price_response.json()
+    raw_price_data = price_response.json()["data"]["5426"]
 
     history_response = httpx.get(
         "https://api.coingecko.com/api/v3/coins/solana/market_chart",
