@@ -69,10 +69,10 @@ def normalize_token(raw_token, n):
         raw_token,
     )
 
+
 def normalize_tokens(raw_tokens):
-    return [
-        normalize_token(raw_token, n) for n, raw_token in enumerate(raw_tokens)
-    ]
+    return [normalize_token(raw_token, n) for n, raw_token in enumerate(raw_tokens)]
+
 
 def update_tokens():
     redis = get_redis_connection()

@@ -8,6 +8,7 @@ from toolz.curried import filter, map, merge
 from etl.connector import get_redis_connection
 from etl.utils import now, pick, s_to_ms, sort
 
+
 def normalize_protocol(raw_protocol, total_tvl, n):
     return pick(
         [
@@ -33,14 +34,14 @@ def normalize_protocol(raw_protocol, total_tvl, n):
                     "change_7day": dic["change_7d"],
                     "change_24h": dic["change_1d"],
                     "change_1h": dic["change_1h"],
-                    "dominancePercent": (dic["chainTvls"]["Solana"] / total_tvl)
-                    * 100,
+                    "dominancePercent": (dic["chainTvls"]["Solana"] / total_tvl) * 100,
                 },
             ],
         ],
         raw_protocol,
         enforce_unset=True,
     )
+
 
 def normalize_tvl(raw_history, raw_protocols):
     total_tvl = raw_history[-1]["totalLiquidityUSD"]
@@ -66,8 +67,9 @@ def normalize_tvl(raw_history, raw_protocols):
                 ),
                 sort(lambda a, b: b["chainTvls"]["Solana"] - a["chainTvls"]["Solana"]),
                 lambda raw_protocols: [
-                    normalize_protocol(raw_protocol, total_tvl, n) for n, raw_protocol in enumerate(raw_protocols)
-                ]
+                    normalize_protocol(raw_protocol, total_tvl, n)
+                    for n, raw_protocol in enumerate(raw_protocols)
+                ],
             )(raw_protocols)
         ),
     }
@@ -75,7 +77,6 @@ def normalize_tvl(raw_history, raw_protocols):
 
 def update_tvl():
     redis = get_redis_connection()
-
 
     tvl_response = httpx.get("https://api.llama.fi/charts/Solana")
     tvl_response.raise_for_status()
