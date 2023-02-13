@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { CurrencyDisplay, Display } from '../../../components'
 
 const Market = ({ marketData }) => {
-  const { change, marketCap, price, tvl, tvlChange, volume } = marketData || {}
+  const { change, marketCap, marketCapRank, price, tvl, tvlChange, volume } = marketData || {}
 
   const [changeColor, setChangeColor] = useState('muted')
   const [tvlChangeColor, setTvlChangeColor] = useState('muted')
@@ -35,6 +35,7 @@ const Market = ({ marketData }) => {
 
   return (
     <>
+      <span className="px-sm rounded-sm text-muted bg-inset">Rank #{marketCapRank}</span>
       <div className="d-flex items-center">
         <CurrencyDisplay as="div" className="text-xl" val={price} suffix={<>&nbsp;</>} />
         <Display as="div" className={`text-${changeColor}`} prefix={changeSymbol + ' '} suffix=" %">{change}</Display>
