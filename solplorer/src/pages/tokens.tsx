@@ -96,7 +96,7 @@ export default function Tokens() {
                         <div className="d-flex items-center">
                           <Image
                             alt={`${token.name} Logo`}
-                            src={token.imageUrl}
+                            src={'/assets/images/logo.png'}
                             width={16}
                             height={16}
                             className="overflow-hidden"

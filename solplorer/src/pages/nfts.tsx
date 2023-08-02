@@ -205,7 +205,7 @@ export default function NftCollectionsPage() {
                         <Box style={{ width: '48px', height: '48px', overflow: 'hidden' }}>
                           <Image
                             alt={collection.name}
-                            src={collection.imageUrl}
+                            src={'/assets/images/logo.png'}
                             quality={80}
                             width={48}
                             height={48}

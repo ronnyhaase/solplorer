@@ -12,6 +12,6 @@ run-jobs:
 	poetry run python etl/jobs/nft_collections.py
 	poetry run python etl/jobs/stats.py
 	poetry run python etl/jobs/supply.py
-	poetry run python etl/jobs/tokens.py
+	poetry run python etl/jobs/tokens_cmc.py
 	poetry run python etl/jobs/top10.py
 	poetry run python etl/jobs/tvl.py

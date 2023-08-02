@@ -11,15 +11,15 @@ const nextConfig = {
       }
     ]
   },
-  images: {
-    loader: 'custom',
-    loaderFile: './src/loaders/image.js',
-    domains: [
-      'assets.coingecko.com',
-      'icons.llama.fi',
-      'ckaumumkea.cloudimg.io',
-    ],
-  }
+  // images: {
+  //   loader: 'custom',
+  //   loaderFile: './src/loaders/image.js',
+  //   domains: [
+  //     'assets.coingecko.com',
+  //     'icons.llama.fi',
+  //     'ckaumumkea.cloudimg.io',
+  //   ],
+  // },
 }
 
 module.exports = nextConfig

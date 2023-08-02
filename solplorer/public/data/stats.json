@@ -1,0 +1,1 @@
+{"data": {"epoch": {"currentEpoch": 483, "nextEpoch": 484, "slotCurrent": 208261, "slotTarget": 432000, "slotRangeStart": 208656000, "slotRangeEnd": 209088000, "epochETA": 123056450, "epochProgress": 48}, "blockHeight": 191337276, "slotHeight": 208864261, "transactionsCount": 204397396452, "tps": 4603}, "count": 0, "type": "object", "updatedAt": 1690911785868}

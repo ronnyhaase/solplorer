@@ -95,7 +95,7 @@ export default function Protocols() {
                           <div style={{ width: '16px', height: '16px', overflow: 'hidden' }}>
                             <Image
                               alt={`${protocol.name} Logo`}
-                              src={protocol.imageUrl}
+                              src={'/assets/images/logo.png'}
                               quality={80}
                               width={16}
                               height={16}

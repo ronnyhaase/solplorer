@@ -64,6 +64,7 @@ def normalize_tvl(raw_history, raw_protocols):
                     lambda raw_protocol: "Solana" in raw_protocol["chains"]
                     and "chainTvls" in raw_protocol
                     and "Solana" in raw_protocol["chainTvls"]
+                    and not "CEX" in raw_protocol["category"]
                 ),
                 sort(lambda a, b: b["chainTvls"]["Solana"] - a["chainTvls"]["Solana"]),
                 lambda raw_protocols: [
