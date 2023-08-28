@@ -11,7 +11,7 @@
     "maintained node versions"
   ],
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "dev": "next dev",

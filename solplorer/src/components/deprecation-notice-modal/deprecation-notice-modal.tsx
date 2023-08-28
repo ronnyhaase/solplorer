@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useState } from 'react'
 
 import styles from './deprecation-notice-modal.module.css'
