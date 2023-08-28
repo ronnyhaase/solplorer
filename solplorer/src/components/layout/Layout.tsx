@@ -5,6 +5,7 @@ import { BsDiscord, BsGithub, BsTwitter } from 'react-icons/bs'
 import { Container } from '../container'
 import Logo from './Logo'
 import Navigation from './Navigation'
+import { DeprecationNoticeModal } from '../deprecation-notice-modal'
 
 const Layout = ({ children }) => {
   return (
@@ -34,6 +35,7 @@ const Layout = ({ children }) => {
       </>
       <footer>
         <div className="bg-slant my-lg py-md">
+          <DeprecationNoticeModal />
           <Container className="text-center text-sm">
             <div className="pb-md">
               We love Solana. We love you. &hearts;<br />

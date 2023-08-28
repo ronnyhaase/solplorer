@@ -172,6 +172,7 @@ th {
 
 .p-sm { padding: var(--space-sm); }
 .px-sm { padding-left: var(--space-sm); padding-right: var(--space-sm); }
+.px-md { padding-left: var(--space-md); padding-right: var(--space-md); }
 .py-sm { padding-top: var(--space-sm); padding-bottom: var(--space-sm); }
 
 .p-md { padding: var(--space-md); }
@@ -267,6 +268,7 @@ th {
 
 .no-underline { text-decoration: none; }
 .not-italic { font-style: normal; }
+.underline { text-decoration: underline; }
 
 .text-inherit { color: inherit }
 .text-background { color: var(--c-background) }
